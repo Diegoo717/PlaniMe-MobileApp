@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.googlefonts.Font
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.draw.shadow
 
 @Composable
 fun mainScreen(){
@@ -50,19 +53,32 @@ fun mainScreen(){
         )
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(top = 35.dp)
-            .padding(bottom = 55.dp),
+            .padding(top = 30.dp)
+            .padding(bottom = 80.dp),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
 
         ){
-            Text(text = "PlaniMe",
-                fontSize = 30.sp,
-                fontFamily = fontFamilyGoogle,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                .fillMaxWidth()
-            )
+            Row(modifier = Modifier
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Text(text = "PlaniMe",
+                    fontSize = 30.sp,
+                    fontFamily = fontFamilyGoogle,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .width(100.dp)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.logo_pm),
+                    contentDescription = "logo",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .size(70.dp)
+                )
+            }
             Column (modifier = Modifier
                 .height(500.dp)
                 .padding(bottom = 70.dp)
@@ -76,27 +92,22 @@ fun mainScreen(){
                     Modifier
                         .size(250.dp)
                 )
-                Text(text = "Diseñamos tu dieta, conquistas tus metas!",
-                    fontSize = 30.sp,
+                Text(text = "Diseñamos tu dieta,\nconquistas tus metas!",
+                    fontSize = 35.sp,
                     fontFamily = fontFamilyGoogle,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                     .fillMaxWidth())
             }
-
-            Button(onClick = {},
+            Text(text = "Comenzar",
+                fontFamily = fontFamilyGoogle,
+                fontSize = 50.sp,
+                color = (Color.White),
                 modifier = Modifier
-                    .border(
-                    width = 2.dp,
-                    color = Color(0xFF000000),
-                    shape = RoundedCornerShape(30.dp)
-                    )) {
-                Text(text = "Comenzar",
-                    fontFamily = fontFamilyGoogle,
-                    fontSize = 30.sp,
-                    )
-            }
+                    .clickable {  },
+                fontWeight = FontWeight.Bold
+                )
         }
     }
 }
