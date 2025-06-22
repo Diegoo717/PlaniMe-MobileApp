@@ -14,6 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.planime_mobileapp.screens.loadingScreen
 import com.example.planime_mobileapp.ui.theme.PlaniMeMobileAppTheme
+import com.example.planime_mobileapp.screens.welcomeScreen
+import com.example.planime_mobileapp.screens.welcomeScreenTwo
+import com.example.planime_mobileapp.screens.welcomeScreenThree
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
