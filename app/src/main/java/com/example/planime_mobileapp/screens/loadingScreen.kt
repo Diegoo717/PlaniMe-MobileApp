@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 @Composable
-fun loadingScreen(){
+fun loadingScreen(onNavigateToWelcomeScreen: () -> Unit){
 
     var isJumping by remember { mutableStateOf(false) }
 
@@ -43,6 +43,8 @@ fun loadingScreen(){
         isJumping = true
         delay(300)
         isJumping = false
+        delay(1500)
+        onNavigateToWelcomeScreen()
     }
     Box(
         modifier = Modifier

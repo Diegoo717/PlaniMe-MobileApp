@@ -34,11 +34,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.googlefonts.Font
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.shadow
 
 @Composable
-fun mainScreen(){
+fun mainScreen(onNavigateToLoginScreen: () -> Unit){
 
     Box(
       modifier = Modifier
@@ -105,7 +107,10 @@ fun mainScreen(){
                 fontSize = 50.sp,
                 color = (Color.White),
                 modifier = Modifier
-                    .clickable {  },
+                    .clickable (
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ){  },
                 fontWeight = FontWeight.Bold
                 )
         }

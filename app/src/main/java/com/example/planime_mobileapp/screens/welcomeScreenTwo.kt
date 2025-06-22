@@ -25,14 +25,16 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
+import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun welcomeScreenTwo() {
+fun welcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -116,7 +118,10 @@ fun welcomeScreenTwo() {
                     contentDescription = "next",
                     Modifier
                         .size(90.dp)
-                        .clickable {  }
+                        .clickable (
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ){ onNavigateToWSThree() }
                 )
             }
         }
