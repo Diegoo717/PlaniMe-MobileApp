@@ -6,4 +6,6 @@ object routes{
     const val WELCOMESCREENTWO = "welcomescreentwo"
     const val WELCOMESCREENTHREE = "welcomescreenthree"
     const val MAINSCREEN = "mainscreen"
+    const val REGISTERSCREEN = "registerscreen"
+    const val LOGINSCREEN = "loginscreen"
 }

@@ -6,10 +6,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.planime_mobileapp.screens.LoadingScreen
+import com.example.planime_mobileapp.screens.LoginScreen
 import com.example.planime_mobileapp.screens.WelcomeScreen
 import com.example.planime_mobileapp.screens.WelcomeScreenTwo
 import com.example.planime_mobileapp.screens.WelcomeScreenThree
 import com.example.planime_mobileapp.screens.MainScreen
+import com.example.planime_mobileapp.screens.RegisterScreen
 
 @Composable
 fun AppNavGraph(
@@ -42,7 +44,17 @@ fun AppNavGraph(
         }
         composable(routes.MAINSCREEN){
             MainScreen(
-                onNavigateToLoginScreen = {}
+                onNavigateToLoginScreen = {navController.navigate((routes.LOGINSCREEN))}
+            )
+        }
+        composable(routes.REGISTERSCREEN){
+            RegisterScreen(
+                onNavigateToLoginScreen = {navController.navigate((routes.LOGINSCREEN))}
+            )
+        }
+        composable(routes.LOGINSCREEN){
+            LoginScreen(
+                onNavigateToRegisterScreen = {navController.navigate((routes.REGISTERSCREEN))}
             )
         }
     }

@@ -2,6 +2,9 @@ package com.example.planime_mobileapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,14 +33,22 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import com.example.planime_mobileapp.animations.buttons.animateButtonInteraction
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onNavigateToRegisterScreen: () -> Unit) {
 
     var text by remember { mutableStateOf("") }
     var textTwo by remember { mutableStateOf("") }
+    var isPressed by remember { mutableStateOf(false) }
+    var isHovered by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
@@ -212,6 +223,24 @@ fun LoginScreen() {
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
                         .offset(x = 85.dp, y = -60.dp)
+                        .animateButtonInteraction(isPressed, isHovered)
+                        .clickable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() },
+                            onClick = {}
+                        )
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = { isPressed = true },
+                                onTap = {
+                                    scope.launch {
+                                        delay(100)
+                                        isPressed = false
+                                        onNavigateToRegisterScreen()
+                                    }
+                                }
+                            )
+                        }
                 )
             }
         }
