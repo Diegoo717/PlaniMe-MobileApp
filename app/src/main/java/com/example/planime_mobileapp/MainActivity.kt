@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.planime_mobileapp.navegation.AppNavGraph
 import com.example.planime_mobileapp.screens.LoadingScreen
 import com.example.planime_mobileapp.screens.LoginScreen
+import com.example.planime_mobileapp.screens.RegisterScreen
 import com.example.planime_mobileapp.screens.MainScreen
 
 
@@ -15,7 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LoginScreen()
+            RegisterScreen()
         }
     }
 }
