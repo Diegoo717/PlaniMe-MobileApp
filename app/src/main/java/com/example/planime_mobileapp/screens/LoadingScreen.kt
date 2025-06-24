@@ -23,11 +23,10 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.*
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 @Composable
-fun loadingScreen(onNavigateToWelcomeScreen: () -> Unit){
+fun LoadingScreen(onNavigateToWelcomeScreen: () -> Unit){
 
     var isJumping by remember { mutableStateOf(false) }
 
@@ -52,7 +51,7 @@ fun loadingScreen(onNavigateToWelcomeScreen: () -> Unit){
         contentAlignment = Alignment.Center
     ){
         Image(
-            painter = painterResource(id = R.drawable.main_background),
+            painter = painterResource(id = R.drawable.loading_background),
             contentDescription = "background",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier .matchParentSize()
@@ -70,7 +69,7 @@ fun loadingScreen(onNavigateToWelcomeScreen: () -> Unit){
                     .width(130.dp)
             )
             Image(
-                painter = painterResource(id = R.drawable.logo_pm),
+                painter = painterResource(id = R.drawable.planime_logo),
                 contentDescription = "logo",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

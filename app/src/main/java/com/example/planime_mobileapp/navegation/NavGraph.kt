@@ -5,11 +5,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.planime_mobileapp.screens.loadingScreen
-import com.example.planime_mobileapp.screens.welcomeScreen
-import com.example.planime_mobileapp.screens.welcomeScreenTwo
-import com.example.planime_mobileapp.screens.welcomeScreenThree
-import com.example.planime_mobileapp.screens.mainScreen
+import com.example.planime_mobileapp.screens.LoadingScreen
+import com.example.planime_mobileapp.screens.WelcomeScreen
+import com.example.planime_mobileapp.screens.WelcomeScreenTwo
+import com.example.planime_mobileapp.screens.WelcomeScreenThree
+import com.example.planime_mobileapp.screens.MainScreen
 
 @Composable
 fun AppNavGraph(
@@ -21,27 +21,27 @@ fun AppNavGraph(
         startDestination = startDestination
     ){
         composable(routes.LOADINGSCREEN){
-            loadingScreen(
+            LoadingScreen(
                 onNavigateToWelcomeScreen = {navController.navigate((routes.WELCOMESCREEN))}
             )
         }
         composable(routes.WELCOMESCREEN){
-            welcomeScreen(
+            WelcomeScreen(
                 onNavigateToWSTwo = {navController.navigate((routes.WELCOMESCREENTWO))}
             )
         }
         composable(routes.WELCOMESCREENTWO){
-            welcomeScreenTwo(
+            WelcomeScreenTwo(
                 onNavigateToWSThree = {navController.navigate((routes.WELCOMESCREENTHREE))}
             )
         }
         composable(routes.WELCOMESCREENTHREE){
-            welcomeScreenThree(
+            WelcomeScreenThree(
                 onNavigateToMainScreen = {navController.navigate((routes.MAINSCREEN))}
             )
         }
         composable(routes.MAINSCREEN){
-            mainScreen(
+            MainScreen(
                 onNavigateToLoginScreen = {}
             )
         }

@@ -1,6 +1,7 @@
 package com.example.planime_mobileapp.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -31,10 +32,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.planime_mobileapp.animations.screens.AnimatedScreen
-import com.example.planime_mobileapp.animations.screens.screenTransitions
+import com.example.planime_mobileapp.animations.screens.ScreenTransitions
 
 @Composable
-fun mainScreen(onNavigateToLoginScreen: () -> Unit){
+fun MainScreen(onNavigateToLoginScreen: () -> Unit){
 
     var isPressed by remember { mutableStateOf(false) }
 
@@ -44,12 +45,12 @@ fun mainScreen(onNavigateToLoginScreen: () -> Unit){
             contentAlignment = Alignment.Center
         ){
             Image(
-                painter = painterResource(id = R.drawable.background2),
+                painter = painterResource(id = R.drawable.mainscreen_background),
                 contentDescription = "background",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier .matchParentSize()
             )
-            AnimatedScreen(enter = screenTransitions.enterScreen, exit = screenTransitions.exitScreen){
+            AnimatedScreen(enter = ScreenTransitions.enterScreen, exit = ScreenTransitions.exitScreen){
             Column(modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 30.dp)
@@ -71,7 +72,7 @@ fun mainScreen(onNavigateToLoginScreen: () -> Unit){
                             .width(100.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.logo_pm),
+                        painter = painterResource(id = R.drawable.planime_logo),
                         contentDescription = "logo",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier

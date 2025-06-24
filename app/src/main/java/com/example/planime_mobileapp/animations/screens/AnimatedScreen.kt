@@ -13,8 +13,8 @@ import androidx.compose.runtime.setValue
 @Composable
 fun AnimatedScreen(
     visible: Boolean = true,
-    enter: EnterTransition = screenTransitions.enterScreen,
-    exit: ExitTransition = screenTransitions.exitScreen,
+    enter: EnterTransition = ScreenTransitions.enterScreen,
+    exit: ExitTransition = ScreenTransitions.exitScreen,
     content: @Composable () -> Unit
 ) {
     var shouldAnimate by remember { mutableStateOf(false) }

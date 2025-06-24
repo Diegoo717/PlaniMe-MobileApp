@@ -35,12 +35,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import com.example.planime_mobileapp.animations.buttons.animateButtonInteraction
 import com.example.planime_mobileapp.animations.screens.AnimatedScreen
-import com.example.planime_mobileapp.animations.screens.screenTransitions
+import com.example.planime_mobileapp.animations.screens.ScreenTransitions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun welcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
+fun WelcomeScreen(onNavigateToWSTwo: () -> Unit) {
 
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
@@ -52,12 +52,12 @@ fun welcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.background),
+            painter = painterResource(id = R.drawable.welcome_background),
             contentDescription = "background",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        AnimatedScreen(enter = screenTransitions.enterScreen, exit = screenTransitions.exitScreen) {
+        AnimatedScreen(enter = ScreenTransitions.enterScreen, exit = ScreenTransitions.exitScreen) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -82,7 +82,7 @@ fun welcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
                             .width(100.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.logo_pm),
+                        painter = painterResource(id = R.drawable.planime_logo),
                         contentDescription = "logo",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
@@ -96,19 +96,19 @@ fun welcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
                     verticalArrangement = Arrangement.SpaceAround,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.fooddesign),
-                        contentDescription = "path",
-                        Modifier
-                            .size(200.dp)
-                    )
                     Text(
-                        text = "Tu alimentación puede ser inteligente, deliciosa y\ndiseñada solo para ti.",
+                        text = "Cada cuerpo tiene su propio camino.\nNosotros te ayudamos a encontrar el tuyo.",
                         fontSize = 35.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.path),
+                        contentDescription = "path",
+                        Modifier
+                            .size(200.dp)
                     )
                     Canvas(
                         modifier = Modifier
@@ -134,7 +134,7 @@ fun welcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
                     Image(
                         painter = painterResource(id = R.drawable.next),
                         contentDescription = "next",
-                        Modifier
+                        modifier = Modifier
                             .size(90.dp)
                             .animateButtonInteraction(isPressed, isHovered)
                             .clickable(
@@ -149,7 +149,7 @@ fun welcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
                                         scope.launch {
                                             delay(100)
                                             isPressed = false
-                                            onNavigateToWSThree()
+                                            onNavigateToWSTwo()
                                         }
                                     }
                                 )

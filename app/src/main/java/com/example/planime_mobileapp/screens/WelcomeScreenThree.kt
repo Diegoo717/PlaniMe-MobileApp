@@ -35,12 +35,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import com.example.planime_mobileapp.animations.buttons.animateButtonInteraction
 import com.example.planime_mobileapp.animations.screens.AnimatedScreen
-import com.example.planime_mobileapp.animations.screens.screenTransitions
+import com.example.planime_mobileapp.animations.screens.ScreenTransitions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun welcomeScreenThree(onNavigateToMainScreen: () -> Unit) {
+fun WelcomeScreenThree(onNavigateToMainScreen: () -> Unit) {
 
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
@@ -52,12 +52,12 @@ fun welcomeScreenThree(onNavigateToMainScreen: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.background),
+            painter = painterResource(id = R.drawable.welcomethree_background),
             contentDescription = "background",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        AnimatedScreen(enter = screenTransitions.enterScreen, exit = screenTransitions.exitScreen) {
+        AnimatedScreen(enter = ScreenTransitions.enterScreen, exit = ScreenTransitions.exitScreen) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -82,7 +82,7 @@ fun welcomeScreenThree(onNavigateToMainScreen: () -> Unit) {
                             .width(100.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.logo_pm),
+                        painter = painterResource(id = R.drawable.planime_logo),
                         contentDescription = "logo",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier

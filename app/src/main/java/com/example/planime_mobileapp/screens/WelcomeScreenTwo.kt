@@ -1,6 +1,5 @@
 package com.example.planime_mobileapp.screens
 
-import android.view.MotionEvent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -34,15 +33,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.pointerInteropFilter
 import com.example.planime_mobileapp.animations.buttons.animateButtonInteraction
 import com.example.planime_mobileapp.animations.screens.AnimatedScreen
-import com.example.planime_mobileapp.animations.screens.screenTransitions
+import com.example.planime_mobileapp.animations.screens.ScreenTransitions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun welcomeScreen(onNavigateToWSTwo: () -> Unit) {
+fun WelcomeScreenTwo(onNavigateToWSThree: () -> Unit) {
 
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
@@ -54,12 +52,12 @@ fun welcomeScreen(onNavigateToWSTwo: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.background),
+            painter = painterResource(id = R.drawable.welcometwo_background),
             contentDescription = "background",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        AnimatedScreen(enter = screenTransitions.enterScreen, exit = screenTransitions.exitScreen) {
+        AnimatedScreen(enter = ScreenTransitions.enterScreen, exit = ScreenTransitions.exitScreen) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -84,7 +82,7 @@ fun welcomeScreen(onNavigateToWSTwo: () -> Unit) {
                             .width(100.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.logo_pm),
+                        painter = painterResource(id = R.drawable.planime_logo),
                         contentDescription = "logo",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
@@ -98,19 +96,19 @@ fun welcomeScreen(onNavigateToWSTwo: () -> Unit) {
                     verticalArrangement = Arrangement.SpaceAround,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.fooddesign),
+                        contentDescription = "path",
+                        Modifier
+                            .size(200.dp)
+                    )
                     Text(
-                        text = "Cada cuerpo tiene su propio camino.\nNosotros te ayudamos a encontrar el tuyo.",
+                        text = "Tu alimentación puede ser inteligente, deliciosa y\ndiseñada solo para ti.",
                         fontSize = 35.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.path),
-                        contentDescription = "path",
-                        Modifier
-                            .size(200.dp)
                     )
                     Canvas(
                         modifier = Modifier
@@ -136,7 +134,7 @@ fun welcomeScreen(onNavigateToWSTwo: () -> Unit) {
                     Image(
                         painter = painterResource(id = R.drawable.next),
                         contentDescription = "next",
-                        modifier = Modifier
+                        Modifier
                             .size(90.dp)
                             .animateButtonInteraction(isPressed, isHovered)
                             .clickable(
@@ -151,7 +149,7 @@ fun welcomeScreen(onNavigateToWSTwo: () -> Unit) {
                                         scope.launch {
                                             delay(100)
                                             isPressed = false
-                                            onNavigateToWSTwo()
+                                            onNavigateToWSThree()
                                         }
                                     }
                                 )
