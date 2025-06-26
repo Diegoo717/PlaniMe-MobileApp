@@ -19,4 +19,18 @@ object ScreenTransitions {
     ) + fadeOut(
         animationSpec = tween(durationMillis = 300)
     )
+
+    val enterScaleFromCenter: EnterTransition = scaleIn(
+        initialScale = 0.3f,
+        animationSpec = tween(durationMillis = 600, easing = FastOutSlowInEasing)
+    ) + fadeIn(
+        animationSpec = tween(durationMillis = 550)
+    )
+
+    val exitScaleToCenter: ExitTransition = scaleOut(
+        targetScale = 0.3f,
+        animationSpec = tween(durationMillis = 600)
+    ) + fadeOut(
+        animationSpec = tween(durationMillis = 550)
+    )
 }

@@ -38,6 +38,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planime_mobileapp.animations.buttons.animateButtonInteraction
+import com.example.planime_mobileapp.animations.screens.AnimatedScreen
+import com.example.planime_mobileapp.animations.screens.ScreenTransitions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -61,187 +63,189 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit) {
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(
-                modifier = Modifier
-                    .weight(0.35f)
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.planime_logo),
-                    contentDescription = "planime_logo",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(280.dp)
-                        .align(Alignment.BottomCenter)
-                )
-                Text(
-                    text = "PlaniMe",
-                    fontSize = 40.sp,
-                    fontFamily = fontFamilyGoogle,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .offset(y = (0).dp)
-                )
-            }
+        AnimatedScreen(enter = ScreenTransitions.enterScaleFromCenter, exit = ScreenTransitions.exitScaleToCenter) {
             Column(
                 modifier = Modifier
-                    .weight(0.35f)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Ingresa a tu cuenta",
-                    fontSize = 50.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = fontFamilyGoogle,
-                    textAlign = TextAlign.Center,
+                Box(
                     modifier = Modifier
+                        .weight(0.35f)
                         .fillMaxWidth()
-
-                )
-                TextField(
-                    value = text,
-                    onValueChange = { newText -> text = newText },
-                    label = {
-                        Text(
-                            "Correo electronico",
-                            style = TextStyle(fontFamily = fontFamilyGoogle),
-                            fontSize = 20.sp
-                        )
-                    },
-                    placeholder = {
-                        Text(
-                            "Escribe aquí",
-                            style = TextStyle(fontFamily = fontFamilyGoogle),
-                            fontSize = 20.sp
-                        )
-                    },
-                    modifier = Modifier
-                        .width(300.dp)
-                        .padding(top = 40.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = Color(0xFFEFF299),
-                        focusedContainerColor = Color(0xFFEFF299),
-                        focusedLabelColor = Color.Black,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.planime_logo),
+                        contentDescription = "planime_logo",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .size(280.dp)
+                            .align(Alignment.BottomCenter)
                     )
-                )
-                TextField(
-                    value = textTwo,
-                    onValueChange = { newText -> textTwo = newText },
-                    label = {
-                        Text(
-                            "Contraseña",
-                            style = TextStyle(fontFamily = fontFamilyGoogle),
-                            fontSize = 20.sp
-                        )
-                    },
-                    placeholder = {
-                        Text(
-                            "Escribe aquí",
-                            style = TextStyle(fontFamily = fontFamilyGoogle),
-                            fontSize = 20.sp
-                        )
-                    },
-                    modifier = Modifier
-                        .width(300.dp)
-                        .padding(top = 30.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = Color(0xFFEFF299),
-                        focusedContainerColor = Color(0xFFEFF299),
-                        focusedLabelColor = Color.Black,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
+                    Text(
+                        text = "PlaniMe",
+                        fontSize = 40.sp,
+                        fontFamily = fontFamilyGoogle,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .offset(y = (0).dp)
                     )
-                )
-            }
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(0.35f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Ingresa a tu cuenta",
+                        fontSize = 50.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamilyGoogle,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
 
-            Box(
-                modifier = Modifier
-                    .weight(0.3f)
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.signin_button),
-                    contentDescription = "signup_button",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(130.dp)
-                        .align(Alignment.TopCenter)
-                        .offset(x = 0.dp, y = -40.dp)
-                )
-
-                Text(
-                    text = "o continuar con: ",
-                    fontSize = 20.sp,
-                    fontFamily = fontFamilyGoogle,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center)
-                        .offset(x = 0.dp, y = -50.dp)
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.android_light_rd_si),
-                    contentDescription = "signup_button",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(150.dp)
-                        .align(Alignment.TopCenter)
-                        .offset(x = 0.dp, y = 50.dp)
-                )
-                Text(
-                    text = "¿No tienes cuenta?",
-                    fontSize = 23.sp,
-                    fontFamily = fontFamilyGoogle,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .offset(x = -85.dp, y = -60.dp)
-                )
-                Text(
-                    text = "Registrate AQUI!",
-                    color = Color.White,
-                    fontSize = 27.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = fontFamilyGoogle,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .offset(x = 85.dp, y = -60.dp)
-                        .animateButtonInteraction(isPressed, isHovered)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() },
-                            onClick = {}
-                        )
-                        .pointerInput(Unit) {
-                            detectTapGestures(
-                                onPress = { isPressed = true },
-                                onTap = {
-                                    scope.launch {
-                                        delay(100)
-                                        isPressed = false
-                                        onNavigateToRegisterScreen()
-                                    }
-                                }
+                    )
+                    TextField(
+                        value = text,
+                        onValueChange = { newText -> text = newText },
+                        label = {
+                            Text(
+                                "Correo electronico",
+                                style = TextStyle(fontFamily = fontFamilyGoogle),
+                                fontSize = 20.sp
                             )
-                        }
-                )
+                        },
+                        placeholder = {
+                            Text(
+                                "Escribe aquí",
+                                style = TextStyle(fontFamily = fontFamilyGoogle),
+                                fontSize = 20.sp
+                            )
+                        },
+                        modifier = Modifier
+                            .width(300.dp)
+                            .padding(top = 40.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = Color(0xFFEFF299),
+                            focusedContainerColor = Color(0xFFEFF299),
+                            focusedLabelColor = Color.Black,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                        )
+                    )
+                    TextField(
+                        value = textTwo,
+                        onValueChange = { newText -> textTwo = newText },
+                        label = {
+                            Text(
+                                "Contraseña",
+                                style = TextStyle(fontFamily = fontFamilyGoogle),
+                                fontSize = 20.sp
+                            )
+                        },
+                        placeholder = {
+                            Text(
+                                "Escribe aquí",
+                                style = TextStyle(fontFamily = fontFamilyGoogle),
+                                fontSize = 20.sp
+                            )
+                        },
+                        modifier = Modifier
+                            .width(300.dp)
+                            .padding(top = 30.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = Color(0xFFEFF299),
+                            focusedContainerColor = Color(0xFFEFF299),
+                            focusedLabelColor = Color.Black,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                        )
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .weight(0.3f)
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.signin_button),
+                        contentDescription = "signup_button",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .size(130.dp)
+                            .align(Alignment.TopCenter)
+                            .offset(x = 0.dp, y = -40.dp)
+                    )
+
+                    Text(
+                        text = "o continuar con: ",
+                        fontSize = 20.sp,
+                        fontFamily = fontFamilyGoogle,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.Center)
+                            .offset(x = 0.dp, y = -50.dp)
+                    )
+
+                    Image(
+                        painter = painterResource(id = R.drawable.android_light_rd_si),
+                        contentDescription = "signup_button",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .size(150.dp)
+                            .align(Alignment.TopCenter)
+                            .offset(x = 0.dp, y = 50.dp)
+                    )
+                    Text(
+                        text = "¿No tienes cuenta?",
+                        fontSize = 23.sp,
+                        fontFamily = fontFamilyGoogle,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .offset(x = -85.dp, y = -60.dp)
+                    )
+                    Text(
+                        text = "Registrate AQUI!",
+                        color = Color.White,
+                        fontSize = 27.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamilyGoogle,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .offset(x = 85.dp, y = -60.dp)
+                            .animateButtonInteraction(isPressed, isHovered)
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() },
+                                onClick = {}
+                            )
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onPress = { isPressed = true },
+                                    onTap = {
+                                        scope.launch {
+                                            delay(100)
+                                            isPressed = false
+                                            onNavigateToRegisterScreen()
+                                        }
+                                    }
+                                )
+                            }
+                    )
+                }
             }
         }
     }
