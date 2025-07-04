@@ -1,4 +1,4 @@
-package com.example.planime_mobileapp.screens
+package com.example.planime_mobileapp.screens.welcome
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

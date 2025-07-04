@@ -1,4 +1,4 @@
-package com.example.planime_mobileapp.screens
+package com.example.planime_mobileapp.screens.welcome
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,7 +40,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun WelcomeScreen(onNavigateToWSTwo: () -> Unit) {
+fun WelcomeScreenThree(onNavigateToMainScreen: () -> Unit) {
 
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
@@ -52,7 +52,7 @@ fun WelcomeScreen(onNavigateToWSTwo: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.welcome_background),
+            painter = painterResource(id = R.drawable.welcomethree_background),
             contentDescription = "background",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
@@ -97,7 +97,7 @@ fun WelcomeScreen(onNavigateToWSTwo: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Cada cuerpo tiene su propio camino.\nNosotros te ayudamos a encontrar el tuyo.",
+                        text = "Sigue tu progreso, celebra\ncada paso y transforma\ntu estilo de vida.",
                         fontSize = 35.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
@@ -105,7 +105,7 @@ fun WelcomeScreen(onNavigateToWSTwo: () -> Unit) {
                             .fillMaxWidth()
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.path),
+                        painter = painterResource(id = R.drawable.progress),
                         contentDescription = "path",
                         Modifier
                             .size(200.dp)
@@ -134,7 +134,7 @@ fun WelcomeScreen(onNavigateToWSTwo: () -> Unit) {
                     Image(
                         painter = painterResource(id = R.drawable.next),
                         contentDescription = "next",
-                        modifier = Modifier
+                        Modifier
                             .size(90.dp)
                             .animateButtonInteraction(isPressed, isHovered)
                             .clickable(
@@ -149,7 +149,7 @@ fun WelcomeScreen(onNavigateToWSTwo: () -> Unit) {
                                         scope.launch {
                                             delay(100)
                                             isPressed = false
-                                            onNavigateToWSTwo()
+                                            onNavigateToMainScreen()
                                         }
                                     }
                                 )

@@ -1,7 +1,6 @@
-package com.example.planime_mobileapp.screens
+package com.example.planime_mobileapp.screens.auth
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -68,7 +67,7 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit) {
                 modifier = Modifier
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+            ){
                 Box(
                     modifier = Modifier
                         .weight(0.35f)
