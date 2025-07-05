@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -23,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
@@ -35,7 +37,15 @@ import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.semantics.Role.Companion.Button
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.material3.Button
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
@@ -52,7 +62,7 @@ fun HomeScreen() {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.home_background),
+            painter = painterResource(id = R.drawable.ultimate_background),
             contentDescription = "home_backgorund",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
@@ -87,10 +97,17 @@ fun HomeScreen() {
                     ) {
                         Text(
                             text = "Hola Luis, Bienvenido!",
-                            fontSize = 30.sp,
-                            fontFamily = fontFamilyGoogle,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
+                            style = TextStyle(
+                                fontSize = 30.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = fontFamilyGoogle,
+                                textAlign = TextAlign.Center,
+                                shadow = Shadow(
+                                    color = Color.White,
+                                    offset = Offset(4f, 4f),
+                                    blurRadius = 0f
+                                )
+                            )
                         )
                     }
                     Column(
@@ -172,16 +189,30 @@ fun HomeScreen() {
                 ) {
                     Text(
                         text = "Tus Planes",
-                        fontSize = 30.sp,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            fontSize = 30.sp,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(3f, 3f),
+                                blurRadius = 0f
+                            )
+                        )
                     )
                     Text(
                         text = "Ver todos",
-                        color = Color.Gray,
-                        fontSize = 20.sp,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            color = Color.Gray,
+                            fontSize = 20.sp,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(2f, 2f),
+                                blurRadius = 0f
+                            )
+                        )
                     )
                 }
                 Row(
@@ -191,32 +222,49 @@ fun HomeScreen() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.active_button),
-                        contentDescription = "active_button",
-                        contentScale = ContentScale.Fit,
+                    IconButton(
+                        onClick = {},
                         modifier = Modifier
                             .size(130.dp)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.expired_button),
-                        contentDescription = "expired_button",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .size(100.dp)
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.others_button),
-                        contentDescription = "others_button",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .size(100.dp)
-                    )
+                            .padding(0.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.active_button),
+                            contentDescription = "active_button",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier.size(100.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.expired_button),
+                            contentDescription = "expired_button",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                    }
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier.size(100.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.others_button),
+                            contentDescription = "others_button",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                    }
                 }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 15.dp)
+                        .padding(top = 50.dp)
+                        .padding(bottom = 80.dp)
                         .weight(0.75f),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround
@@ -224,27 +272,46 @@ fun HomeScreen() {
                     Column(
                         modifier = Modifier
                             .fillMaxHeight()
+                            .shadow(elevation = 5.dp, shape = RoundedCornerShape(22.dp))
+                            .clip(RoundedCornerShape(22.dp))
                             .width(300.dp),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Box(
+                            contentAlignment = Alignment.Center,
                             modifier = Modifier
-                                .weight(0.6f)
-                                .clip(RoundedCornerShape(22.dp))
+                                .weight(0.7f)
                                 .fillMaxWidth()
-                                .background(color = Color.Red)
+                                .background(brush = Brush.horizontalGradient(
+                                    colors = listOf(
+                                        Color(0xFFFF6B6B),
+                                        Color(0xFFFFD54F),
+                                    ),
+                                    startX = 0f,
+                                    endX = 800f
+                                ))
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.plan_background),
+                                painter = painterResource(id = R.drawable.planime_logo),
                                 contentDescription = "plan_backgorund",
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.matchParentSize()
+                                modifier = Modifier
+                                    .size(220.dp)
+
                             )
                         }
                         Column(
                             modifier = Modifier
-                                .weight(0.4f)
+                                .weight(0.3f)
+                                .background(brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color(0xFFA0D94A),
+                                        Color(0xFF4FC3F7),
+                                    ),
+                                    startY = 0f,
+                                    endY = 500f
+                                ))
                                 .fillMaxWidth(),
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
@@ -253,27 +320,41 @@ fun HomeScreen() {
                                 modifier = Modifier
                                     .width(200.dp)
                                     .height(80.dp)
-                                    .clip(RoundedCornerShape(22.dp))
-                                    .background(color = Color(0xFFA0D94A)),
+                                    .clip(RoundedCornerShape(22.dp)),
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             )
                             {
                                 Text(
                                     text = "Muscletone",
-                                    color = Color.White,
-                                    fontSize = 25.sp,
-                                    fontFamily = fontFamilyGoogle,
+                                    style = TextStyle(
+                                        color = Color.White,
+                                        fontSize = 25.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = fontFamilyGoogle,
+                                        shadow = Shadow(
+                                            color = Color.Black,
+                                            offset = Offset(5f, 5f),
+                                            blurRadius = 0f
+                                        )
+                                    ),
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier
+                                        .padding(2.dp)
                                 )
                                 Text(
                                     text = "13/06/2025",
-                                    color = Color.Gray,
-                                    fontSize = 15.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
+                                    style = TextStyle(
+                                        color = Color.Black,
+                                        fontSize = 15.sp,
+                                        fontFamily = fontFamilyGoogle,
+                                        textAlign = TextAlign.Center,
+                                        shadow = Shadow(
+                                            color = Color.White,
+                                            offset = Offset(2f, 2f),
+                                            blurRadius = 0f
+                                        )
+                                    )
                                 )
                             }
                         }
@@ -283,7 +364,21 @@ fun HomeScreen() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.1f),
+                    .background(color = Color(0xFFFF6B6B))
+                    .weight(0.1f)
+                .drawBehind {
+                drawRect(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Black.copy(alpha = 0.1f),
+                            Color.Transparent
+                        ),
+                        startY = 0f,
+                        endY = 30f
+                    ),
+                    size = Size(size.width, 15.dp.toPx())
+                )
+            },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
@@ -292,14 +387,14 @@ fun HomeScreen() {
                     contentDescription = "home_icon",
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(45.dp)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.add_icon),
                     contentDescription = "add_icon",
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(45.dp)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.goals_icon),
