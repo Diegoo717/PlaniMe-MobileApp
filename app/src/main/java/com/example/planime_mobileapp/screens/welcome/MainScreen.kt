@@ -18,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.planime_mobileapp.R
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -52,7 +51,7 @@ fun MainScreen(onNavigateToLoginScreen: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.mainscreen_background),
+            painter = painterResource(id = R.drawable.main_new_background),
             contentDescription = "background",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
@@ -69,6 +68,7 @@ fun MainScreen(onNavigateToLoginScreen: () -> Unit) {
             ) {
                 Row(
                     modifier = Modifier
+                        .padding(top = 50.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
@@ -92,7 +92,8 @@ fun MainScreen(onNavigateToLoginScreen: () -> Unit) {
                 Column(
                     modifier = Modifier
                         .height(500.dp)
-                        .padding(bottom = 70.dp)
+                        .padding(top = 90.dp)
+                        .padding(bottom = 80.dp)
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -113,13 +114,11 @@ fun MainScreen(onNavigateToLoginScreen: () -> Unit) {
                             .fillMaxWidth()
                     )
                 }
-                Text(
-                    text = "Comenzar",
-                    fontFamily = fontFamilyGoogle,
-                    fontSize = 50.sp,
-                    color = (Color.White),
-                    fontWeight = FontWeight.Bold,
+                Image(
+                    painter = painterResource(id = R.drawable.start_text),
+                    contentDescription = "start_text",
                     modifier = Modifier
+                        .size(250.dp)
                         .animateButtonInteraction(isPressed, isHovered)
                         .clickable(
                             indication = null,

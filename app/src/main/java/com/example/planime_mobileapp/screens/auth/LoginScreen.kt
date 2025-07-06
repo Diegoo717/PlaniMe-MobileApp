@@ -43,12 +43,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onNavigateToRegisterScreen: () -> Unit) {
+fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit) {
 
     var text by remember { mutableStateOf("") }
     var textTwo by remember { mutableStateOf("") }
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
+    var isPressedSignIn by remember { mutableStateOf(false) }
+    var isHoveredSignIn by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     Box(
@@ -182,6 +184,24 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit) {
                             .size(130.dp)
                             .align(Alignment.TopCenter)
                             .offset(x = 0.dp, y = -40.dp)
+                            .animateButtonInteraction(isPressedSignIn, isHoveredSignIn)
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() },
+                                onClick = {}
+                            )
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onPress = { isPressedSignIn = true },
+                                    onTap = {
+                                        scope.launch {
+                                            delay(100)
+                                            isPressedSignIn = false
+                                            onNavigateToHomeScreen()
+                                        }
+                                    }
+                                )
+                            }
                     )
 
                     Text(

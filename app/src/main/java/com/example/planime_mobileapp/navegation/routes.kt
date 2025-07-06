@@ -8,4 +8,5 @@ object routes{
     const val MAINSCREEN = "mainscreen"
     const val REGISTERSCREEN = "registerscreen"
     const val LOGINSCREEN = "loginscreen"
+    const val HOMESCREEN = "homescreen"
 }

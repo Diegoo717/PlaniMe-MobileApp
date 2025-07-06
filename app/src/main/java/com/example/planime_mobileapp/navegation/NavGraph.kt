@@ -12,6 +12,7 @@ import com.example.planime_mobileapp.screens.welcome.WelcomeScreenTwo
 import com.example.planime_mobileapp.screens.welcome.WelcomeScreenThree
 import com.example.planime_mobileapp.screens.welcome.MainScreen
 import com.example.planime_mobileapp.screens.auth.RegisterScreen
+import com.example.planime_mobileapp.screens.user.HomeScreen
 
 @Composable
 fun AppNavGraph(
@@ -54,7 +55,12 @@ fun AppNavGraph(
         }
         composable(routes.LOGINSCREEN){
             LoginScreen(
-                onNavigateToRegisterScreen = {navController.navigate((routes.REGISTERSCREEN))}
+                onNavigateToRegisterScreen = {navController.navigate((routes.REGISTERSCREEN))},
+                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
+            )
+        }
+        composable(routes.HOMESCREEN){
+            HomeScreen(
             )
         }
     }
