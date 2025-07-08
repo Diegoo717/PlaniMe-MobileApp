@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.example.planime_mobileapp.components.BottomNavBar
+import com.example.planime_mobileapp.components.PlanCard
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,6 +48,10 @@ fun HomeScreen() {
 
     var query by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
+
+    var PlansList = 3
+    var PlanTittle = "Muscletone"
+    var PlanDate = "13/16/2025"
 
     Box(
         modifier = Modifier
@@ -251,104 +257,18 @@ fun HomeScreen() {
                         )
                     }
                 }
-                Row(
+                LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 50.dp)
                         .padding(bottom = 80.dp)
                         .weight(0.75f),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                    contentPadding = PaddingValues(start = 50.dp, end = 50.dp),
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .shadow(elevation = 5.dp, shape = RoundedCornerShape(22.dp))
-                            .clip(RoundedCornerShape(22.dp))
-                            .width(300.dp),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .weight(0.7f)
-                                .fillMaxWidth()
-                                .background(brush = Brush.horizontalGradient(
-                                    colors = listOf(
-                                        Color(0xFFFF6B6B),
-                                        Color(0xFFFFD54F),
-                                    ),
-                                    startX = 0f,
-                                    endX = 800f
-                                ))
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.planime_logo),
-                                contentDescription = "plan_backgorund",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .size(220.dp)
-
-                            )
-                        }
-                        Column(
-                            modifier = Modifier
-                                .weight(0.3f)
-                                .background(brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        Color(0xFFA0D94A),
-                                        Color(0xFF4FC3F7),
-                                    ),
-                                    startY = 0f,
-                                    endY = 500f
-                                ))
-                                .fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .width(200.dp)
-                                    .height(80.dp)
-                                    .clip(RoundedCornerShape(22.dp)),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            )
-                            {
-                                Text(
-                                    text = "Muscletone",
-                                    style = TextStyle(
-                                        color = Color.White,
-                                        fontSize = 25.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        fontFamily = fontFamilyGoogle,
-                                        shadow = Shadow(
-                                            color = Color.Black,
-                                            offset = Offset(5f, 5f),
-                                            blurRadius = 0f
-                                        )
-                                    ),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .padding(2.dp)
-                                )
-                                Text(
-                                    text = "13/06/2025",
-                                    style = TextStyle(
-                                        color = Color.Black,
-                                        fontSize = 15.sp,
-                                        fontFamily = fontFamilyGoogle,
-                                        textAlign = TextAlign.Center,
-                                        shadow = Shadow(
-                                            color = Color.White,
-                                            offset = Offset(2f, 2f),
-                                            blurRadius = 0f
-                                        )
-                                    )
-                                )
-                            }
-                        }
+                    items(PlansList) { index ->
+                        PlanCard(PlanTittle, PlanDate)
                     }
                 }
             }
