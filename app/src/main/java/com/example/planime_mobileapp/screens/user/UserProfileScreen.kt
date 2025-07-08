@@ -21,6 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.planime_mobileapp.components.BottomNavBar
+import com.example.planime_mobileapp.components.DataBox
+import com.example.planime_mobileapp.components.StatsBox
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @Composable
@@ -35,6 +37,21 @@ fun UserProfileScreen() {
             contentDescription = "home_backgorund",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
+        )
+        Text(text = "Próximamente!",
+            modifier = Modifier
+                .offset(x = 135.dp, y = -155.dp),
+            style = TextStyle(
+                fontSize = 18.sp,
+                fontFamily = fontFamilyGoogle,
+                textAlign = TextAlign.Center,
+                color = Color.Red,
+                shadow = Shadow(
+                    color = Color.White,
+                    offset = Offset(4f, 4f),
+                    blurRadius = 0f
+                )
+            ),
         )
         Column(
             modifier = Modifier
@@ -140,63 +157,9 @@ fun UserProfileScreen() {
                         .fillMaxWidth()
                         .weight(0.3f)
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(80.dp)
-                            .border(2.dp, color = Color(0xFFFF6B6B))
-                    ) {
-                        Text(
-                            text = "15",
-                            style = TextStyle(
-                                fontSize = 32.sp,
-                                fontFamily = fontFamilyGoogle,
-                                textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                        Text(text = "Planes")
-                    }
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(80.dp)
-                            .border(2.dp, color = Color(0xFFFF6B6B))
-                    ) {
-                        Text(
-                            text = "10",
-                            style = TextStyle(
-                                fontSize = 32.sp,
-                                fontFamily = fontFamilyGoogle,
-                                textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                        Text(text = "Objetivos")
-                    }
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(80.dp)
-                            .border(2.dp, color = Color(0xFFFF6B6B))
-                    ) {
-                        Text(
-                            text = "1",
-                            style = TextStyle(
-                                fontSize = 32.sp,
-                                fontFamily = fontFamilyGoogle,
-                                textAlign = TextAlign.Center,
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                        Text(text = "Insignias")
-                    }
+                    StatsBox("15","Planes")
+                    StatsBox("10", "Objetivos")
+                    StatsBox("1", "Insignias")
                 }
             }
             Column(
@@ -205,7 +168,7 @@ fun UserProfileScreen() {
                     .weight(0.45f)
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.Start,
+                    horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -236,56 +199,8 @@ fun UserProfileScreen() {
                             .fillMaxWidth()
                             .weight(0.5f)
                     ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .fillMaxHeight()
-                        ){
-                            Text(
-                                text = "Edad",
-                                style = TextStyle(
-                                    fontSize = 26.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                            Text(
-                                text = "22",
-                                color = Color.Gray,
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                        }
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .fillMaxHeight()
-                        ){
-                            Text(
-                                text = "Correo Electronico",
-                                style = TextStyle(
-                                    fontSize = 26.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                            Text(
-                                text = "soydiegoo@gmail.com",
-                                color = Color.Gray,
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                        }
+                        DataBox(modifier = Modifier.weight(0.5f), "Rol", "Estudiante",)
+                        DataBox(modifier = Modifier.weight(0.5f), "Ciudad", "Uriangato",)
                     }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -294,56 +209,8 @@ fun UserProfileScreen() {
                             .fillMaxWidth()
                             .weight(0.5f)
                     ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .fillMaxHeight()
-                        ){
-                            Text(
-                                text = "Peso",
-                                style = TextStyle(
-                                    fontSize = 26.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                            Text(
-                                text = "77",
-                                color = Color.Gray,
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                        }
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
-                            modifier = Modifier
-                                .weight(0.5f)
-                                .fillMaxHeight()
-                        ){
-                            Text(
-                                text = "Altura",
-                                style = TextStyle(
-                                    fontSize = 26.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                            Text(
-                                text = "1.73",
-                                color = Color.Gray,
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    fontFamily = fontFamilyGoogle,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                        }
+                        DataBox(modifier = Modifier.weight(0.5f), "Edad", "22",)
+                        DataBox(modifier = Modifier.weight(0.5f), "Correo", "...o71@gmail.com",)
                     }
                 }
                 Column(
@@ -356,7 +223,7 @@ fun UserProfileScreen() {
                     IconButton(
                         onClick = {},
                         modifier = Modifier
-                            .size(160.dp)
+                            .size(150.dp)
                             .padding(0.dp)
                     ) {
                         Image(
