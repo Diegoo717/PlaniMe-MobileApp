@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.planime_mobileapp.navegation.AppNavGraph
 import com.example.planime_mobileapp.screens.user.HomeScreen
+import com.example.planime_mobileapp.screens.user.UserProfileScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AppNavGraph()
+            UserProfileScreen()
         }
     }
 }
