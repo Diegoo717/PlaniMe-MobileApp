@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import com.example.planime_mobileapp.components.BottomNavBar
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -351,56 +352,9 @@ fun HomeScreen() {
                     }
                 }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color(0xFFFF6B6B))
-                    .weight(0.1f)
-                .drawBehind {
-                drawRect(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color.Black.copy(alpha = 0.1f),
-                            Color.Transparent
-                        ),
-                        startY = 0f,
-                        endY = 30f
-                    ),
-                    size = Size(size.width, 15.dp.toPx())
-                )
-            },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.home_icon),
-                    contentDescription = "home_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.add_icon),
-                    contentDescription = "add_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.goals_icon),
-                    contentDescription = "goals_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.user_icon),
-                    contentDescription = "user_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-            }
+            BottomNavBar(modifier = Modifier
+                .weight(0.1f)
+            )
         }
     }
 

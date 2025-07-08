@@ -1,7 +1,6 @@
 package com.example.planime_mobileapp.screens.user
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -13,10 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.res.painterResource
 import com.example.planime_mobileapp.R
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
@@ -24,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.planime_mobileapp.components.BottomNavBar
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @Composable
@@ -53,8 +50,7 @@ fun UserProfileScreen() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(0.2f)
-                        .background(color = Color.Red),
+                        .weight(0.2f),
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -99,8 +95,7 @@ fun UserProfileScreen() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(0.5f)
-                        .background(color = Color.Blue),
+                        .weight(0.5f),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -144,13 +139,11 @@ fun UserProfileScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(0.3f)
-                        .background(color = Color.Green)
                 ) {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .background(color = Color.Yellow)
                             .width(100.dp)
                             .height(80.dp)
                             .border(2.dp, color = Color(0xFFFF6B6B))
@@ -170,7 +163,6 @@ fun UserProfileScreen() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .background(color = Color.Yellow)
                             .width(100.dp)
                             .height(80.dp)
                             .border(2.dp, color = Color(0xFFFF6B6B))
@@ -190,7 +182,6 @@ fun UserProfileScreen() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .background(color = Color.Yellow)
                             .width(100.dp)
                             .height(80.dp)
                             .border(2.dp, color = Color(0xFFFF6B6B))
@@ -219,7 +210,6 @@ fun UserProfileScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(0.2f)
-                        .background(color = Color.Cyan)
                         .padding(start = 10.dp)
                 ) {
                     Text(
@@ -238,7 +228,6 @@ fun UserProfileScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(0.5f)
-                        .background(color = Color.DarkGray)
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -246,7 +235,6 @@ fun UserProfileScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(0.5f)
-                            .background(color = Color.Red)
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -254,7 +242,6 @@ fun UserProfileScreen() {
                             modifier = Modifier
                                 .weight(0.5f)
                                 .fillMaxHeight()
-                                .background(color = Color.Red)
                         ){
                             Text(
                                 text = "Edad",
@@ -280,7 +267,6 @@ fun UserProfileScreen() {
                             modifier = Modifier
                                 .weight(0.5f)
                                 .fillMaxHeight()
-                                .background(color = Color.Blue)
                         ){
                             Text(
                                 text = "Correo Electronico",
@@ -314,7 +300,6 @@ fun UserProfileScreen() {
                             modifier = Modifier
                                 .weight(0.5f)
                                 .fillMaxHeight()
-                                .background(color = Color.Blue)
                         ){
                             Text(
                                 text = "Peso",
@@ -340,7 +325,6 @@ fun UserProfileScreen() {
                             modifier = Modifier
                                 .weight(0.5f)
                                 .fillMaxHeight()
-                                .background(color = Color.Red)
                         ){
                             Text(
                                 text = "Altura",
@@ -368,7 +352,6 @@ fun UserProfileScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(0.3f)
-                        .background(color = Color.Magenta)
                 ) {
                     IconButton(
                         onClick = {},
@@ -385,56 +368,9 @@ fun UserProfileScreen() {
                     }
                 }
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color(0xFFFF6B6B))
-                    .weight(0.1f)
-                    .drawBehind {
-                        drawRect(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Black.copy(alpha = 0.1f),
-                                    Color.Transparent
-                                ),
-                                startY = 0f,
-                                endY = 30f
-                            ),
-                            size = Size(size.width, 15.dp.toPx())
-                        )
-                    },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.home_icon),
-                    contentDescription = "home_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.add_icon),
-                    contentDescription = "add_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.goals_icon),
-                    contentDescription = "goals_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.user_icon),
-                    contentDescription = "user_icon",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .size(45.dp)
-                )
-            }
+            BottomNavBar(modifier = Modifier
+                .weight(0.1f)
+            )
         }
 
     }
