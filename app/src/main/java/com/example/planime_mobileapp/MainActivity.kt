@@ -8,6 +8,7 @@ import com.example.planime_mobileapp.navegation.AppNavGraph
 import com.example.planime_mobileapp.screens.user.HomeScreen
 import com.example.planime_mobileapp.screens.user.UserProfileScreen
 import com.example.planime_mobileapp.screens.user.CreatePlanScreen
+import com.example.planime_mobileapp.screens.user.ProgressScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +16,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CreatePlanScreen()
+            ProgressScreen()
         }
     }
 }

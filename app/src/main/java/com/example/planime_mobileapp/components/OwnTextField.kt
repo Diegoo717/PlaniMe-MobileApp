@@ -14,8 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
@@ -25,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @Composable
-fun CreatePlanTextField(tittle: String) {
+fun OwnTextField(tittle: String, modifier: Modifier = Modifier) {
 
     var text by remember { mutableStateOf("") }
 
@@ -47,8 +45,7 @@ fun CreatePlanTextField(tittle: String) {
                 color = Color.White
             )
         },
-        modifier = Modifier
-            .width(350.dp)
+        modifier = modifier
             .padding(bottom = 20.dp)
             .background(
                 color = Color(0xFFFF8282),

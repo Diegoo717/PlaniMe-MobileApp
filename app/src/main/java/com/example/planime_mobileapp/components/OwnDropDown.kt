@@ -23,28 +23,25 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreatePlanDropdown(tittle: String, options: List<String>) {
+fun OwnDropdown(tittle: String, options: List<String>, modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(options[0]) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
-        modifier = Modifier
-            .width(350.dp)
+        modifier = modifier
             .padding(bottom = 20.dp)
     ) {
         TextField(
-            modifier = Modifier
+            modifier = modifier
                 .menuAnchor()
-                .width(350.dp)
                 .background(
                     Brush.horizontalGradient(
                         colors = listOf(
@@ -113,8 +110,7 @@ fun CreatePlanDropdown(tittle: String, options: List<String>) {
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .width(350.dp)
+            modifier = modifier
                 .background(
                     Brush.horizontalGradient(
                         colors = listOf(

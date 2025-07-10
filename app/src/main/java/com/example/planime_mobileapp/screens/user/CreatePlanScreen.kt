@@ -7,21 +7,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.res.painterResource
 import com.example.planime_mobileapp.R
 import com.example.planime_mobileapp.components.BottomNavBar
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -30,10 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.planime_mobileapp.components.CreatePlanDropdown
-import com.example.planime_mobileapp.components.CreatePlanTextField
+import com.example.planime_mobileapp.components.OwnTextField
+import com.example.planime_mobileapp.components.OwnDropdown
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
-import java.util.Collections.list
+
 
 @Composable
 fun CreatePlanScreen() {
@@ -114,17 +106,19 @@ fun CreatePlanScreen() {
                     .weight(0.75f)
                     .padding(bottom = 20.dp)
             ) {
-                CreatePlanTextField("Edad")
-                CreatePlanTextField("Peso (kg)")
-                CreatePlanTextField("Altura (cm)")
-                CreatePlanDropdown(
+                OwnTextField("Edad", modifier = Modifier.width(350.dp))
+                OwnTextField("Peso (kg)", modifier = Modifier.width(350.dp))
+                OwnTextField("Altura (cm)", modifier = Modifier.width(350.dp))
+                OwnDropdown(
                     "Genero",
-                    listOf("Masculino", "Femenino")
+                    listOf("Masculino", "Femenino"), modifier = Modifier.width(350.dp)
                 )
-                CreatePlanDropdown("Nivel de actividad física", listOf("Sedentario", "Ligero (1-2 días/semana)", "Moderado (3-4 días/semana)", "Activo (5-6 días/semana)"))
-                CreatePlanDropdown(
+                OwnDropdown("Nivel de actividad física", listOf("Sedentario", "Ligero (1-2 días/semana)", "Moderado (3-4 días/semana)", "Activo (5-6 días/semana)"),
+                    modifier = Modifier.width(350.dp))
+                OwnDropdown(
                     "Objetivo fisico",
-                    listOf("Bajar de peso", "Mantener un peso saludable", "Aumentar masa muscular")
+                    listOf("Bajar de peso", "Mantener un peso saludable", "Aumentar masa muscular"),
+                    modifier = Modifier.width(350.dp)
                 )
                 IconButton(
                     onClick = {},
