@@ -25,7 +25,10 @@ import com.example.planime_mobileapp.ui.components.visual.StatsBox
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @Composable
-fun UserProfileScreen() {
+fun UserProfileScreen(
+    onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
+    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -37,7 +40,8 @@ fun UserProfileScreen() {
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        Text(text = "Próximamente!",
+        Text(
+            text = "Próximamente!",
             modifier = Modifier
                 .offset(x = 135.dp, y = -155.dp),
             style = TextStyle(
@@ -156,7 +160,7 @@ fun UserProfileScreen() {
                         .fillMaxWidth()
                         .weight(0.3f)
                 ) {
-                    StatsBox("15","Planes")
+                    StatsBox("15", "Planes")
                     StatsBox("10", "Objetivos")
                     StatsBox("1", "Insignias")
                 }
@@ -198,8 +202,8 @@ fun UserProfileScreen() {
                             .fillMaxWidth()
                             .weight(0.5f)
                     ) {
-                        DataBox(modifier = Modifier.weight(0.5f), "Rol", "Estudiante",)
-                        DataBox(modifier = Modifier.weight(0.5f), "Ciudad", "Uriangato",)
+                        DataBox(modifier = Modifier.weight(0.5f), "Rol", "Estudiante")
+                        DataBox(modifier = Modifier.weight(0.5f), "Ciudad", "Uriangato")
                     }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -208,8 +212,8 @@ fun UserProfileScreen() {
                             .fillMaxWidth()
                             .weight(0.5f)
                     ) {
-                        DataBox(modifier = Modifier.weight(0.5f), "Edad", "22",)
-                        DataBox(modifier = Modifier.weight(0.5f), "Correo", "...o71@gmail.com",)
+                        DataBox(modifier = Modifier.weight(0.5f), "Edad", "22")
+                        DataBox(modifier = Modifier.weight(0.5f), "Correo", "...o71@gmail.com")
                     }
                 }
                 Column(
@@ -234,8 +238,13 @@ fun UserProfileScreen() {
                     }
                 }
             }
-            BottomNavBar(modifier = Modifier
-                .weight(0.1f)
+            BottomNavBar(
+                modifier = Modifier
+                    .weight(0.1f),
+                onNavigateToHomeScreen,
+                onNavigateToUserProfileScreen,
+                onNavigateToCreatePlanScreen,
+                onNavigateToProgressScreen
             )
         }
 

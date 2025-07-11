@@ -38,7 +38,10 @@ import com.example.planime_mobileapp.ui.components.charts.WeightProgressChart
 import com.example.planime_mobileapp.domain.model.WeightOption
 
 @Composable
-fun ProgressScreen(){
+fun ProgressScreen(
+    onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
+    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit
+) {
 
     val weightRecords = listOf(
         WeightRecord("25/05/2025", 85f),
@@ -116,7 +119,7 @@ fun ProgressScreen(){
                     .weight(0.45f)
                     .fillMaxWidth()
                     .padding(start = 10.dp)
-            ){
+            ) {
                 Text(
                     text = "Establece un objetivo",
                     style = TextStyle(
@@ -138,7 +141,7 @@ fun ProgressScreen(){
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(80.dp)
-                ){
+                ) {
                     OwnDropdown("Objetivo (kg)", weightTexts, modifier = Modifier.width(385.dp))
                 }
                 Text(
@@ -164,7 +167,7 @@ fun ProgressScreen(){
                     modifier = Modifier
                         .width(390.dp)
                         .height(50.dp)
-                ){
+                ) {
                     IconButton(
                         onClick = {},
                         modifier = Modifier
@@ -186,7 +189,7 @@ fun ProgressScreen(){
                 modifier = Modifier
                     .weight(0.35f)
                     .fillMaxWidth()
-            ){
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start,
@@ -194,7 +197,7 @@ fun ProgressScreen(){
                         .fillMaxWidth()
                         .weight(0.1f)
                         .padding(start = 10.dp)
-                ){
+                ) {
                     Text(
                         text = "Evolución de tú peso",
                         style = TextStyle(
@@ -221,7 +224,11 @@ fun ProgressScreen(){
             }
             BottomNavBar(
                 modifier = Modifier
-                    .weight(0.1f)
+                    .weight(0.1f),
+                onNavigateToHomeScreen,
+                onNavigateToUserProfileScreen,
+                onNavigateToCreatePlanScreen,
+                onNavigateToProgressScreen
             )
         }
     }

@@ -12,7 +12,10 @@ import com.example.planime_mobileapp.ui.screens.welcome.welcomescreentwo.Welcome
 import com.example.planime_mobileapp.ui.screens.welcome.welcomescreenthree.WelcomeScreenThree
 import com.example.planime_mobileapp.ui.screens.welcome.mainscreen.MainScreen
 import com.example.planime_mobileapp.ui.screens.auth.registerscreen.RegisterScreen
+import com.example.planime_mobileapp.ui.screens.dashboard.createplanscreen.CreatePlanScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.homescreen.HomeScreen
+import com.example.planime_mobileapp.ui.screens.dashboard.progressscreen.ProgressScreen
+import com.example.planime_mobileapp.ui.screens.dashboard.userprofile.UserProfileScreen
 
 @Composable
 fun AppNavGraph(
@@ -61,6 +64,34 @@ fun AppNavGraph(
         }
         composable(routes.HOMESCREEN){
             HomeScreen(
+                onNavigateToUserProfileScreen = {navController.navigate((routes.USERPROFILESCREEN))},
+                onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
+                onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
+                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
+            )
+        }
+        composable(routes.USERPROFILESCREEN){
+            UserProfileScreen(
+                onNavigateToUserProfileScreen = {navController.navigate((routes.USERPROFILESCREEN))},
+                onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
+                onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
+                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
+            )
+        }
+        composable(routes.CREATEPLANSCREEN){
+            CreatePlanScreen(
+                onNavigateToUserProfileScreen = {navController.navigate((routes.USERPROFILESCREEN))},
+                onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
+                onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
+                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
+            )
+        }
+        composable(routes.PROGRESSSCREEN){
+            ProgressScreen(
+                onNavigateToUserProfileScreen = {navController.navigate((routes.USERPROFILESCREEN))},
+                onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
+                onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
+                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
             )
         }
     }

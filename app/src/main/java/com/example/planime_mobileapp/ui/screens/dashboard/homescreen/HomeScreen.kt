@@ -38,7 +38,10 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
+    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit
+) {
 
     var query by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
@@ -266,8 +269,13 @@ fun HomeScreen() {
                     }
                 }
             }
-            BottomNavBar(modifier = Modifier
-                .weight(0.1f)
+            BottomNavBar(
+                modifier = Modifier
+                    .weight(0.1f),
+                onNavigateToHomeScreen,
+                onNavigateToUserProfileScreen,
+                onNavigateToCreatePlanScreen,
+                onNavigateToProgressScreen
             )
         }
     }

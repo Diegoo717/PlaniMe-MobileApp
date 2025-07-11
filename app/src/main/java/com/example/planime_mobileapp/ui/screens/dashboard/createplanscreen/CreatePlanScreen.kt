@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.res.painterResource
 import com.example.planime_mobileapp.R
@@ -28,7 +29,10 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 
 @Composable
-fun CreatePlanScreen() {
+fun CreatePlanScreen(
+    onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
+    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -83,7 +87,7 @@ fun CreatePlanScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(0.15f)
-            ){
+            ) {
                 Text(
                     text = "Cuéntanos sobre ti",
                     style = TextStyle(
@@ -103,7 +107,7 @@ fun CreatePlanScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.75f)
+                    .weight(0.65f)
                     .padding(bottom = 20.dp)
             ) {
                 OwnTextField("Edad", modifier = Modifier.width(350.dp))
@@ -113,8 +117,16 @@ fun CreatePlanScreen() {
                     "Genero",
                     listOf("Masculino", "Femenino"), modifier = Modifier.width(350.dp)
                 )
-                OwnDropdown("Nivel de actividad física", listOf("Sedentario", "Ligero (1-2 días/semana)", "Moderado (3-4 días/semana)", "Activo (5-6 días/semana)"),
-                    modifier = Modifier.width(350.dp))
+                OwnDropdown(
+                    "Nivel de actividad física",
+                    listOf(
+                        "Sedentario",
+                        "Ligero (1-2 días/semana)",
+                        "Moderado (3-4 días/semana)",
+                        "Activo (5-6 días/semana)"
+                    ),
+                    modifier = Modifier.width(350.dp)
+                )
                 OwnDropdown(
                     "Objetivo fisico",
                     listOf("Bajar de peso", "Mantener un peso saludable", "Aumentar masa muscular"),
@@ -135,7 +147,11 @@ fun CreatePlanScreen() {
             }
             BottomNavBar(
                 modifier = Modifier
-                    .weight(0.1f)
+                    .weight(0.1f),
+                onNavigateToHomeScreen,
+                onNavigateToUserProfileScreen,
+                onNavigateToCreatePlanScreen,
+                onNavigateToProgressScreen
             )
         }
     }

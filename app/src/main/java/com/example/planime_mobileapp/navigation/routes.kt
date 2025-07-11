@@ -9,4 +9,7 @@ object routes{
     const val REGISTERSCREEN = "registerscreen"
     const val LOGINSCREEN = "loginscreen"
     const val HOMESCREEN = "homescreen"
+    const val USERPROFILESCREEN = "userprofilescreen"
+    const val CREATEPLANSCREEN = "createplanscreen"
+    const val PROGRESSSCREEN = "progressscreen"
 }

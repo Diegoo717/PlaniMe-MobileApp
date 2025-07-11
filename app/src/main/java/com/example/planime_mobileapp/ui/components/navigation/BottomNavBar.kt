@@ -29,21 +29,30 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import androidx.compose.material3.ripple
 
 @Composable
-fun BottomNavBar(modifier: Modifier = Modifier){
-    Column(modifier = modifier
-        .fillMaxWidth()
+fun BottomNavBar(
+    modifier: Modifier = Modifier,
+    onNavigateToHomeScreen: () -> Unit,
+    onNavigateToUserProfileScreen: () -> Unit,
+    onNavigateToCreatePlanScreen: () -> Unit,
+    onNavigateToProgressScreen: () -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFFFF6B6B),
-                        Color(0xFFFF8E8E)
-                    ),
-                    startY = 0f,
-                    endY = Float.POSITIVE_INFINITY
-                ))
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFFFF6B6B),
+                            Color(0xFFFF8E8E)
+                        ),
+                        startY = 0f,
+                        endY = Float.POSITIVE_INFINITY
+                    )
+                )
                 .fillMaxHeight()
                 .drawBehind {
                     drawRect(
@@ -70,9 +79,9 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = ripple(bounded = false, radius = 30.dp),
-                        onClick = {}
+                        onClick = { onNavigateToHomeScreen() }
                     )
-            ){
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.home_icon),
                     contentDescription = "home_icon",
@@ -80,7 +89,8 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     modifier = Modifier
                         .size(28.dp)
                 )
-                Text(text = "Inicio",
+                Text(
+                    text = "Inicio",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontFamily = fontFamilyGoogle,
@@ -97,9 +107,9 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = ripple(bounded = false, radius = 30.dp),
-                        onClick = {}
+                        onClick = { onNavigateToCreatePlanScreen() }
                     )
-            ){
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.add_icon),
                     contentDescription = "add_icon",
@@ -107,7 +117,8 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     modifier = Modifier
                         .size(28.dp)
                 )
-                Text(text = "Crear Plan",
+                Text(
+                    text = "Crear Plan",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontFamily = fontFamilyGoogle,
@@ -124,9 +135,9 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = ripple(bounded = false, radius = 30.dp),
-                        onClick = {}
+                        onClick = { onNavigateToProgressScreen() }
                     )
-            ){
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.goals_icon),
                     contentDescription = "goals_icon",
@@ -134,7 +145,8 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     modifier = Modifier
                         .size(28.dp)
                 )
-                Text(text = "Progeso",
+                Text(
+                    text = "Progeso",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontFamily = fontFamilyGoogle,
@@ -151,9 +163,9 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = ripple(bounded = false, radius = 30.dp),
-                        onClick = {}
+                        onClick = { onNavigateToUserProfileScreen() }
                     )
-            ){
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.user_icon),
                     contentDescription = "user_icon",
@@ -161,7 +173,8 @@ fun BottomNavBar(modifier: Modifier = Modifier){
                     modifier = Modifier
                         .size(28.dp)
                 )
-                Text(text = "Perfil",
+                Text(
+                    text = "Perfil",
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontFamily = fontFamilyGoogle,
