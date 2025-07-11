@@ -12,4 +12,5 @@ object routes{
     const val USERPROFILESCREEN = "userprofilescreen"
     const val CREATEPLANSCREEN = "createplanscreen"
     const val PROGRESSSCREEN = "progressscreen"
+    const val ABOUTUSSCREEN = "aboutusscreen"
 }

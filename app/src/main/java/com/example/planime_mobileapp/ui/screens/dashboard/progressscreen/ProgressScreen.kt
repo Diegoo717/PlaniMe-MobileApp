@@ -88,13 +88,6 @@ fun ProgressScreen(
                     .weight(0.1f)
                     .padding(top = 50.dp)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.arrow_icon),
-                    contentDescription = "arrow_icon",
-                    modifier = Modifier
-                        .size(30.dp)
-                        .offset(x = 10.dp)
-                )
                 Text(
                     text = "Tu  Progreso",
                     style = TextStyle(
@@ -109,7 +102,7 @@ fun ProgressScreen(
                         )
                     ),
                     modifier = Modifier
-                        .offset(x = 110.dp)
+                        .offset(x = 135.dp)
                 )
             }
             Column(

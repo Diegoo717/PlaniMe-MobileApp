@@ -12,6 +12,7 @@ import com.example.planime_mobileapp.ui.screens.welcome.welcomescreentwo.Welcome
 import com.example.planime_mobileapp.ui.screens.welcome.welcomescreenthree.WelcomeScreenThree
 import com.example.planime_mobileapp.ui.screens.welcome.mainscreen.MainScreen
 import com.example.planime_mobileapp.ui.screens.auth.registerscreen.RegisterScreen
+import com.example.planime_mobileapp.ui.screens.dashboard.aboutusscreen.AboutUsScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.createplanscreen.CreatePlanScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.homescreen.HomeScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.progressscreen.ProgressScreen
@@ -75,7 +76,8 @@ fun AppNavGraph(
                 onNavigateToUserProfileScreen = {navController.navigate((routes.USERPROFILESCREEN))},
                 onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
                 onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
-                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
+                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))},
+                onNavigateToAboutUsScreen = {navController.navigate((routes.ABOUTUSSCREEN))}
             )
         }
         composable(routes.CREATEPLANSCREEN){
@@ -92,6 +94,11 @@ fun AppNavGraph(
                 onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
                 onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
                 onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
+            )
+        }
+        composable(routes.ABOUTUSSCREEN){
+            AboutUsScreen(
+                onNavigateToUserProfileScreen = {navController.navigate((routes.USERPROFILESCREEN))}
             )
         }
     }

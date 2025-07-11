@@ -235,7 +235,7 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         .fillMaxWidth()
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.signin_button),
+                        painter = painterResource(id = R.drawable.signup_button),
                         contentDescription = "signup_button",
                         contentScale = ContentScale.Fit,
                         modifier = Modifier

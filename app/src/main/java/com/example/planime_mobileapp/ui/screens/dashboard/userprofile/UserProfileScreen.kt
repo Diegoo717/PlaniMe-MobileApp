@@ -1,6 +1,8 @@
 package com.example.planime_mobileapp.ui.screens.dashboard.userprofile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,6 +10,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
 import com.example.planime_mobileapp.R
 import androidx.compose.ui.Alignment
@@ -27,7 +31,7 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 @Composable
 fun UserProfileScreen(
     onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
-    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit
+    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit, onNavigateToAboutUsScreen: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -74,13 +78,6 @@ fun UserProfileScreen(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.arrow_icon),
-                        contentDescription = "arrow_icon",
-                        modifier = Modifier
-                            .size(30.dp)
-                            .offset(x = 10.dp)
-                    )
                     Text(
                         text = "Perfil",
                         style = TextStyle(
@@ -95,21 +92,26 @@ fun UserProfileScreen(
                             )
                         ),
                         modifier = Modifier
-                            .offset(x = 140.dp)
+                            .offset(x = 170.dp)
                     )
                     Image(
                         painter = painterResource(id = R.drawable.info_icon),
-                        contentDescription = "arrow_icon",
+                        contentDescription = "info_icon",
                         modifier = Modifier
                             .size(30.dp)
-                            .offset(x = 220.dp)
+                            .offset(x = 250.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = ripple(bounded = false, radius = 30.dp),
+                                onClick = { onNavigateToAboutUsScreen() }
+                            )
                     )
                     Image(
                         painter = painterResource(id = R.drawable.logout_button_icon),
-                        contentDescription = "arrow_icon",
+                        contentDescription = "logout_button",
                         modifier = Modifier
                             .size(30.dp)
-                            .offset(x = 240.dp)
+                            .offset(x = 270.dp)
                     )
                 }
                 Column(
@@ -226,11 +228,11 @@ fun UserProfileScreen(
                     IconButton(
                         onClick = {},
                         modifier = Modifier
-                            .size(150.dp)
+                            .size(135.dp)
                             .padding(0.dp)
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.edit_button_icon),
+                            painter = painterResource(id = R.drawable.edit_button),
                             contentDescription = "active_button",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier.fillMaxSize()

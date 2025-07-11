@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +26,11 @@ fun StatsBox(value: String, tittle: String){
         modifier = Modifier
             .width(100.dp)
             .height(80.dp)
-            .border(2.dp, color = Color(0xFFFF6B6B))
+            .border(
+                width = 2.dp,
+                color = Color(0xFFFF6B6B),
+                shape = RoundedCornerShape(12.dp)
+            )
     ) {
         Text(
             text = value,
