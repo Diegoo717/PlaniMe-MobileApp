@@ -23,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
+import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 import com.example.planime_mobileapp.ui.components.inputs.OwnTextField
 import com.example.planime_mobileapp.ui.components.inputs.OwnDropdown
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
@@ -36,7 +38,7 @@ fun CreatePlanScreen(
     Box(
         modifier = Modifier
             .fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.BottomCenter
     ) {
         Image(
             painter = painterResource(id = R.drawable.ultimate_background),
@@ -44,108 +46,118 @@ fun CreatePlanScreen(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        AnimatedScreen(
+            enter = ScreenTransitions.enterFromTop,
+            exit = ScreenTransitions.exitToBottom
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.1f)
-                    .padding(top = 50.dp)
-            ) {
-                Text(
-                    text = "Crear Plan",
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
-                        shadow = Shadow(
-                            color = Color.White,
-                            offset = Offset(4f, 4f),
-                            blurRadius = 0f
-                        )
-                    ),
-                    modifier = Modifier
-                        .offset(x = 140.dp)
-                )
-            }
             Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.15f)
+                    .fillMaxSize()
+                    .padding(bottom = 90.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Cuéntanos sobre ti",
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
-                        shadow = Shadow(
-                            color = Color.White,
-                            offset = Offset(3f, 3f),
-                            blurRadius = 0f
-                        )
-                    )
-                )
-            }
-            Column(
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.65f)
-                    .padding(bottom = 20.dp)
-            ) {
-                OwnTextField("Edad", modifier = Modifier.width(350.dp))
-                OwnTextField("Peso (kg)", modifier = Modifier.width(350.dp))
-                OwnTextField("Altura (cm)", modifier = Modifier.width(350.dp))
-                OwnDropdown(
-                    "Genero",
-                    listOf("Masculino", "Femenino"), modifier = Modifier.width(350.dp)
-                )
-                OwnDropdown(
-                    "Nivel de actividad física",
-                    listOf(
-                        "Sedentario",
-                        "Ligero (1-2 días/semana)",
-                        "Moderado (3-4 días/semana)",
-                        "Activo (5-6 días/semana)"
-                    ),
-                    modifier = Modifier.width(350.dp)
-                )
-                OwnDropdown(
-                    "Objetivo fisico",
-                    listOf("Bajar de peso", "Mantener un peso saludable", "Aumentar masa muscular"),
-                    modifier = Modifier.width(350.dp)
-                )
-                IconButton(
-                    onClick = {},
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
                     modifier = Modifier
-                        .size(160.dp)
+                        .fillMaxWidth()
+                        .weight(0.1f)
+                        .padding(top = 50.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.acept_button),
-                        contentDescription = "active_button",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.fillMaxSize()
+                    Text(
+                        text = "Crear Plan",
+                        style = TextStyle(
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(4f, 4f),
+                                blurRadius = 0f
+                            )
+                        ),
+                        modifier = Modifier
+                            .offset(x = 140.dp)
                     )
                 }
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.15f)
+                ) {
+                    Text(
+                        text = "Cuéntanos sobre ti",
+                        style = TextStyle(
+                            fontSize = 30.sp,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(3f, 3f),
+                                blurRadius = 0f
+                            )
+                        )
+                    )
+                }
+                Column(
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.65f)
+                        .padding(bottom = 20.dp)
+                ) {
+                    OwnTextField("Edad", modifier = Modifier.width(350.dp))
+                    OwnTextField("Peso (kg)", modifier = Modifier.width(350.dp))
+                    OwnTextField("Altura (cm)", modifier = Modifier.width(350.dp))
+                    OwnDropdown(
+                        "Genero",
+                        listOf("Masculino", "Femenino"), modifier = Modifier.width(350.dp)
+                    )
+                    OwnDropdown(
+                        "Nivel de actividad física",
+                        listOf(
+                            "Sedentario",
+                            "Ligero (1-2 días/semana)",
+                            "Moderado (3-4 días/semana)",
+                            "Activo (5-6 días/semana)"
+                        ),
+                        modifier = Modifier.width(350.dp)
+                    )
+                    OwnDropdown(
+                        "Objetivo fisico",
+                        listOf(
+                            "Bajar de peso",
+                            "Mantener un peso saludable",
+                            "Aumentar masa muscular"
+                        ),
+                        modifier = Modifier.width(350.dp)
+                    )
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier
+                            .size(160.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.acept_button),
+                            contentDescription = "active_button",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                }
             }
-            BottomNavBar(
-                modifier = Modifier
-                    .weight(0.1f),
-                onNavigateToHomeScreen,
-                onNavigateToUserProfileScreen,
-                onNavigateToCreatePlanScreen,
-                onNavigateToProgressScreen
-            )
         }
+        BottomNavBar(
+            modifier = Modifier
+                .height(90.dp),
+            onNavigateToHomeScreen,
+            onNavigateToUserProfileScreen,
+            onNavigateToCreatePlanScreen,
+            onNavigateToProgressScreen
+        )
     }
 }

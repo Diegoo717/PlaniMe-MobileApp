@@ -36,6 +36,8 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import com.example.planime_mobileapp.ui.components.charts.WeightRecord
 import com.example.planime_mobileapp.ui.components.charts.WeightProgressChart
 import com.example.planime_mobileapp.domain.model.WeightOption
+import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
+import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 
 @Composable
 fun ProgressScreen(
@@ -67,7 +69,7 @@ fun ProgressScreen(
     Box(
         modifier = Modifier
             .fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.BottomCenter
     ) {
         Image(
             painter = painterResource(id = R.drawable.ultimate_background),
@@ -75,113 +77,15 @@ fun ProgressScreen(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        AnimatedScreen(
+            enter = ScreenTransitions.enterFromTop,
+            exit = ScreenTransitions.exitToBottom
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.1f)
-                    .padding(top = 50.dp)
-            ) {
-                Text(
-                    text = "Tu  Progreso",
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
-                        shadow = Shadow(
-                            color = Color.White,
-                            offset = Offset(4f, 4f),
-                            blurRadius = 0f
-                        )
-                    ),
-                    modifier = Modifier
-                        .offset(x = 135.dp)
-                )
-            }
             Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .weight(0.45f)
-                    .fillMaxWidth()
-                    .padding(start = 10.dp)
-            ) {
-                Text(
-                    text = "Establece un objetivo",
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
-                        shadow = Shadow(
-                            color = Color.White,
-                            offset = Offset(3f, 3f),
-                            blurRadius = 0f
-                        )
-                    ),
-                    modifier = Modifier
-                        .padding(bottom = 10.dp)
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(80.dp)
-                ) {
-                    OwnDropdown("Objetivo (kg)", weightTexts, modifier = Modifier.width(385.dp))
-                }
-                Text(
-                    text = "Agrega un registro",
-                    style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
-                        shadow = Shadow(
-                            color = Color.White,
-                            offset = Offset(3f, 3f),
-                            blurRadius = 0f
-                        )
-                    ),
-                    modifier = Modifier
-                        .padding(bottom = 10.dp)
-                )
-                OwnTextField("Peso (kg)", modifier = Modifier.width(385.dp))
-                OwnTextField("Fecha (dia/mes/año)", modifier = Modifier.width(385.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier
-                        .width(390.dp)
-                        .height(50.dp)
-                ) {
-                    IconButton(
-                        onClick = {},
-                        modifier = Modifier
-                            .height(60.dp)
-                            .width(100.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.acept_button),
-                            contentDescription = "active_button",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .weight(0.35f)
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .padding(bottom = 90.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -189,40 +93,144 @@ fun ProgressScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(0.1f)
+                        .padding(top = 50.dp)
+                ) {
+                    Text(
+                        text = "Tu  Progreso",
+                        style = TextStyle(
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(4f, 4f),
+                                blurRadius = 0f
+                            )
+                        ),
+                        modifier = Modifier
+                            .offset(x = 135.dp)
+                    )
+                }
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier
+                        .weight(0.45f)
+                        .fillMaxWidth()
                         .padding(start = 10.dp)
                 ) {
                     Text(
-                        text = "Evolución de tú peso",
+                        text = "Establece un objetivo",
                         style = TextStyle(
-                            fontSize = 32.sp,
+                            fontSize = 30.sp,
                             fontFamily = fontFamilyGoogle,
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.9f)
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    WeightProgressChart(
-                        records = weightRecords,
-                        goalWeight = goalWeight,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(3f, 3f),
+                                blurRadius = 0f
+                            )
+                        ),
                         modifier = Modifier
+                            .padding(bottom = 10.dp)
                     )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(80.dp)
+                    ) {
+                        OwnDropdown("Objetivo (kg)", weightTexts, modifier = Modifier.width(385.dp))
+                    }
+                    Text(
+                        text = "Agrega un registro",
+                        style = TextStyle(
+                            fontSize = 30.sp,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(3f, 3f),
+                                blurRadius = 0f
+                            )
+                        ),
+                        modifier = Modifier
+                            .padding(bottom = 10.dp)
+                    )
+                    OwnTextField("Peso (kg)", modifier = Modifier.width(385.dp))
+                    OwnTextField("Fecha (dia/mes/año)", modifier = Modifier.width(385.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier
+                            .width(390.dp)
+                            .height(50.dp)
+                    ) {
+                        IconButton(
+                            onClick = {},
+                            modifier = Modifier
+                                .height(60.dp)
+                                .width(100.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.acept_button),
+                                contentDescription = "active_button",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .weight(0.35f)
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.1f)
+                            .padding(start = 10.dp)
+                    ) {
+                        Text(
+                            text = "Evolución de tú peso",
+                            style = TextStyle(
+                                fontSize = 32.sp,
+                                fontFamily = fontFamilyGoogle,
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.9f)
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        WeightProgressChart(
+                            records = weightRecords,
+                            goalWeight = goalWeight,
+                            modifier = Modifier
+                        )
+                    }
                 }
             }
-            BottomNavBar(
-                modifier = Modifier
-                    .weight(0.1f),
-                onNavigateToHomeScreen,
-                onNavigateToUserProfileScreen,
-                onNavigateToCreatePlanScreen,
-                onNavigateToProgressScreen
-            )
         }
+        BottomNavBar(
+            modifier = Modifier
+                .height(90.dp),
+            onNavigateToHomeScreen,
+            onNavigateToUserProfileScreen,
+            onNavigateToCreatePlanScreen,
+            onNavigateToProgressScreen
+        )
     }
 }

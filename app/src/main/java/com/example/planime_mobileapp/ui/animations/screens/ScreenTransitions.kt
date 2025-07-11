@@ -33,4 +33,24 @@ object ScreenTransitions {
     ) + fadeOut(
         animationSpec = tween(durationMillis = 550)
     )
+
+    val enterFromTop: EnterTransition = slideInVertically(
+        initialOffsetY = { -it },
+        animationSpec = tween(
+            durationMillis = 500,
+            easing = FastOutSlowInEasing
+        )
+    ) + fadeIn(
+        animationSpec = tween(durationMillis = 300)
+    )
+
+    val exitToBottom: ExitTransition = slideOutVertically(
+        targetOffsetY = { it },
+        animationSpec = tween(
+            durationMillis = 450,
+            easing = FastOutSlowInEasing
+        )
+    ) + fadeOut(
+        animationSpec = tween(durationMillis = 300)
+    )
 }

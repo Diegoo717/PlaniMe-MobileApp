@@ -32,6 +32,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
+import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 import com.example.planime_mobileapp.ui.components.navigation.BottomNavBar
 import com.example.planime_mobileapp.ui.components.cards.PlanCard
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
@@ -53,7 +55,7 @@ fun HomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.BottomCenter
     ) {
         Image(
             painter = painterResource(id = R.drawable.ultimate_background),
@@ -61,223 +63,229 @@ fun HomeScreen(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        AnimatedScreen(
+            enter = ScreenTransitions.enterFromTop,
+            exit = ScreenTransitions.exitToBottom
         ) {
             Column(
                 modifier = Modifier
-                    .weight(0.25f)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
+                    .fillMaxSize()
+                    .padding(bottom = 90.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp)
-                        .padding(top = 30.dp)
-                        .weight(0.7f),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start
+                        .weight(0.25f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
+                    Row(
                         modifier = Modifier
-                            .fillMaxHeight()
+                            .fillMaxWidth()
+                            .padding(start = 20.dp)
+                            .padding(top = 30.dp)
                             .weight(0.7f),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(0.7f),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "Hola Luis, Bienvenido!",
+                                style = TextStyle(
+                                    fontSize = 30.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = fontFamilyGoogle,
+                                    textAlign = TextAlign.Center,
+                                    shadow = Shadow(
+                                        color = Color.White,
+                                        offset = Offset(4f, 4f),
+                                        blurRadius = 0f
+                                    )
+                                )
+                            )
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(0.3f),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.user_image),
+                                contentDescription = "user_image",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .size(50.dp)
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(0.3f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        SearchBar(
+                            query = query,
+                            onQueryChange = { query = it },
+                            onSearch = { active = false },
+                            active = active,
+                            onActiveChange = { active = it },
+                            placeholder = { Text("Buscar...") },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Buscar"
+                                )
+                            },
+                            trailingIcon = {
+                                IconButton(onClick = {}) {
+                                    Icon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = "Cerrar"
+                                    )
+                                }
+                            },
+                            colors = SearchBarDefaults.colors(
+                                containerColor = Color.Transparent,
+                                dividerColor = Color.Transparent
+                            ),
+                            modifier = Modifier
+                                .width(350.dp)
+                                .height(50.dp)
+                                .offset(y = (-40).dp)
+                        ) {}
+                        Box(
+                            modifier = Modifier
+                                .width(320.dp)
+                                .height(2.dp)
+                                .background(Color.Black)
+                                .offset(y = (-0).dp)
+                        )
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(0.65f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 20.dp)
+                            .padding(end = 20.dp)
+                            .weight(0.1f),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Hola Luis, Bienvenido!",
+                            text = "Tus Planes",
                             style = TextStyle(
                                 fontSize = 30.sp,
-                                fontWeight = FontWeight.Bold,
                                 fontFamily = fontFamilyGoogle,
                                 textAlign = TextAlign.Center,
                                 shadow = Shadow(
                                     color = Color.White,
-                                    offset = Offset(4f, 4f),
+                                    offset = Offset(3f, 3f),
+                                    blurRadius = 0f
+                                )
+                            )
+                        )
+                        Text(
+                            text = "Ver todos",
+                            style = TextStyle(
+                                color = Color.Gray,
+                                fontSize = 20.sp,
+                                fontFamily = fontFamilyGoogle,
+                                textAlign = TextAlign.Center,
+                                shadow = Shadow(
+                                    color = Color.White,
+                                    offset = Offset(2f, 2f),
                                     blurRadius = 0f
                                 )
                             )
                         )
                     }
-                    Column(
+                    Row(
                         modifier = Modifier
-                            .fillMaxHeight()
-                            .weight(0.3f),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                            .fillMaxWidth()
+                            .weight(0.15f),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.user_image),
-                            contentDescription = "user_image",
-                            contentScale = ContentScale.Fit,
+                        IconButton(
+                            onClick = {},
                             modifier = Modifier
-                                .size(50.dp)
-                        )
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.3f),
-                    contentAlignment = Alignment.Center
-                ) {
-                    SearchBar(
-                        query = query,
-                        onQueryChange = { query = it },
-                        onSearch = { active = false },
-                        active = active,
-                        onActiveChange = { active = it },
-                        placeholder = { Text("Buscar...") },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Buscar"
+                                .size(130.dp)
+                                .padding(0.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.active_button),
+                                contentDescription = "active_button",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
                             )
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {}) {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Cerrar"
-                                )
-                            }
-                        },
-                        colors = SearchBarDefaults.colors(
-                            containerColor = Color.Transparent,
-                            dividerColor = Color.Transparent
-                        ),
-                        modifier = Modifier
-                            .width(350.dp)
-                            .height(50.dp)
-                            .offset(y = (-40).dp)
-                    ) {}
-                    Box(
-                        modifier = Modifier
-                            .width(320.dp)
-                            .height(2.dp)
-                            .background(Color.Black)
-                            .offset(y = (-0).dp)
-                    )
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .weight(0.65f)
-                    .fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp)
-                        .padding(end = 20.dp)
-                        .weight(0.1f),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Tus Planes",
-                        style = TextStyle(
-                            fontSize = 30.sp,
-                            fontFamily = fontFamilyGoogle,
-                            textAlign = TextAlign.Center,
-                            shadow = Shadow(
-                                color = Color.White,
-                                offset = Offset(3f, 3f),
-                                blurRadius = 0f
+                        }
+                        IconButton(
+                            onClick = {},
+                            modifier = Modifier.size(100.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.expired_button),
+                                contentDescription = "expired_button",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxSize()
                             )
-                        )
-                    )
-                    Text(
-                        text = "Ver todos",
-                        style = TextStyle(
-                            color = Color.Gray,
-                            fontSize = 20.sp,
-                            fontFamily = fontFamilyGoogle,
-                            textAlign = TextAlign.Center,
-                            shadow = Shadow(
-                                color = Color.White,
-                                offset = Offset(2f, 2f),
-                                blurRadius = 0f
+                        }
+                        IconButton(
+                            onClick = {},
+                            modifier = Modifier.size(100.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.others_button),
+                                contentDescription = "others_button",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxSize()
                             )
-                        )
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.15f),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    IconButton(
-                        onClick = {},
+                        }
+                    }
+                    LazyRow(
                         modifier = Modifier
-                            .size(130.dp)
-                            .padding(0.dp)
+                            .fillMaxWidth()
+                            .padding(top = 50.dp)
+                            .padding(bottom = 80.dp)
+                            .weight(0.75f),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(24.dp),
+                        contentPadding = PaddingValues(start = 50.dp, end = 50.dp),
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.active_button),
-                            contentDescription = "active_button",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    IconButton(
-                        onClick = {},
-                        modifier = Modifier.size(100.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.expired_button),
-                            contentDescription = "expired_button",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
-                    }
-                    IconButton(
-                        onClick = {},
-                        modifier = Modifier.size(100.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.others_button),
-                            contentDescription = "others_button",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
-                    }
-                }
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 50.dp)
-                        .padding(bottom = 80.dp)
-                        .weight(0.75f),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(24.dp),
-                    contentPadding = PaddingValues(start = 50.dp, end = 50.dp),
-                ) {
-                    items(PlansList) { index ->
-                        PlanCard(PlanTittle, PlanDate)
+                        items(PlansList) { index ->
+                            PlanCard(PlanTittle, PlanDate)
+                        }
                     }
                 }
             }
-            BottomNavBar(
-                modifier = Modifier
-                    .weight(0.1f),
-                onNavigateToHomeScreen,
-                onNavigateToUserProfileScreen,
-                onNavigateToCreatePlanScreen,
-                onNavigateToProgressScreen
-            )
         }
+        BottomNavBar(
+            modifier = Modifier
+                .height(90.dp),
+            onNavigateToHomeScreen,
+            onNavigateToUserProfileScreen,
+            onNavigateToCreatePlanScreen,
+            onNavigateToProgressScreen
+        )
     }
 
 }
