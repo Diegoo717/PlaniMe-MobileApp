@@ -4,11 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.planime_mobileapp.navegation.AppNavGraph
-import com.example.planime_mobileapp.screens.user.HomeScreen
-import com.example.planime_mobileapp.screens.user.UserProfileScreen
-import com.example.planime_mobileapp.screens.user.CreatePlanScreen
-import com.example.planime_mobileapp.screens.user.ProgressScreen
+import com.example.planime_mobileapp.ui.screens.dashboard.progressscreen.ProgressScreen
 
 
 class MainActivity : ComponentActivity() {
