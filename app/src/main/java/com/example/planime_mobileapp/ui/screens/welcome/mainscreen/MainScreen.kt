@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.input.pointer.pointerInput
+import com.example.planime_mobileapp.data.local.AppPreferences
 import com.example.planime_mobileapp.ui.animations.buttons.animateButtonInteraction
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
@@ -39,7 +40,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(onNavigateToLoginScreen: () -> Unit) {
+fun MainScreen(onNavigateToLoginScreen: () -> Unit, appPreferences: AppPreferences) {
 
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
@@ -132,6 +133,7 @@ fun MainScreen(onNavigateToLoginScreen: () -> Unit) {
                                     scope.launch {
                                         delay(100)
                                         isPressed = false
+                                        appPreferences.setOnboardingCompleted()
                                         onNavigateToLoginScreen()
                                     }
                                 }

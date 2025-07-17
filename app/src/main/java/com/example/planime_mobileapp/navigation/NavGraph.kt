@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.planime_mobileapp.data.local.AppPreferences
 import com.example.planime_mobileapp.ui.screens.welcome.loadingscreen.LoadingScreen
 import com.example.planime_mobileapp.ui.screens.auth.loginscreen.LoginScreen
 import com.example.planime_mobileapp.ui.screens.welcome.welcomescreen.WelcomeScreen
@@ -21,15 +22,21 @@ import com.example.planime_mobileapp.ui.screens.dashboard.userprofile.UserProfil
 @Composable
 fun AppNavGraph(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = routes.LOADINGSCREEN
+    appPreferences: AppPreferences
 ) {
+
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = routes.LOADINGSCREEN
     ){
         composable(routes.LOADINGSCREEN){
+            val destination = if(appPreferences.isOnboardingCompleted()){
+                routes.LOGINSCREEN
+            }else{
+                routes.WELCOMESCREEN
+            }
             LoadingScreen(
-                onNavigateToWelcomeScreen = {navController.navigate((routes.WELCOMESCREEN))}
+                onNavigateToWelcomeScreen = {navController.navigate((destination))}
             )
         }
         composable(routes.WELCOMESCREEN){
@@ -49,7 +56,8 @@ fun AppNavGraph(
         }
         composable(routes.MAINSCREEN){
             MainScreen(
-                onNavigateToLoginScreen = {navController.navigate((routes.LOGINSCREEN))}
+                onNavigateToLoginScreen = {navController.navigate((routes.LOGINSCREEN))},
+                appPreferences = appPreferences
             )
         }
         composable(routes.REGISTERSCREEN){
