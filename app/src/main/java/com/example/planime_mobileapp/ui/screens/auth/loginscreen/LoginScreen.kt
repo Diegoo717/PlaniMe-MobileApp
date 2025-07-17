@@ -49,6 +49,8 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
     var textTwo by remember { mutableStateOf("") }
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
+    var isPressedTwo by remember { mutableStateOf(false) }
+    var isHoveredTwo by remember { mutableStateOf(false) }
     var isPressedSignIn by remember { mutableStateOf(false) }
     var isHoveredSignIn by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -205,7 +207,7 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
                     )
 
                     Text(
-                        text = "o continuar con: ",
+                        text = "o si prefieres: ",
                         fontSize = 20.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
@@ -232,19 +234,19 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)
-                            .offset(x = -85.dp, y = -60.dp)
+                            .offset(x = -85.dp, y = -70.dp)
                     )
                     Text(
                         text = "Registrate AQUI!",
                         color = Color.White,
-                        fontSize = 27.sp,
+                        fontSize = 25.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)
-                            .offset(x = 85.dp, y = -60.dp)
+                            .offset(x = 85.dp, y = -70.dp)
                             .animateButtonInteraction(isPressed, isHovered)
                             .clickable(
                                 indication = null,
@@ -259,6 +261,45 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
                                             delay(100)
                                             isPressed = false
                                             onNavigateToRegisterScreen()
+                                        }
+                                    }
+                                )
+                            }
+                    )
+                    Text(
+                            text = "¿Haz olvidado tu contraseña?",
+                    fontSize = 23.sp,
+                    fontFamily = fontFamilyGoogle,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .offset(x = -65.dp, y = -30.dp)
+                    )
+                    Text(
+                        text = "HAZ AQUI!",
+                        color = Color.White,
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = fontFamilyGoogle,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .offset(x = 125.dp, y = -30.dp)
+                            .animateButtonInteraction(isPressedTwo, isHoveredTwo)
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() },
+                                onClick = {}
+                            )
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onPress = { isPressedTwo = true },
+                                    onTap = {
+                                        scope.launch {
+                                            delay(100)
+                                            isPressedTwo = false
                                         }
                                     }
                                 )
