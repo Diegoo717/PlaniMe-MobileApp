@@ -14,10 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,9 +34,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.planime_mobileapp.R
 import com.example.planime_mobileapp.ui.animations.buttons.animateButtonInteraction
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
@@ -43,16 +48,26 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
-    var text by remember { mutableStateOf("") }
-    var textTwo by remember { mutableStateOf("") }
+fun RegisterScreen(
+    onNavigateToLoginScreen: () -> Unit,
+    viewModel: RegisterScreenViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
     var isPressed by remember { mutableStateOf(false) }
     var isHovered by remember { mutableStateOf(false) }
+    var isRegisterPressed by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
+    LaunchedEffect(uiState.isSuccess) {
+        if (uiState.isSuccess) {
+            delay(2000)
+            onNavigateToLoginScreen()
+        }
+    }
+
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Image(
@@ -61,18 +76,18 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
+
         AnimatedScreen(
             enter = ScreenTransitions.enterScaleFromCenter,
             exit = ScreenTransitions.exitScaleToCenter
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(
                     modifier = Modifier
-                        .weight(0.3f)
+                        .weight(0.25f)
                         .fillMaxWidth()
                 ) {
                     Image(
@@ -91,12 +106,11 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)
-                            .offset(y = (0).dp)
                     )
                 }
                 Column(
                     modifier = Modifier
-                        .weight(0.45f)
+                        .weight(0.55f)
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -107,13 +121,11 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-
+                        modifier = Modifier.fillMaxWidth()
                     )
                     TextField(
-                        value = text,
-                        onValueChange = { newText -> text = newText },
+                        value = uiState.firstName,
+                        onValueChange = viewModel::updateFirstName,
                         label = {
                             Text(
                                 "Nombre/s",
@@ -130,7 +142,7 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 40.dp),
+                            .padding(top = 30.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -141,8 +153,8 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         )
                     )
                     TextField(
-                        value = textTwo,
-                        onValueChange = { newText -> textTwo = newText },
+                        value = uiState.lastName,
+                        onValueChange = viewModel::updateLastName,
                         label = {
                             Text(
                                 "Apellidos",
@@ -159,7 +171,7 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 30.dp),
+                            .padding(top = 20.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -170,25 +182,25 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         )
                     )
                     TextField(
-                        value = textTwo,
-                        onValueChange = { newText -> textTwo = newText },
+                        value = uiState.email,
+                        onValueChange = viewModel::updateEmail,
                         label = {
                             Text(
-                                "Correo electronico",
+                                "Correo electrónico",
                                 style = TextStyle(fontFamily = fontFamilyGoogle),
                                 fontSize = 20.sp
                             )
                         },
                         placeholder = {
                             Text(
-                                "Escribe aquí",
+                                "ejemplo@correo.com",
                                 style = TextStyle(fontFamily = fontFamilyGoogle),
                                 fontSize = 20.sp
                             )
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 30.dp),
+                            .padding(top = 20.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -199,8 +211,8 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         )
                     )
                     TextField(
-                        value = textTwo,
-                        onValueChange = { newText -> textTwo = newText },
+                        value = uiState.password,
+                        onValueChange = viewModel::updatePassword,
                         label = {
                             Text(
                                 "Contraseña",
@@ -210,14 +222,15 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                         },
                         placeholder = {
                             Text(
-                                "Escribe aquí",
+                                "Mínimo 8 caracteres",
                                 style = TextStyle(fontFamily = fontFamilyGoogle),
                                 fontSize = 20.sp
                             )
                         },
+                        visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 30.dp),
+                            .padding(top = 20.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -227,22 +240,71 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                             focusedIndicatorColor = Color.Transparent,
                         )
                     )
+                    uiState.errorMessage?.let { errorMessage ->
+                        Text(
+                            text = errorMessage,
+                            color = Color.Red,
+                            fontSize = 20.sp,
+                            fontFamily = fontFamilyGoogle,
+                            modifier = Modifier.padding(top = 20.dp, bottom = 0.dp)
+                        )
+                    }
+                    uiState.successMessage?.let { successMessage ->
+                        Text(
+                            text = successMessage + "!",
+                            color = Color.Black,
+                            fontSize = 20.sp,
+                            fontFamily = fontFamilyGoogle,
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+                    }
                 }
-
                 Box(
                     modifier = Modifier
                         .weight(0.2f)
                         .fillMaxWidth()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.signup_button),
-                        contentDescription = "signup_button",
-                        contentScale = ContentScale.Fit,
+                    Box(
                         modifier = Modifier
-                            .size(130.dp)
                             .align(Alignment.TopCenter)
-                            .offset(x = 0.dp, y = -20.dp)
-                    )
+                            .offset(y = (-50).dp)
+                    ) {
+                        if (uiState.isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .align(Alignment.Center),
+                                color = Color(0xFF4CAF50)
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(id = R.drawable.signup_button),
+                                contentDescription = "signup_button",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .size(130.dp)
+                                    .animateButtonInteraction(isRegisterPressed, false)
+                                    .clickable(
+                                        indication = null,
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        onClick = {}
+                                    )
+                                    .pointerInput(Unit) {
+                                        detectTapGestures(
+                                            onPress = { isRegisterPressed = true },
+                                            onTap = {
+                                                scope.launch {
+                                                    delay(100)
+                                                    isRegisterPressed = false
+                                                    viewModel.register()
+                                                }
+                                            }
+                                        )
+                                    }
+                            )
+                        }
+                    }
+
                     Text(
                         text = "¿Ya tienes cuenta?",
                         fontSize = 23.sp,
@@ -253,6 +315,7 @@ fun RegisterScreen(onNavigateToLoginScreen: () -> Unit) {
                             .align(Alignment.BottomCenter)
                             .offset(x = -100.dp, y = -60.dp)
                     )
+
                     Text(
                         text = "Inicia sesión AQUI!",
                         color = Color.White,

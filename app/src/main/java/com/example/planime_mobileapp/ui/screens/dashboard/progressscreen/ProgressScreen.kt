@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -35,7 +34,7 @@ import com.example.planime_mobileapp.ui.components.inputs.OwnTextField
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import com.example.planime_mobileapp.ui.components.charts.WeightRecord
 import com.example.planime_mobileapp.ui.components.charts.WeightProgressChart
-import com.example.planime_mobileapp.domain.model.WeightOption
+import com.example.planime_mobileapp.domain.model.user.WeightOption
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 

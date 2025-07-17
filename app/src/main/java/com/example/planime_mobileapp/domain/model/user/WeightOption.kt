@@ -1,4 +1,4 @@
-package com.example.planime_mobileapp.domain.model
+package com.example.planime_mobileapp.domain.model.user
 
 data class WeightOption(
     val value: Int,

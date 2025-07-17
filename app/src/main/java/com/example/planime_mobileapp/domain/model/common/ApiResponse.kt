@@ -1,4 +1,4 @@
-package com.example.planime_mobileapp.domain.model
+package com.example.planime_mobileapp.domain.model.common
 
 data class ApiResponse(
     val message: String? = null,
