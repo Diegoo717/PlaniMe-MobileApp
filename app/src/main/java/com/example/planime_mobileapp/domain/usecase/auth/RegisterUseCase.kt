@@ -1,4 +1,4 @@
-package com.example.planime_mobileapp.domain.usecase
+package com.example.planime_mobileapp.domain.usecase.auth
 
 import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
@@ -7,6 +7,7 @@ import com.example.planime_mobileapp.domain.repository.ApiRepository
 class RegisterUseCase(
     private val repository: ApiRepository
 ) {
+
     suspend operator fun invoke(
         firstName: String,
         lastName: String,
@@ -41,7 +42,18 @@ class RegisterUseCase(
             password = password
         )
 
-        return repository.register(request)
+        return try {
+            repository.register(request).fold(
+                onSuccess = { response ->
+                    Result.success(response)
+                },
+                onFailure = {
+                    Result.failure(Exception("El correo ingresado ya esta registrado"))
+                }
+            )
+        } catch (e: Exception) {
+            Result.failure(Exception("Error de conexión. Intenta de nuevo"))
+        }
     }
 
     private fun validateFirstName(firstName: String): String? {

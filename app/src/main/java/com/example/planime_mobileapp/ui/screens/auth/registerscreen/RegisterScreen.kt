@@ -251,7 +251,7 @@ fun RegisterScreen(
                     }
                     uiState.successMessage?.let { successMessage ->
                         Text(
-                            text = successMessage + "!",
+                            text = successMessage,
                             color = Color.Black,
                             fontSize = 20.sp,
                             fontFamily = fontFamilyGoogle,
@@ -273,6 +273,7 @@ fun RegisterScreen(
                             CircularProgressIndicator(
                                 modifier = Modifier
                                     .size(50.dp)
+                                    .offset(y = 40.dp)
                                     .align(Alignment.Center),
                                 color = Color(0xFF4CAF50)
                             )

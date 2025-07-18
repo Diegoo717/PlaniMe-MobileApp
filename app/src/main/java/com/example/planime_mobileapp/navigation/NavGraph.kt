@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.planime_mobileapp.data.local.AppPreferences
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.ui.screens.welcome.loadingscreen.LoadingScreen
 import com.example.planime_mobileapp.ui.screens.auth.loginscreen.LoginScreen
 import com.example.planime_mobileapp.ui.screens.welcome.welcomescreen.WelcomeScreen
@@ -22,7 +23,8 @@ import com.example.planime_mobileapp.ui.screens.dashboard.userprofile.UserProfil
 @Composable
 fun AppNavGraph(
     navController: NavHostController = rememberNavController(),
-    appPreferences: AppPreferences
+    appPreferences: AppPreferences,
+    tokenPreferences: TokenPreferences
 ) {
 
     NavHost(
@@ -31,7 +33,11 @@ fun AppNavGraph(
     ){
         composable(routes.LOADINGSCREEN){
             val destination = if(appPreferences.isOnboardingCompleted()){
-                routes.LOGINSCREEN
+                if(tokenPreferences.hasToken()){
+                    routes.HOMESCREEN
+                }else{
+                    routes.LOGINSCREEN
+                }
             }else{
                 routes.WELCOMESCREEN
             }
@@ -68,7 +74,8 @@ fun AppNavGraph(
         composable(routes.LOGINSCREEN){
             LoginScreen(
                 onNavigateToRegisterScreen = {navController.navigate((routes.REGISTERSCREEN))},
-                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))}
+                onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))},
+                tokenPreferences = tokenPreferences
             )
         }
         composable(routes.HOMESCREEN){

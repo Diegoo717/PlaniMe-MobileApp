@@ -1,4 +1,4 @@
-package com.example.planime_mobileapp.domain.usecase
+package com.example.planime_mobileapp.domain.usecase.common
 
 import com.example.planime_mobileapp.domain.repository.ApiRepository
 

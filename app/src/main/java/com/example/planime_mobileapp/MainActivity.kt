@@ -8,8 +8,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavGraph
 import com.example.planime_mobileapp.data.local.AppPreferences
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
-import com.example.planime_mobileapp.domain.usecase.GetApiStatusUseCase
+import com.example.planime_mobileapp.domain.usecase.common.GetApiStatusUseCase
 import com.example.planime_mobileapp.navigation.AppNavGraph
 import com.example.planime_mobileapp.ui.screens.dashboard.aboutusscreen.AboutUsScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.progressscreen.ProgressScreen
@@ -22,9 +23,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         testApiConnection()
         val appPreferences = AppPreferences(this)
+        val tokenPreferences = TokenPreferences(this)
 
         setContent {
-           AppNavGraph(appPreferences = appPreferences)
+           AppNavGraph(appPreferences = appPreferences, tokenPreferences = tokenPreferences)
         }
     }
 

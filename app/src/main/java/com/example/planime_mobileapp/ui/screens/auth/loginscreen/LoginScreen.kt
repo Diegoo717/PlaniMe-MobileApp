@@ -31,11 +31,16 @@ import com.example.planime_mobileapp.R
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.ui.animations.buttons.animateButtonInteraction
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
@@ -43,7 +48,16 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit) {
+fun LoginScreen(
+    onNavigateToRegisterScreen: () -> Unit,
+    onNavigateToHomeScreen: () -> Unit,
+    tokenPreferences: TokenPreferences,
+    viewModel: LoginScreenViewModel = viewModel(
+        factory = LoginViewModelFactory(tokenPreferences)
+    )
+) {
+
+    val uiState by viewModel.uiState.collectAsState()
 
     var text by remember { mutableStateOf("") }
     var textTwo by remember { mutableStateOf("") }
@@ -54,6 +68,13 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
     var isPressedSignIn by remember { mutableStateOf(false) }
     var isHoveredSignIn by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+
+    LaunchedEffect(uiState.isSuccess) {
+        if (uiState.isSuccess) {
+            delay(2000)
+            onNavigateToHomeScreen()
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -114,8 +135,8 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
 
                     )
                     TextField(
-                        value = text,
-                        onValueChange = { newText -> text = newText },
+                        value = uiState.email,
+                        onValueChange = viewModel::updateEmail,
                         label = {
                             Text(
                                 "Correo electronico",
@@ -143,8 +164,8 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
                         )
                     )
                     TextField(
-                        value = textTwo,
-                        onValueChange = { newText -> textTwo = newText },
+                        value = uiState.password,
+                        onValueChange = viewModel::updatePassword,
                         label = {
                             Text(
                                 "Contraseña",
@@ -173,39 +194,67 @@ fun LoginScreen(onNavigateToRegisterScreen: () -> Unit, onNavigateToHomeScreen: 
                     )
                 }
 
+                uiState.errorMessage?.let { errorMessage ->
+                    Text(
+                        text = errorMessage,
+                        color = Color.Red,
+                        fontSize = 20.sp,
+                        fontFamily = fontFamilyGoogle,
+                        modifier = Modifier.padding(top = 0.dp, bottom = 30.dp)
+                    )
+                }
+                uiState.successMessage?.let { successMessage ->
+                    Text(
+                        text = successMessage,
+                        color = Color.Black,
+                        fontSize = 20.sp,
+                        fontFamily = fontFamilyGoogle,
+                        modifier = Modifier.padding(top = 0.dp, bottom = 30.dp)
+                    )
+                }
+
                 Box(
                     modifier = Modifier
                         .weight(0.3f)
                         .fillMaxWidth()
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.signin_button),
-                        contentDescription = "signup_button",
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier
-                            .size(130.dp)
-                            .align(Alignment.TopCenter)
-                            .offset(x = 0.dp, y = -40.dp)
-                            .animateButtonInteraction(isPressedSignIn, isHoveredSignIn)
-                            .clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() },
-                                onClick = {}
-                            )
-                            .pointerInput(Unit) {
-                                detectTapGestures(
-                                    onPress = { isPressedSignIn = true },
-                                    onTap = {
-                                        scope.launch {
-                                            delay(100)
-                                            isPressedSignIn = false
-                                            onNavigateToHomeScreen()
-                                        }
-                                    }
+                    if (uiState.isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .offset(y= -100.dp)
+                                .size(50.dp)
+                                .align(Alignment.Center),
+                            color = Color(0xFF4CAF50)
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = R.drawable.signin_button),
+                            contentDescription = "signup_button",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .size(130.dp)
+                                .align(Alignment.TopCenter)
+                                .offset(x = 0.dp, y = -40.dp)
+                                .animateButtonInteraction(isPressedSignIn, isHoveredSignIn)
+                                .clickable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    onClick = {}
                                 )
-                            }
-                    )
-
+                                .pointerInput(Unit) {
+                                    detectTapGestures(
+                                        onPress = { isPressedSignIn = true },
+                                        onTap = {
+                                            scope.launch {
+                                                delay(100)
+                                                isPressedSignIn = false
+                                                viewModel.signin()
+                                            }
+                                        }
+                                    )
+                                }
+                        )
+                    }
                     Text(
                         text = "o si prefieres: ",
                         fontSize = 20.sp,

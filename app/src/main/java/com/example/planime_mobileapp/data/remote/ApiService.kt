@@ -1,5 +1,7 @@
 package com.example.planime_mobileapp.data.remote
 
+import com.example.planime_mobileapp.domain.model.auth.LoginRequest
+import com.example.planime_mobileapp.domain.model.auth.LoginResponse
 import com.example.planime_mobileapp.domain.model.common.ApiResponse
 import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
@@ -14,4 +16,7 @@ interface ApiService {
 
     @POST("/api/register")
     suspend fun register(@Body request: RegisterRequest): Response<RegisterResponse>
+
+    @POST("/api/login")
+    suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 }

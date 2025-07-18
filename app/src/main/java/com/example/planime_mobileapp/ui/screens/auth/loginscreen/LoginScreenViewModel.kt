@@ -1,29 +1,25 @@
-package com.example.planime_mobileapp.ui.screens.auth.registerscreen
+package com.example.planime_mobileapp.ui.screens.auth.loginscreen
+
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
-import com.example.planime_mobileapp.domain.usecase.auth.RegisterUseCase
+import com.example.planime_mobileapp.domain.usecase.auth.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class RegisterScreenViewModel : ViewModel() {
+class LoginScreenViewModel(
+    private val tokenPreferences: TokenPreferences
+) : ViewModel() {
 
     private val repository = ApiRepositoryImpl()
-    private val registerUseCase = RegisterUseCase(repository)
+    private val loginUseCase = LoginUseCase(repository, tokenPreferences)
 
-    private val _uiState = MutableStateFlow(RegisterUiState())
-    val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
-
-    fun updateFirstName(firstName: String) {
-        _uiState.value = _uiState.value.copy(firstName = firstName)
-    }
-
-    fun updateLastName(lastName: String) {
-        _uiState.value = _uiState.value.copy(lastName = lastName)
-    }
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun updateEmail(email: String) {
         _uiState.value = _uiState.value.copy(email = email)
@@ -33,7 +29,7 @@ class RegisterScreenViewModel : ViewModel() {
         _uiState.value = _uiState.value.copy(password = password)
     }
 
-    fun register() {
+    fun signin() {
         val currentState = _uiState.value
 
         _uiState.value = currentState.copy(
@@ -42,9 +38,7 @@ class RegisterScreenViewModel : ViewModel() {
         )
 
         viewModelScope.launch {
-            val result = registerUseCase(
-                firstName = currentState.firstName,
-                lastName = currentState.lastName,
+            val result = loginUseCase(
                 email = currentState.email,
                 password = currentState.password
             )
@@ -53,12 +47,12 @@ class RegisterScreenViewModel : ViewModel() {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     isSuccess = true,
-                    successMessage = "Usuario registrado exitosamente!"
+                    successMessage = "Ingresando a tu cuenta!"
                 )
             }.onFailure { error ->
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    errorMessage = error.message ?: "Error desconocido"
+                    errorMessage = error.message
                 )
             }
         }
@@ -72,9 +66,7 @@ class RegisterScreenViewModel : ViewModel() {
     }
 }
 
-data class RegisterUiState(
-    val firstName: String = "",
-    val lastName: String = "",
+data class LoginUiState(
     val email: String = "",
     val password: String = "",
     val isLoading: Boolean = false,
