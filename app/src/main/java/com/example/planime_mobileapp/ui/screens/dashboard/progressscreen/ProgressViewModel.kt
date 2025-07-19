@@ -5,11 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
 import com.example.planime_mobileapp.domain.model.user.progress.WeightOption
+import com.example.planime_mobileapp.domain.usecase.user.progress.getWeightGoalUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.setWeightGoalUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.String
 
 class ProgressScreenViewModel(
     private val tokenPreferences: TokenPreferences
@@ -17,9 +19,39 @@ class ProgressScreenViewModel(
 
     private val repository = ApiRepositoryImpl()
     private val setWeightGoalUseCase = setWeightGoalUseCase(repository, tokenPreferences)
+    private val getWeightGoalUseCase = getWeightGoalUseCase(repository, tokenPreferences)
 
     private val _uiState = MutableStateFlow(ProgressUiState())
     val uiState: StateFlow<ProgressUiState> = _uiState.asStateFlow()
+
+    init {
+        updateWeightOptionSaved()
+    }
+
+    fun updateWeightOptionSaved(){
+        _uiState.value = _uiState.value.copy(
+            isLoading = true,
+            selectedWeightOption = null
+        )
+        viewModelScope.launch {
+            val result = getWeightGoalUseCase()
+
+            result.onSuccess { response ->
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    selectedWeightOption = WeightOption(
+                        value = response.data?.toInt() ?: 0,
+                        displayText = "${response.data ?: "0"} kg"
+                    )
+                )
+            }.onFailure { error ->
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    errorMessage = error.message
+                )
+            }
+        }
+    }
 
     fun onWeightOptionSelected(weightOption: WeightOption) {
         _uiState.value = _uiState.value.copy(

@@ -31,11 +31,21 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 fun OwnDropdownProgress(
     tittle: String,
     options: List<String>,
+    selectedIndex: Int? = null,
     onSelectionChanged: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedOption by remember { mutableStateOf(options[0]) }
+
+    var selectedOption by remember(selectedIndex) {
+        mutableStateOf(
+            if (selectedIndex != null && selectedIndex in options.indices) {
+                options[selectedIndex]
+            } else {
+                options.firstOrNull() ?: ""
+            }
+        )
+    }
 
     ExposedDropdownMenuBox(
         expanded = expanded,

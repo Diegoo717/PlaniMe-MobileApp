@@ -172,6 +172,9 @@ fun ProgressScreen(
                         OwnDropdownProgress(
                             tittle = "Objetivo (kg)",
                             options = weightTexts,
+                            selectedIndex = weightOptions.indexOfFirst {
+                                it.value == uiState.selectedWeightOption?.value
+                            }.takeIf { it != -1 },
                             onSelectionChanged = { selectedIndex ->
                                 val selectedOption = weightOptions[selectedIndex]
                                 viewModel.onWeightOptionSelected(selectedOption)
