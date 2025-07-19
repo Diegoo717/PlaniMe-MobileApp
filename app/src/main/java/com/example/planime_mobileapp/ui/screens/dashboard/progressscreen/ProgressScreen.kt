@@ -14,10 +14,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -27,22 +31,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.planime_mobileapp.R
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.ui.components.navigation.BottomNavBar
-import com.example.planime_mobileapp.ui.components.inputs.OwnDropdown
+import com.example.planime_mobileapp.ui.components.inputs.OwnDropdownProgress
 import com.example.planime_mobileapp.ui.components.inputs.OwnTextField
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import com.example.planime_mobileapp.ui.components.charts.WeightRecord
 import com.example.planime_mobileapp.ui.components.charts.WeightProgressChart
-import com.example.planime_mobileapp.domain.model.user.WeightOption
+import com.example.planime_mobileapp.domain.model.user.progress.WeightOption
+import com.example.planime_mobileapp.presentation.viewmodel.ProgressScreenViewModel
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 
 @Composable
 fun ProgressScreen(
-    onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
-    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit
+    onNavigateToUserProfileScreen: () -> Unit,
+    onNavigateToCreatePlanScreen: () -> Unit,
+    onNavigateToProgressScreen: () -> Unit,
+    onNavigateToHomeScreen: () -> Unit,
+    tokenPreferences: TokenPreferences,
+    viewModel: ProgressScreenViewModel = viewModel(
+        factory = ProgressViewModelFactory(tokenPreferences)
+    )
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    val weightOptions = remember { WeightOption.generateWeightOptions() }
+
+    val weightTexts = remember(weightOptions) {
+        weightOptions.map { it.displayText }
+    }
 
     val weightRecords = listOf(
         WeightRecord("25/05/2025", 85f),
@@ -62,12 +82,8 @@ fun ProgressScreen(
     )
     val goalWeight = 95f
 
-    val weightOptions = WeightOption.generateWeightOptions()
-    val weightTexts = remember { weightOptions.map { it.displayText } }
-
     Box(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
     ) {
         Image(
@@ -107,8 +123,7 @@ fun ProgressScreen(
                                 blurRadius = 0f
                             )
                         ),
-                        modifier = Modifier
-                            .offset(x = 135.dp)
+                        modifier = Modifier.offset(x = 135.dp)
                     )
                 }
                 Column(
@@ -119,21 +134,34 @@ fun ProgressScreen(
                         .fillMaxWidth()
                         .padding(start = 10.dp)
                 ) {
-                    Text(
-                        text = "Establece un objetivo",
-                        style = TextStyle(
-                            fontSize = 30.sp,
-                            fontFamily = fontFamilyGoogle,
-                            textAlign = TextAlign.Center,
-                            shadow = Shadow(
-                                color = Color.White,
-                                offset = Offset(3f, 3f),
-                                blurRadius = 0f
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Establece un objetivo",
+                            style = TextStyle(
+                                fontSize = 30.sp,
+                                fontFamily = fontFamilyGoogle,
+                                textAlign = TextAlign.Center,
+                                shadow = Shadow(
+                                    color = Color.White,
+                                    offset = Offset(3f, 3f),
+                                    blurRadius = 0f
+                                )
+                            ),
+                            modifier = Modifier.padding(bottom = 10.dp)
+                        )
+
+                        if (uiState.isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                strokeWidth = 2.dp
                             )
-                        ),
-                        modifier = Modifier
-                            .padding(bottom = 10.dp)
-                    )
+                        }
+                    }
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Start,
@@ -141,8 +169,17 @@ fun ProgressScreen(
                             .fillMaxWidth()
                             .height(80.dp)
                     ) {
-                        OwnDropdown("Objetivo (kg)", weightTexts, modifier = Modifier.width(385.dp))
+                        OwnDropdownProgress(
+                            tittle = "Objetivo (kg)",
+                            options = weightTexts,
+                            onSelectionChanged = { selectedIndex ->
+                                val selectedOption = weightOptions[selectedIndex]
+                                viewModel.onWeightOptionSelected(selectedOption)
+                            },
+                            modifier = Modifier.width(385.dp)
+                        )
                     }
+
                     Text(
                         text = "Agrega un registro",
                         style = TextStyle(
@@ -155,8 +192,7 @@ fun ProgressScreen(
                                 blurRadius = 0f
                             )
                         ),
-                        modifier = Modifier
-                            .padding(bottom = 10.dp)
+                        modifier = Modifier.padding(bottom = 10.dp)
                     )
                     OwnTextField("Peso (kg)", modifier = Modifier.width(385.dp))
                     OwnTextField("Fecha (dia/mes/año)", modifier = Modifier.width(385.dp))
@@ -182,6 +218,7 @@ fun ProgressScreen(
                         }
                     }
                 }
+
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -224,8 +261,7 @@ fun ProgressScreen(
             }
         }
         BottomNavBar(
-            modifier = Modifier
-                .height(90.dp),
+            modifier = Modifier.height(90.dp),
             onNavigateToHomeScreen,
             onNavigateToUserProfileScreen,
             onNavigateToCreatePlanScreen,

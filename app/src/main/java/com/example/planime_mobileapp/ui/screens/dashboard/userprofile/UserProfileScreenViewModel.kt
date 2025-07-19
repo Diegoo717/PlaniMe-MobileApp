@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
 import com.example.planime_mobileapp.data.local.TokenPreferences
-import com.example.planime_mobileapp.domain.usecase.user.ProfileUseCase
+import com.example.planime_mobileapp.domain.usecase.user.profile.ProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

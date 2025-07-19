@@ -1,4 +1,4 @@
-package com.example.planime_mobileapp.domain.model.user
+package com.example.planime_mobileapp.domain.model.user.progress
 
 data class WeightOption(
     val value: Int,

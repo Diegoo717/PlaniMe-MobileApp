@@ -1,8 +1,7 @@
-package com.example.planime_mobileapp.domain.usecase.user
+package com.example.planime_mobileapp.domain.usecase.user.profile
 
-import android.util.Log
 import com.example.planime_mobileapp.data.local.TokenPreferences
-import com.example.planime_mobileapp.domain.model.user.ProfileResponse
+import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.repository.ApiRepository
 
 class ProfileUseCase(
