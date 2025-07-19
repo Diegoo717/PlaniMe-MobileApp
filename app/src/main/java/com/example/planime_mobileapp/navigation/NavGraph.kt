@@ -92,7 +92,9 @@ fun AppNavGraph(
                 onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
                 onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
                 onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))},
-                onNavigateToAboutUsScreen = {navController.navigate((routes.ABOUTUSSCREEN))}
+                onNavigateToAboutUsScreen = {navController.navigate((routes.ABOUTUSSCREEN))},
+                onNavigateToLoginScreen = {navController.navigate((routes.LOGINSCREEN))},
+                tokenPreferences = tokenPreferences
             )
         }
         composable(routes.CREATEPLANSCREEN){

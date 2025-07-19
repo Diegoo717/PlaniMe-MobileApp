@@ -11,7 +11,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import com.example.planime_mobileapp.R
 import androidx.compose.ui.Alignment
@@ -23,6 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.ui.components.navigation.BottomNavBar
 import com.example.planime_mobileapp.ui.components.visual.DataBox
 import com.example.planime_mobileapp.ui.components.visual.StatsBox
@@ -36,8 +41,15 @@ fun UserProfileScreen(
     onNavigateToCreatePlanScreen: () -> Unit,
     onNavigateToProgressScreen: () -> Unit,
     onNavigateToHomeScreen: () -> Unit,
-    onNavigateToAboutUsScreen: () -> Unit
+    onNavigateToAboutUsScreen: () -> Unit,
+    onNavigateToLoginScreen: () -> Unit,
+    tokenPreferences: TokenPreferences,
+    viewModel: UserProfileScreenViewModel = viewModel {
+        UserProfileScreenViewModel(tokenPreferences)
+    }
 ) {
+    val state by viewModel.state.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -53,6 +65,18 @@ fun UserProfileScreen(
             enter = ScreenTransitions.enterFromTop,
             exit = ScreenTransitions.exitToBottom
         ) {
+            if (state.isLoading) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.offset(y = (-50).dp),
+                        color = Color.Green
+                    )
+                }
+            }
+
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -126,12 +150,21 @@ fun UserProfileScreen(
                             modifier = Modifier
                                 .size(30.dp)
                                 .offset(x = 270.dp)
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = ripple(bounded = false, radius = 30.dp),
+                                    onClick = {
+                                        tokenPreferences.clearToken()
+                                        onNavigateToLoginScreen()
+                                    }
+                                )
                         )
                     }
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.5f),
+                            .weight(0.5f)
+                            .padding(bottom = 15.dp),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -139,10 +172,10 @@ fun UserProfileScreen(
                             painter = painterResource(id = R.drawable.user_image),
                             contentDescription = "user_image",
                             modifier = Modifier
-                                .size(100.dp)
+                                .size(120.dp)
                         )
                         Text(
-                            text = "Luis Gonzales",
+                            text = if (state.userName.isNotBlank()) state.userName else "Cargando...",
                             style = TextStyle(
                                 fontSize = 30.sp,
                                 fontFamily = fontFamilyGoogle,
@@ -218,8 +251,8 @@ fun UserProfileScreen(
                                 .fillMaxWidth()
                                 .weight(0.5f)
                         ) {
-                            DataBox(modifier = Modifier.weight(0.5f), "Rol", "Estudiante")
-                            DataBox(modifier = Modifier.weight(0.5f), "Ciudad", "Uriangato")
+                            DataBox(modifier = Modifier.weight(0.5f), "Rol", "*****")
+                            DataBox(modifier = Modifier.weight(0.5f), "Ciudad", "*****")
                         }
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -228,8 +261,18 @@ fun UserProfileScreen(
                                 .fillMaxWidth()
                                 .weight(0.5f)
                         ) {
-                            DataBox(modifier = Modifier.weight(0.5f), "Edad", "22")
-                            DataBox(modifier = Modifier.weight(0.5f), "Correo", "...o71@gmail.com")
+                            DataBox(modifier = Modifier.weight(0.5f), "Edad", "*****")
+                            DataBox(
+                                modifier = Modifier.weight(0.5f),
+                                "Correo",
+                                if (state.userEmail.isNotBlank()) {
+                                    if (state.userEmail.length > 21) {
+                                        "${state.userEmail.take(3)}...${state.userEmail.substringAfterLast("@", "")}"
+                                    } else {
+                                        state.userEmail
+                                    }
+                                } else "Cargando..."
+                            )
                         }
                     }
                     Column(

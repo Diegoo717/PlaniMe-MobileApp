@@ -29,7 +29,6 @@ class MainActivity : ComponentActivity() {
            AppNavGraph(appPreferences = appPreferences, tokenPreferences = tokenPreferences)
         }
     }
-
     private val repository = ApiRepositoryImpl()
     private val getApiStatusUseCase = GetApiStatusUseCase(repository)
 
