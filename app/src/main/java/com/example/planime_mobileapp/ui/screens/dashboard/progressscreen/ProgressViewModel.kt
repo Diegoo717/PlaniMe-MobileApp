@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
 import com.example.planime_mobileapp.domain.model.user.progress.WeightOption
-import com.example.planime_mobileapp.domain.usecase.user.progress.getWeightGoalUseCase
-import com.example.planime_mobileapp.domain.usecase.user.progress.setWeightGoalUseCase
+import com.example.planime_mobileapp.domain.usecase.user.progress.GetWeightGoalUseCase
+import com.example.planime_mobileapp.domain.usecase.user.progress.SetWeightGoalUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,8 +18,8 @@ class ProgressScreenViewModel(
 ) : ViewModel() {
 
     private val repository = ApiRepositoryImpl()
-    private val setWeightGoalUseCase = setWeightGoalUseCase(repository, tokenPreferences)
-    private val getWeightGoalUseCase = getWeightGoalUseCase(repository, tokenPreferences)
+    private val setWeightGoalUseCase = SetWeightGoalUseCase(repository, tokenPreferences)
+    private val getWeightGoalUseCase = GetWeightGoalUseCase(repository, tokenPreferences)
 
     private val _uiState = MutableStateFlow(ProgressUiState())
     val uiState: StateFlow<ProgressUiState> = _uiState.asStateFlow()

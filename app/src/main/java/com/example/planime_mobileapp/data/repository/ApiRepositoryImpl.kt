@@ -1,18 +1,17 @@
 package com.example.planime_mobileapp.data.repository
 
-import android.util.Log
-import android.util.Log.e
-import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.remote.ApiClient
 import com.example.planime_mobileapp.domain.model.auth.LoginRequest
 import com.example.planime_mobileapp.domain.model.auth.LoginResponse
 import com.example.planime_mobileapp.domain.model.common.ApiResponse
 import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
+import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
+import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
-import com.example.planime_mobileapp.domain.model.user.progress.getWeightGoalResponse
-import com.example.planime_mobileapp.domain.model.user.progress.setWeightGoalRequest
-import com.example.planime_mobileapp.domain.model.user.progress.setWeightGoalResponse
+import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
+import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
+import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalResponse
 import com.example.planime_mobileapp.domain.repository.ApiRepository
 
 class ApiRepositoryImpl() : ApiRepository {
@@ -82,7 +81,7 @@ class ApiRepositoryImpl() : ApiRepository {
         }
     }
 
-    override suspend fun setWeightGoal(token: String, request: setWeightGoalRequest): Result<setWeightGoalResponse> {
+    override suspend fun setWeightGoal(token: String, request: SetWeightGoalRequest): Result<SetWeightGoalResponse> {
         return try {
             val response = ApiClient.apiService.setWeightGoal("Bearer "+token, request)
             if (response.isSuccessful) {
@@ -100,7 +99,7 @@ class ApiRepositoryImpl() : ApiRepository {
         }
     }
 
-    override suspend fun getWeightGoal(token: String): Result<getWeightGoalResponse> {
+    override suspend fun getWeightGoal(token: String): Result<GetWeightGoalResponse> {
         return try{
             val response = ApiClient.apiService.getWeightGoal("Bearer "+token)
             if(response.isSuccessful){
@@ -112,6 +111,23 @@ class ApiRepositoryImpl() : ApiRepository {
                     Exception("Error al obtener los datos de objetivo: ${response.code()}"))
             }
         }catch(e: Exception){
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun createPlan(token: String, request: CreatePlanRequest): Result<CreatePlanResponse>{
+        return try{
+            val response = ApiClient.apiService.createPlan("Bearer "+token, request)
+            if(response.isSuccessful){
+                response.body()?.let{
+                    Result.success(it)
+                } ?: Result.failure(Exception("Respuesta vacía"))
+            }else{
+                Result.failure(
+                    Exception("Error al generar plan:  ${response.code()}")
+                )
+            }
+        }catch (e: Exception){
             Result.failure(e)
         }
     }
