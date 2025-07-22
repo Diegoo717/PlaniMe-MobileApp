@@ -22,10 +22,6 @@ class UserProfileScreenViewModel(
     private val tokenPreferences: TokenPreferences
 ) : ViewModel() {
 
-    companion object {
-        private const val TAG = "UserProfileViewModel"
-    }
-
     private val repository = ApiRepositoryImpl()
     private val profileUseCase = ProfileUseCase(repository, tokenPreferences)
 

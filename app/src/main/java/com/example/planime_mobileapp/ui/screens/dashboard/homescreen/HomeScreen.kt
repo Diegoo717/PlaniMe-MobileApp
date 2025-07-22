@@ -28,29 +28,36 @@ import androidx.compose.ui.unit.sp
 import com.example.planime_mobileapp.R
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 import com.example.planime_mobileapp.ui.components.navigation.BottomNavBar
 import com.example.planime_mobileapp.ui.components.cards.PlanCard
+import com.example.planime_mobileapp.ui.screens.dashboard.userprofile.UserProfileScreenViewModel
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
-    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit
+    onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit,
+    tokenPreferences: TokenPreferences,
+    viewModel: HomeViewModel = viewModel {
+        HomeViewModel(tokenPreferences)
+    }
 ) {
+
+    val state by viewModel.state.collectAsState()
 
     var query by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
-
-    var PlansList = 3
-    var PlanTittle = "Muscletone"
-    var PlanDate = "13/16/2025"
 
     Box(
         modifier = Modifier
@@ -271,8 +278,9 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.spacedBy(24.dp),
                         contentPadding = PaddingValues(start = 50.dp, end = 50.dp),
                     ) {
-                        items(PlansList) { index ->
-                            PlanCard(PlanTittle, PlanDate)
+                        items(state.plansList.size) { index ->
+                            val planItem = state.plansList[index]
+                            PlanCard(planItem.name, planItem.date)
                         }
                     }
                 }
