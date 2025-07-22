@@ -8,15 +8,11 @@ class ProfileUseCase(
     private val repository: ApiRepository,
     tokenPreferences: TokenPreferences
 ) {
-    companion object {
-        private const val TAG = "ProfileUseCase"
-    }
-
     val token = tokenPreferences.getToken()
 
     suspend operator fun invoke(): Result<ProfileResponse> {
         return try {
-            val result = repository.profile("$token")
+            val result = repository.profile("Bearer $token")
             result
         } catch (e: Exception) {
             Result.failure(e)

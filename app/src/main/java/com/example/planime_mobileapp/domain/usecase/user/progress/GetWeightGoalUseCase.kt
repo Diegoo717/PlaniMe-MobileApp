@@ -10,5 +10,5 @@ class GetWeightGoalUseCase(
 
     val token = tokenPreferences.getToken()
 
-    suspend operator fun invoke() = repository.getWeightGoal("$token")
+    suspend operator fun invoke() = repository.getWeightGoal("Bearer $token")
 }

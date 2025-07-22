@@ -8,6 +8,7 @@ import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
+import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
@@ -65,7 +66,7 @@ class ApiRepositoryImpl() : ApiRepository {
 
     override suspend fun profile(token: String): Result<ProfileResponse> {
         return try {
-            val response = ApiClient.apiService.profile("Bearer "+token)
+            val response = ApiClient.apiService.profile(token)
             if (response.isSuccessful) {
                 response.body()?.let {
                     Result.success(it)
@@ -83,7 +84,7 @@ class ApiRepositoryImpl() : ApiRepository {
 
     override suspend fun setWeightGoal(token: String, request: SetWeightGoalRequest): Result<SetWeightGoalResponse> {
         return try {
-            val response = ApiClient.apiService.setWeightGoal("Bearer "+token, request)
+            val response = ApiClient.apiService.setWeightGoal(token, request)
             if (response.isSuccessful) {
                 response.body()?.let {
                     Result.success(it)
@@ -101,7 +102,7 @@ class ApiRepositoryImpl() : ApiRepository {
 
     override suspend fun getWeightGoal(token: String): Result<GetWeightGoalResponse> {
         return try{
-            val response = ApiClient.apiService.getWeightGoal("Bearer "+token)
+            val response = ApiClient.apiService.getWeightGoal(token)
             if(response.isSuccessful){
                 response.body()?.let{
                     Result.success(it)
@@ -117,7 +118,7 @@ class ApiRepositoryImpl() : ApiRepository {
 
     override suspend fun createPlan(token: String, request: CreatePlanRequest): Result<CreatePlanResponse>{
         return try{
-            val response = ApiClient.apiService.createPlan("Bearer "+token, request)
+            val response = ApiClient.apiService.createPlan(token, request)
             if(response.isSuccessful){
                 response.body()?.let{
                     Result.success(it)
@@ -132,4 +133,19 @@ class ApiRepositoryImpl() : ApiRepository {
         }
     }
 
+    override suspend fun getPlans(token: String): Result<GetPlansResponse> {
+        return try{
+            val response = ApiClient.apiService.getPlans(token)
+            if(response.isSuccessful){
+                response.body()?.let{
+                    Result.success(it)
+                } ?: Result.failure(Exception("Respuesta vacía"))
+            }else{
+                Result.failure(
+                    Exception("Error al obtener los planes: ${response.code()}"))
+            }
+        }catch(e: Exception){
+            Result.failure(e)
+        }
+    }
 }

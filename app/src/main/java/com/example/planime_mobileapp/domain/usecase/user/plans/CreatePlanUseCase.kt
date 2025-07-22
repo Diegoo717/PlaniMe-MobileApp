@@ -69,7 +69,7 @@ class CreatePlanUseCase(
         Log.d("TAG", "Normalized request: $request")
 
         return try{
-            repository.createPlan(token?:"", request).fold(
+            repository.createPlan("Bearer "+token?:"", request).fold(
                 onSuccess = { response ->
                     Log.d("TAG",response.toString())
                     Result.success(response)

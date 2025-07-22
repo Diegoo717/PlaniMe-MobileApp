@@ -14,7 +14,7 @@ class SetWeightGoalUseCase(
     suspend operator fun invoke(weight: String): Result<SetWeightGoalResponse> {
         return try {
             val request = SetWeightGoalRequest(weight)
-            val result = repository.setWeightGoal("$token", request)
+            val result = repository.setWeightGoal("Bearer $token", request)
             result
         } catch (e: Exception) {
             Result.failure(e)

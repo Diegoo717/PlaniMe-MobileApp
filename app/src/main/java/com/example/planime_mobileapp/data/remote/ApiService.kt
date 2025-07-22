@@ -7,6 +7,7 @@ import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
+import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
@@ -44,4 +45,8 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("/api/protected/generatePlan")
     suspend fun createPlan(@Header("Authorization") token: String, @Body request: CreatePlanRequest): Response<CreatePlanResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/protected/getPlansByID")
+    suspend fun getPlans(@Header("Authorization") token: String): Response<GetPlansResponse>
 }
