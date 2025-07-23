@@ -6,9 +6,11 @@ import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
 import com.example.planime_mobileapp.domain.model.user.progress.WeightOption
 import com.example.planime_mobileapp.domain.usecase.user.plans.GetPlansUseCase
+import com.example.planime_mobileapp.domain.usecase.user.progress.GetAllWeightRecordsUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.GetWeightGoalUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.SetWeightGoalUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.SetWeightRecordUseCase
+import com.example.planime_mobileapp.ui.screens.dashboard.homescreen.PlanItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,34 +25,45 @@ class ProgressScreenViewModel(
     private val setWeightGoalUseCase = SetWeightGoalUseCase(repository, tokenPreferences)
     private val getWeightGoalUseCase = GetWeightGoalUseCase(repository, tokenPreferences)
     private val setWeightRecordUseCase = SetWeightRecordUseCase(repository, tokenPreferences)
+    private val getAllWeightRecordsUseCase =
+        GetAllWeightRecordsUseCase(repository, tokenPreferences)
 
     private val _uiState = MutableStateFlow(ProgressUiState())
     val uiState: StateFlow<ProgressUiState> = _uiState.asStateFlow()
 
     init {
         updateWeightOptionSaved()
+        loadAllWeightRecords()
     }
 
-    fun updateWeightOptionSaved(){
+    fun loadAllWeightRecords() {
         _uiState.value = _uiState.value.copy(
             isLoading = true,
-            selectedWeightOption = null
         )
         viewModelScope.launch {
-            val result = getWeightGoalUseCase()
+            val result = getAllWeightRecordsUseCase()
 
             result.onSuccess { response ->
+                val recordsList = response.data
+                val processedRecords = recordsList?.map { record ->
+                    val id = record.id
+                    val weight = record.weight
+                    val date = record.date
+
+                    RecordItem(id = id, weight = weight, date = date)
+                } ?: emptyList()
+
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    selectedWeightOption = WeightOption(
-                        value = response.data?.toInt() ?: 0,
-                        displayText = "${response.data ?: "0"} kg"
-                    )
+                    totalWeightRecords = recordsList?.size ?: 0,
+                    weightRecordsList = processedRecords,
+                    errorMessage = null
                 )
+
             }.onFailure { error ->
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    errorMessage = error.message
+                    errorMessage = "Error al cargar los registros de peso"
                 )
             }
         }
@@ -66,11 +79,80 @@ class ProgressScreenViewModel(
             val result = setWeightGoalUseCase(weightOption.value.toString())
 
             result.onSuccess { response ->
+                updateWeightOptionSaved()
+
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     isSuccess = true,
                     successGoalMessage = "Objetivo actualizado correctamente!"
                 )
+            }.onFailure { error ->
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    errorMessage = error.message
+                )
+            }
+        }
+    }
+
+    fun updateWeightOptionSaved() {
+        _uiState.value = _uiState.value.copy(
+            isLoading = true,
+            selectedWeightOption = null
+        )
+
+        viewModelScope.launch {
+            val result = getWeightGoalUseCase()
+
+            result.onSuccess { response ->
+                val responseData = response.data
+
+                try {
+                    val weightValue = when (responseData) {
+                        is String -> {
+                            val parsed = responseData.toIntOrNull() ?: 0
+                            parsed
+                        }
+                        is Number -> {
+                            val converted = responseData.toInt()
+                            converted
+                        }
+                        is Map<*, *> -> {
+                            val weightGoal = (responseData as? Map<String, Any>)?.get("weightGoal")
+
+                            when (weightGoal) {
+                                is String -> {
+                                    val parsed = weightGoal.toIntOrNull() ?: 0
+                                    parsed
+                                }
+                                is Number -> {
+                                    val converted = weightGoal.toInt()
+                                    converted
+                                }
+                                else -> {
+                                    0
+                                }
+                            }
+                        }
+                        else -> {
+                            0
+                        }
+                    }
+
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        selectedWeightOption = WeightOption(
+                            value = weightValue,
+                            displayText = "$weightValue kg"
+                        )
+                    )
+
+                } catch (e: Exception) {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        errorMessage = "Error parsing weight goal: ${e.message}"
+                    )
+                }
             }.onFailure { error ->
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
@@ -96,6 +178,7 @@ class ProgressScreenViewModel(
                     isSuccess = true,
                     successRecordMessage = "Registro de peso añadido correctamente!"
                 )
+                loadAllWeightRecords()
             }.onFailure { error ->
                 handleWeightRecordError(error.message ?: "Error desconocido")
             }
@@ -110,6 +193,7 @@ class ProgressScreenViewModel(
                     weightError = errorMessage
                 )
             }
+
             errorMessage.contains("fecha", ignoreCase = true) ||
                     errorMessage.contains("día", ignoreCase = true) ||
                     errorMessage.contains("mes", ignoreCase = true) ||
@@ -120,6 +204,7 @@ class ProgressScreenViewModel(
                     dateError = errorMessage
                 )
             }
+
             else -> {
                 _uiState.value.copy(
                     isLoading = false,
@@ -153,6 +238,12 @@ class ProgressScreenViewModel(
     }
 }
 
+data class RecordItem(
+    val id: String,
+    val weight: Double,
+    val date: String
+)
+
 data class ProgressUiState(
     val selectedWeightOption: WeightOption? = null,
     val isLoading: Boolean = false,
@@ -161,5 +252,7 @@ data class ProgressUiState(
     val successGoalMessage: String? = null,
     val successRecordMessage: String? = null,
     val weightError: String? = null,
-    val dateError: String? = null
+    val dateError: String? = null,
+    val totalWeightRecords: Int = 0,
+    val weightRecordsList: List<RecordItem> = emptyList()
 )

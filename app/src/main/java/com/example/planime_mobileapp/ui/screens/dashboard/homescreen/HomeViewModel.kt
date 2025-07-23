@@ -37,7 +37,6 @@ class HomeViewModel(
                         val details = plan.details
                         val planName = plan.name.substringBefore(" ").replaceFirstChar { it.uppercase() }
                         val planDate = details.createdAt.substringBefore("T")
-
                         PlanItem(name = planName, date = planDate)
                     } ?: emptyList()
 

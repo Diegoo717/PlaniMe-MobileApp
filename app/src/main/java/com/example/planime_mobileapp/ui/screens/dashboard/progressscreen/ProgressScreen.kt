@@ -1,11 +1,10 @@
 package com.example.planime_mobileapp.ui.screens.dashboard.progressscreen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,12 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -50,6 +43,8 @@ import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 import androidx.compose.ui.platform.LocalFocusManager
 import kotlinx.coroutines.delay
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun ProgressScreen(
@@ -73,6 +68,30 @@ fun ProgressScreen(
         weightOptions.map { it.displayText }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.loadAllWeightRecords()
+    }
+
+    val weightRecords = remember(uiState.weightRecordsList) {
+        uiState.weightRecordsList.map { record ->
+            val formattedDate = try {
+                val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).apply {
+                    isLenient = false
+                }
+                val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val date = inputFormat.parse(record.date)
+                outputFormat.format(date ?: Date())
+            } catch (e: Exception) {
+                record.date
+            }
+            WeightRecord(date = formattedDate, weight = record.weight.toFloat())
+        }.sortedBy {
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(it.date) ?: Date()
+        }
+    }
+
+    val goalWeight = uiState.selectedWeightOption?.value?.toFloat() ?: 95f
+
     LaunchedEffect(uiState.successRecordMessage) {
         if (uiState.successRecordMessage != null) {
             weightText = ""
@@ -83,31 +102,13 @@ fun ProgressScreen(
         }
     }
 
-    val weightRecords = listOf(
-        WeightRecord("25/05/2025", 85f),
-        WeightRecord("04/06/2025", 82f),
-        WeightRecord("15/06/2025", 79f),
-        WeightRecord("22/06/2025", 89f),
-        WeightRecord("24/06/2025", 88f),
-        WeightRecord("30/06/2025", 90f),
-        WeightRecord("5/08/2025", 93f),
-        WeightRecord("25/08/2025", 85f),
-        WeightRecord("04/08/2025", 82f),
-        WeightRecord("15/08/2025", 79f),
-        WeightRecord("22/09/2025", 89f),
-        WeightRecord("24/09/2025", 88f),
-        WeightRecord("30/09/2025", 90f),
-        WeightRecord("5/10/2025", 93f)
-    )
-    val goalWeight = uiState.selectedWeightOption?.value?.toFloat() ?: 95f
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
     ) {
         Image(
             painter = painterResource(id = R.drawable.ultimate_background),
-            contentDescription = "home_backgorund",
+            contentDescription = "home_background",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
@@ -130,7 +131,7 @@ fun ProgressScreen(
                         .padding(top = 50.dp)
                 ) {
                     Text(
-                        text = "Tu  Progreso",
+                        text = "Tu Progreso",
                         style = TextStyle(
                             fontSize = 30.sp,
                             fontWeight = FontWeight.Bold,
@@ -175,8 +176,11 @@ fun ProgressScreen(
 
                         if (uiState.isLoading) {
                             CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                strokeWidth = 2.dp
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .padding(end = 10.dp),
+                                strokeWidth = 2.dp,
+                                color = Color.Green
                             )
                         }
                     }
@@ -292,7 +296,6 @@ fun ProgressScreen(
                         }
                         IconButton(
                             onClick = {
-
                                 viewModel.setWeightRecord(weightText, dateText)
                             },
                             modifier = Modifier
@@ -301,7 +304,7 @@ fun ProgressScreen(
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.acept_button),
-                                contentDescription = "active_button",
+                                contentDescription = "accept_button",
                                 contentScale = ContentScale.Fit,
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -326,7 +329,7 @@ fun ProgressScreen(
                             .padding(start = 10.dp)
                     ) {
                         Text(
-                            text = "Evolución de tú peso",
+                            text = "Evolución de tu peso",
                             style = TextStyle(
                                 fontSize = 32.sp,
                                 fontFamily = fontFamilyGoogle,
@@ -342,11 +345,35 @@ fun ProgressScreen(
                             .padding(16.dp),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        WeightProgressChart(
-                            records = weightRecords,
-                            goalWeight = goalWeight,
-                            modifier = Modifier
-                        )
+                        if (uiState.isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                color = Color.Green
+                            )
+                        } else if (uiState.errorMessage != null) {
+                            Text(
+                                text = uiState.errorMessage!!,
+                                color = Color.Red,
+                                fontSize = 16.sp,
+                                fontFamily = fontFamilyGoogle,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+                        } else if (weightRecords.isEmpty()) {
+                            Text(
+                                text = "No hay registros de peso",
+                                fontSize = 16.sp,
+                                fontFamily = fontFamilyGoogle,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+                        } else {
+                            WeightProgressChart(
+                                records = weightRecords,
+                                goalWeight = goalWeight,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp)
+                            )
+                        }
                     }
                 }
             }

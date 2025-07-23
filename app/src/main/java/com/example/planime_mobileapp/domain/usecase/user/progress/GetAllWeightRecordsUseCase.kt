@@ -4,7 +4,7 @@ import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.domain.model.user.progress.GetAllWeightRecordsResponse
 import com.example.planime_mobileapp.domain.repository.ApiRepository
 
-class GetAllWeightRecords(
+class GetAllWeightRecordsUseCase(
     private val repository: ApiRepository,
     private val tokenPreferences: TokenPreferences
 ) {
