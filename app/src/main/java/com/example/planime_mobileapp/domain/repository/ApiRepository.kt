@@ -9,6 +9,7 @@ import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
 import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
+import com.example.planime_mobileapp.domain.model.user.progress.GetAllWeightRecordsResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalResponse
@@ -25,4 +26,5 @@ interface ApiRepository {
     suspend fun createPlan(token: String, request: CreatePlanRequest): Result<CreatePlanResponse>
     suspend fun getPlans(token: String): Result<GetPlansResponse>
     suspend fun setWeightRecord(token: String, request: SetWeightRecordRequest): Result<SetWeightRecordResponse>
+    suspend fun getAllWeightRecords(token: String): Result<GetAllWeightRecordsResponse>
 }

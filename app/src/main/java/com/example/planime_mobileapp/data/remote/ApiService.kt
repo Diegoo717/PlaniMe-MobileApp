@@ -9,6 +9,7 @@ import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
 import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
+import com.example.planime_mobileapp.domain.model.user.progress.GetAllWeightRecordsResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalResponse
@@ -55,4 +56,8 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("/api/protected/setWeightRecord")
     suspend fun setWeightRecord(@Header("Authorization") token: String, @Body request: SetWeightRecordRequest): Response<SetWeightRecordResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/protected/getAllWeightR")
+    suspend fun getAllWeightRecords(@Header("Authorization") token: String): Response<GetAllWeightRecordsResponse>
 }

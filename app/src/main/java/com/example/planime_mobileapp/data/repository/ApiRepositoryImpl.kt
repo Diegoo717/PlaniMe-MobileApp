@@ -10,6 +10,7 @@ import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
 import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
+import com.example.planime_mobileapp.domain.model.user.progress.GetAllWeightRecordsResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalResponse
@@ -165,6 +166,22 @@ class ApiRepositoryImpl() : ApiRepository {
                             response.code()}"))
             }
         } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getAllWeightRecords(token: String): Result<GetAllWeightRecordsResponse> {
+        return try{
+            val response = ApiClient.apiService.getAllWeightRecords(token)
+            if(response.isSuccessful){
+                response.body()?.let{
+                    Result.success(it)
+                } ?: Result.failure(Exception("Respuesta vacía"))
+            }else{
+                Result.failure(
+                    Exception("Error al obtener los registros de peso: ${response.code()}"))
+            }
+        }catch(e: Exception){
             Result.failure(e)
         }
     }
