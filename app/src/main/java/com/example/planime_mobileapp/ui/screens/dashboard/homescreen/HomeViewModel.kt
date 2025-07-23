@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
 import com.example.planime_mobileapp.domain.usecase.user.plans.GetPlansUseCase
+import com.example.planime_mobileapp.domain.usecase.user.profile.ProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,12 +17,14 @@ class HomeViewModel(
 
     private val repository = ApiRepositoryImpl()
     private val getPlansUseCase = GetPlansUseCase(repository, tokenPreferences)
+    private val profileUseCase = ProfileUseCase(repository, tokenPreferences)
 
     private val _state = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState> = _state.asStateFlow()
 
     init {
         loadTotalUserPlans()
+        loadUserName()
     }
 
     fun loadTotalUserPlans(){
@@ -62,6 +65,34 @@ class HomeViewModel(
             }
         }
     }
+
+    fun loadUserName() {
+        _state.value = _state.value.copy(isLoading = true, errorMessage = null)
+
+        viewModelScope.launch {
+            try {
+                val result = profileUseCase()
+
+                result.onSuccess { profile ->
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        userName = profile?.firstName ?: "User Name",
+                        errorMessage = null
+                    )
+                }.onFailure { error ->
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        errorMessage = error.message ?: "Error al cargar el nombre de usuario"
+                    )
+                }
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    errorMessage = "Error inesperado: ${e.message}"
+                )
+            }
+        }
+    }
 }
 
 data class PlanItem(
@@ -70,6 +101,7 @@ data class PlanItem(
 )
 
 data class HomeState(
+    val userName: String = "",
     val isLoading: Boolean = false,
     val totalPlans: Int = 0,
     val plansList: List<PlanItem> = emptyList(),

@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
 import com.example.planime_mobileapp.domain.model.user.progress.WeightOption
-import com.example.planime_mobileapp.domain.usecase.user.plans.GetPlansUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.GetAllWeightRecordsUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.GetWeightGoalUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.SetWeightGoalUseCase
 import com.example.planime_mobileapp.domain.usecase.user.progress.SetWeightRecordUseCase
-import com.example.planime_mobileapp.ui.screens.dashboard.homescreen.PlanItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

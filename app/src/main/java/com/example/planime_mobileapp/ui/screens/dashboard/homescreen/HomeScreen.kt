@@ -104,7 +104,7 @@ fun HomeScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "Hola Luis, Bienvenido!",
+                                text = "Hola "+state.userName+", Bienvenido!",
                                 style = TextStyle(
                                     fontSize = 30.sp,
                                     fontWeight = FontWeight.Bold,
