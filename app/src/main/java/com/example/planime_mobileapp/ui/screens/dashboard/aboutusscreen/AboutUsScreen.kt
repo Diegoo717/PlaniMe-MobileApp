@@ -293,7 +293,7 @@ fun AboutUsScreen(onNavigateToUserProfileScreen: () -> Unit) {
                             Text(
                                 text = "Ing. Diego Magaña Álvarez\n" +
                                         "▸ Rol: Arquitecto principal y desarrollador Full-Stack\n" +
-                                        "▸ Experiencia: 2+ años en desarrollo móvil/web y sistemas escalables\n" +
+                                        "▸ Experiencia: 3+ años en desarrollo móvil/web y sistemas escalables\n" +
                                         "▸ Contacto: soydiegoo71@gmail.com\n",
                                 style = TextStyle(
                                     fontSize = 16.sp,

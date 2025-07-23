@@ -12,6 +12,8 @@ import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalResponse
+import com.example.planime_mobileapp.domain.model.user.progress.SetWeightRecordRequest
+import com.example.planime_mobileapp.domain.model.user.progress.SetWeightRecordResponse
 
 interface ApiRepository {
     suspend fun getApiStatus(): Result<ApiResponse>
@@ -22,4 +24,5 @@ interface ApiRepository {
     suspend fun getWeightGoal(token: String): Result<GetWeightGoalResponse>
     suspend fun createPlan(token: String, request: CreatePlanRequest): Result<CreatePlanResponse>
     suspend fun getPlans(token: String): Result<GetPlansResponse>
+    suspend fun setWeightRecord(token: String, request: SetWeightRecordRequest): Result<SetWeightRecordResponse>
 }

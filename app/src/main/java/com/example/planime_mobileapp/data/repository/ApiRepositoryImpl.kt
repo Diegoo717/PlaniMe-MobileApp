@@ -13,6 +13,8 @@ import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetWeightGoalResponse
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalRequest
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightGoalResponse
+import com.example.planime_mobileapp.domain.model.user.progress.SetWeightRecordRequest
+import com.example.planime_mobileapp.domain.model.user.progress.SetWeightRecordResponse
 import com.example.planime_mobileapp.domain.repository.ApiRepository
 
 class ApiRepositoryImpl() : ApiRepository {
@@ -145,6 +147,24 @@ class ApiRepositoryImpl() : ApiRepository {
                     Exception("Error al obtener los planes: ${response.code()}"))
             }
         }catch(e: Exception){
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun setWeightRecord(token: String, request: SetWeightRecordRequest): Result<SetWeightRecordResponse> {
+        return try {
+            val response = ApiClient.apiService.setWeightRecord(token, request)
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    Result.success(it)
+                } ?: Result.failure(Exception("Respuesta vacía"))
+            } else {
+                Result.failure(
+                    Exception(
+                        "Error al insertar registro de peso: ${
+                            response.code()}"))
+            }
+        } catch (e: Exception) {
             Result.failure(e)
         }
     }

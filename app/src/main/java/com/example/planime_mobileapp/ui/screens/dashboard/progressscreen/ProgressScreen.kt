@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,9 +20,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -44,6 +48,8 @@ import com.example.planime_mobileapp.domain.model.user.progress.WeightOption
 import com.example.planime_mobileapp.presentation.viewmodel.ProgressScreenViewModel
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
+import androidx.compose.ui.platform.LocalFocusManager
+import kotlinx.coroutines.delay
 
 @Composable
 fun ProgressScreen(
@@ -59,9 +65,22 @@ fun ProgressScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     val weightOptions = remember { WeightOption.generateWeightOptions() }
+    val focusManager = LocalFocusManager.current
+    var weightText by remember { mutableStateOf("") }
+    var dateText by remember { mutableStateOf("") }
 
     val weightTexts = remember(weightOptions) {
         weightOptions.map { it.displayText }
+    }
+
+    LaunchedEffect(uiState.successRecordMessage) {
+        if (uiState.successRecordMessage != null) {
+            weightText = ""
+            dateText = ""
+            focusManager.clearFocus()
+            delay(3000)
+            viewModel.clearSuccesMessage()
+        }
     }
 
     val weightRecords = listOf(
@@ -80,7 +99,7 @@ fun ProgressScreen(
         WeightRecord("30/09/2025", 90f),
         WeightRecord("5/10/2025", 93f)
     )
-    val goalWeight = 95f
+    val goalWeight = uiState.selectedWeightOption?.value?.toFloat() ?: 95f
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -197,8 +216,55 @@ fun ProgressScreen(
                         ),
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
-                    OwnTextField("Peso (kg)", modifier = Modifier.width(385.dp))
-                    OwnTextField("Fecha (dia/mes/año)", modifier = Modifier.width(385.dp))
+
+                    Column {
+                        OwnTextField(
+                            title = "Peso (kg)",
+                            value = weightText,
+                            onValueChange = {
+                                weightText = it
+                                if (uiState.weightError != null) {
+                                    viewModel.clearWeightError()
+                                }
+                            },
+                            modifier = Modifier.width(385.dp)
+                        )
+
+                        uiState.weightError?.let { error ->
+                            Text(
+                                text = error,
+                                color = Color.Red,
+                                fontSize = 16.sp,
+                                fontFamily = fontFamilyGoogle,
+                                modifier = Modifier.padding(start = 16.dp, bottom = 20.dp)
+                            )
+                        }
+                    }
+
+                    Column {
+                        OwnTextField(
+                            title = "Fecha (dia/mes/año)",
+                            value = dateText,
+                            onValueChange = {
+                                dateText = it
+                                if (uiState.dateError != null) {
+                                    viewModel.clearDateError()
+                                }
+                            },
+                            modifier = Modifier.width(385.dp)
+                        )
+
+                        uiState.dateError?.let { error ->
+                            Text(
+                                text = error,
+                                color = Color.Red,
+                                fontSize = 16.sp,
+                                fontFamily = fontFamilyGoogle,
+                                modifier = Modifier.padding(start = 16.dp)
+                            )
+                        }
+                    }
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.End,
@@ -206,8 +272,29 @@ fun ProgressScreen(
                             .width(390.dp)
                             .height(50.dp)
                     ) {
+                        uiState.successRecordMessage?.let { message ->
+                            Text(
+                                text = message,
+                                color = Color.White,
+                                fontSize = 18.sp,
+                                fontFamily = fontFamilyGoogle,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .padding(8.dp),
+                                style = TextStyle(
+                                    shadow = Shadow(
+                                        color = Color.Black,
+                                        offset = Offset(2f, 2f),
+                                        blurRadius = 5f
+                                    )
+                                )
+                            )
+                        }
                         IconButton(
-                            onClick = {},
+                            onClick = {
+
+                                viewModel.setWeightRecord(weightText, dateText)
+                            },
                             modifier = Modifier
                                 .height(60.dp)
                                 .width(100.dp)
@@ -216,7 +303,8 @@ fun ProgressScreen(
                                 painter = painterResource(id = R.drawable.acept_button),
                                 contentDescription = "active_button",
                                 contentScale = ContentScale.Fit,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier
+                                    .fillMaxSize()
                             )
                         }
                     }

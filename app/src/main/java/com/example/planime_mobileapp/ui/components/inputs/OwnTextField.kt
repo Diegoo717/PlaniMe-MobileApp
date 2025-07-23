@@ -22,16 +22,18 @@ import androidx.compose.ui.unit.sp
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @Composable
-fun OwnTextField(tittle: String, modifier: Modifier = Modifier) {
-
-    var text by remember { mutableStateOf("") }
-
+fun OwnTextField(
+    title: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     TextField(
-        value = text,
-        onValueChange = { newText -> text = newText },
+        value = value,
+        onValueChange = onValueChange,
         label = {
             Text(
-                tittle,
+                title,
                 style = TextStyle(fontFamily = fontFamilyGoogle),
                 fontSize = 20.sp,
             )
