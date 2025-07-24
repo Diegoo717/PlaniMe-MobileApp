@@ -13,6 +13,7 @@ import com.example.planime_mobileapp.data.repository.ApiRepositoryImpl
 import com.example.planime_mobileapp.domain.usecase.common.GetApiStatusUseCase
 import com.example.planime_mobileapp.navigation.AppNavGraph
 import com.example.planime_mobileapp.ui.screens.dashboard.aboutusscreen.AboutUsScreen
+import com.example.planime_mobileapp.ui.screens.dashboard.detailsplan.DetailsPlanScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.progressscreen.ProgressScreen
 import kotlinx.coroutines.launch
 
@@ -26,7 +27,8 @@ class MainActivity : ComponentActivity() {
         val tokenPreferences = TokenPreferences(this)
 
         setContent {
-           AppNavGraph(appPreferences = appPreferences, tokenPreferences = tokenPreferences)
+            DetailsPlanScreen()
+           //AppNavGraph(appPreferences = appPreferences, tokenPreferences = tokenPreferences)
         }
     }
     private val repository = ApiRepositoryImpl()
