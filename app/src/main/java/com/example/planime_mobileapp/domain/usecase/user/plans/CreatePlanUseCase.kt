@@ -86,9 +86,9 @@ class CreatePlanUseCase(
     private fun normalizeActivityLevel(activityLevel: String): String {
         return when (activityLevel.lowercase()) {
             "sedentario", "sedentario (poco o nada de ejercicio)" -> "sedentario"
-            "ligero", "Ligero (1-2 días/semana)" -> "ligero"
-            "moderado", "Moderado (3-4 días/semana)" -> "moderado"
-            "activo", "Activo (5-6 días/semana)", -> "activo"
+            "ligero", "ligero (1-2 días/semana)", "Ligero (1-2 días/semana)" -> "ligero"
+            "moderado", "moderado (3-4 días/semana)", "Moderado (3-4 días/semana)" -> "moderado"
+            "activo", "activo (5-6 días/semana)", "Activo (5-6 días/semana)", -> "activo"
             else -> "moderado"
         }
     }

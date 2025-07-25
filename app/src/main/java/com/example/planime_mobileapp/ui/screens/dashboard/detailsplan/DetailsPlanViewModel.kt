@@ -12,10 +12,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import android.app.DownloadManager
+import android.content.Context
+import android.os.Environment
+import androidx.core.net.toUri
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class DetailsPlanViewModel(
     private val tokenPreferences: TokenPreferences,
-    private val planId: Int
+    private val planId: Int,
+    private val context: Context
 ): ViewModel() {
 
     private val repository = ApiRepositoryImpl()
@@ -143,7 +150,32 @@ class DetailsPlanViewModel(
     }
 
     fun onDownloadClick() {
+        val imageUrl = state.value.plan?.imageUrl ?: return
+        viewModelScope.launch {
+            downloadImage(imageUrl)
+        }
+    }
 
+    private suspend fun downloadImage(imageUrl: String) = withContext(Dispatchers.IO) {
+        try {
+            val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val request = DownloadManager.Request(imageUrl.toUri())
+                .setTitle("Plan Image Download")
+                .setDescription("Downloading plan image")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_PICTURES,
+                    "Planime/${System.currentTimeMillis()}.jpg"
+                )
+                .setAllowedOverMetered(true)
+                .setAllowedOverRoaming(true)
+
+            downloadManager.enqueue(request)
+        } catch (e: Exception) {
+            _state.value = _state.value.copy(
+                errorMessage = "Error al descargar: ${e.message}"
+            )
+        }
     }
 
     fun onDeleteClick() {
