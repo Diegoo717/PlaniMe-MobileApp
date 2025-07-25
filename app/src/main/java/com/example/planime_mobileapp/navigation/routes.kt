@@ -13,4 +13,5 @@ object routes{
     const val CREATEPLANSCREEN = "createplanscreen"
     const val PROGRESSSCREEN = "progressscreen"
     const val ABOUTUSSCREEN = "aboutusscreen"
+    const val DETAILSPLANSCREEN = "details_plan_screen/{planId}"
 }

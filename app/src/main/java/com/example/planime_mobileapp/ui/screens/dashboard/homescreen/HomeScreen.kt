@@ -48,6 +48,7 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 fun HomeScreen(
     onNavigateToUserProfileScreen: () -> Unit, onNavigateToCreatePlanScreen: () -> Unit,
     onNavigateToProgressScreen: () -> Unit, onNavigateToHomeScreen: () -> Unit,
+    onNavigateToPlanDetails: (Int) -> Unit,
     tokenPreferences: TokenPreferences,
     viewModel: HomeViewModel = viewModel {
         HomeViewModel(tokenPreferences)
@@ -280,7 +281,12 @@ fun HomeScreen(
                     ) {
                         items(state.plansList.size) { index ->
                             val planItem = state.plansList[index]
-                            PlanCard(planItem.name, planItem.date)
+                            PlanCard(
+                                planItem.name,
+                                planItem.date,
+                                onClick = {
+                                    onNavigateToPlanDetails(planItem.id)
+                                })
                         }
                     }
                 }

@@ -2,6 +2,7 @@ package com.example.planime_mobileapp.ui.components.cards
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,9 +34,10 @@ import com.example.planime_mobileapp.R
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 
 @Composable
-fun PlanCard(tittle: String, date: String){
+fun PlanCard(tittle: String, date: String, onClick: () -> Unit = {}){
     Column(
         modifier = Modifier
+            .clickable { onClick() }
             .fillMaxHeight()
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(22.dp))
             .clip(RoundedCornerShape(22.dp))

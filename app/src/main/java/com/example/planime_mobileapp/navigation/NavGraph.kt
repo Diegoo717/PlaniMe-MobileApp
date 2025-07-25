@@ -16,9 +16,12 @@ import com.example.planime_mobileapp.ui.screens.welcome.mainscreen.MainScreen
 import com.example.planime_mobileapp.ui.screens.auth.registerscreen.RegisterScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.aboutusscreen.AboutUsScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.createplanscreen.CreatePlanScreen
+import com.example.planime_mobileapp.ui.screens.dashboard.detailsplan.DetailsPlanScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.homescreen.HomeScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.progressscreen.ProgressScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.userprofile.UserProfileScreen
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 @Composable
 fun AppNavGraph(
@@ -84,6 +87,20 @@ fun AppNavGraph(
                 onNavigateToCreatePlanScreen = {navController.navigate((routes.CREATEPLANSCREEN))},
                 onNavigateToProgressScreen = {navController.navigate((routes.PROGRESSSCREEN))},
                 onNavigateToHomeScreen = {navController.navigate((routes.HOMESCREEN))},
+                onNavigateToPlanDetails = { planId ->
+                    navController.navigate("details_plan_screen/$planId")
+                },
+                tokenPreferences = tokenPreferences
+            )
+        }
+        composable(
+            route = routes.DETAILSPLANSCREEN,
+            arguments = listOf(navArgument("planId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val planId = backStackEntry.arguments?.getInt("planId") ?: 0
+            DetailsPlanScreen(
+                planId = planId,
+                onBackClick = { navController.navigateUp() },
                 tokenPreferences = tokenPreferences
             )
         }

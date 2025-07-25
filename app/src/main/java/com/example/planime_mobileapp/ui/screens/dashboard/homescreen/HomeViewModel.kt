@@ -40,7 +40,11 @@ class HomeViewModel(
                         val details = plan.details
                         val planName = plan.name.substringBefore(" ").replaceFirstChar { it.uppercase() }
                         val planDate = details.createdAt.substringBefore("T")
-                        PlanItem(name = planName, date = planDate)
+                        PlanItem(
+                            id = details.id,
+                            name = planName,
+                            date = planDate
+                        )
                     } ?: emptyList()
 
                     _state.value = _state.value.copy(
@@ -97,7 +101,8 @@ class HomeViewModel(
 
 data class PlanItem(
     val name: String,
-    val date: String
+    val date: String,
+    val id: Int = 0
 )
 
 data class HomeState(

@@ -9,6 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,12 +25,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
 import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
 private val MediumGreen = Color(0xFF2E4328)
 private val LightGreen = Color(0xFFA1C398)
@@ -36,10 +43,17 @@ private val BorderGreen = Color(0xFF416039)
 
 @Composable
 fun DetailsPlanScreen(
+    planId: Int,
+    tokenPreferences: TokenPreferences,
     onBackClick: () -> Unit = {},
     onDownloadClick: () -> Unit = {},
-    onDeleteClick: () -> Unit = {}
+    onDeleteClick: () -> Unit = {},
+    viewModel: DetailsPlanViewModel = viewModel {
+        DetailsPlanViewModel(tokenPreferences, planId)
+    }
 ) {
+    val state by viewModel.state.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -82,17 +96,17 @@ fun DetailsPlanScreen(
                         .padding(horizontal = 16.dp)
                         .clip(RoundedCornerShape(12.dp))
                 ) {
-                    Box(
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(state.plan?.imageUrl)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = "image_plan",
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.CenterStart,
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                Brush.linearGradient(
-                                    colors = listOf(
-                                        Color(0xFFFF8E8E),
-                                        Color(0xFFFF6B6B),
-                                    )
-                                )
-                            )
+                            .fillMaxHeight()
+                            .fillMaxWidth(),
                     )
 
                     Box(
@@ -102,7 +116,7 @@ fun DetailsPlanScreen(
                                 Brush.verticalGradient(
                                     colors = listOf(
                                         Color.Transparent,
-                                        Color.Black.copy(alpha = 0.6f)
+                                        Color.Black.copy(alpha = 0.5f)
                                     ),
                                     startY = 0f,
                                     endY = Float.POSITIVE_INFINITY
@@ -116,7 +130,7 @@ fun DetailsPlanScreen(
                             .padding(16.dp)
                     ) {
                         Text(
-                            text = "Plan de alimentación",
+                            text = state.formattedPlanName,
                             color = Color.White,
                             style = TextStyle(
                                 fontSize = 30.sp,
@@ -134,11 +148,11 @@ fun DetailsPlanScreen(
                 }
 
                 Text(
-                    text = "Creado el 15 de mayo de 2024 · Expira el 15 de junio de 2024",
+                    text = "Creado el ${state.formattedCreatedAt} · Expira ${state.formattedExpiredAt}",
                     color = Color.Black,
                     fontSize = 14.sp,
                     fontFamily = fontFamilyGoogle,
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -150,10 +164,10 @@ fun DetailsPlanScreen(
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = fontFamilyGoogle,
-                    style = androidx.compose.ui.text.TextStyle(
-                        shadow = androidx.compose.ui.graphics.Shadow(
+                    style = TextStyle(
+                        shadow = Shadow(
                             color = Color.White,
-                            offset = androidx.compose.ui.geometry.Offset(3f, 3f),
+                            offset = Offset(3f, 3f),
                             blurRadius = 0f
                         )
                     ),
@@ -163,57 +177,51 @@ fun DetailsPlanScreen(
                 Column(
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
                         DetailItem(
-                            label = "Edad",
-                            value = "22 años",
+                            label = "Edad "+"\uD83D\uDCC6",
+                            value = state.formattedAge,
                             labelFontSize = 20.sp,
                             valueFontSize = 16.sp,
                             modifier = Modifier.weight(1f)
                         )
                         DetailItem(
-                            label = "Sexo",
-                            value = "Masculino",
-                            labelFontSize = 20.sp,
-                            valueFontSize = 16.sp,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        DetailItem(
-                            label = "Peso",
-                            value = "77 kg",
-                            labelFontSize = 20.sp,
-                            valueFontSize = 16.sp,
-                            modifier = Modifier.weight(1f)
-                        )
-                        DetailItem(
-                            label = "Altura",
-                            value = "173 cm",
+                            label = "Genero "+"⚧\uFE0F",
+                            value = state.formattedGender,
                             labelFontSize = 20.sp,
                             valueFontSize = 16.sp,
                             modifier = Modifier.weight(1f)
                         )
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
                         DetailItem(
-                            label = "Nivel de actividad",
-                            value = "Moderado (3-4 días/semana)",
+                            label = "Peso "+"⚖\uFE0F",
+                            value = state.formattedWeight,
                             labelFontSize = 20.sp,
                             valueFontSize = 16.sp,
                             modifier = Modifier.weight(1f)
                         )
                         DetailItem(
-                            label = "Objetivo físico",
-                            value = "Bajar de peso",
+                            label = "Altura "+"\uD83D\uDCCF",
+                            value = state.formattedHeight,
+                            labelFontSize = 20.sp,
+                            valueFontSize = 16.sp,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        DetailItem(
+                            label = "Nivel de actividad "+"\uD83C\uDFC3\uD83C\uDFFB\u200D➡\uFE0F",
+                            value = state.formattedActivityLevel,
+                            labelFontSize = 20.sp,
+                            valueFontSize = 15.sp,
+                            modifier = Modifier.weight(1f)
+                        )
+                        DetailItem(
+                            label = "Objetivo físico "+"\uD83C\uDFF9",
+                            value = state.formattedGoal,
                             labelFontSize = 20.sp,
                             valueFontSize = 16.sp,
                             modifier = Modifier.weight(1f)
@@ -278,10 +286,10 @@ private fun DetailItem(
             color = Color.Black,
             fontSize = labelFontSize,
             fontFamily = fontFamilyGoogle,
-            style = androidx.compose.ui.text.TextStyle(
-                shadow = androidx.compose.ui.graphics.Shadow(
+            style = TextStyle(
+                shadow = Shadow(
                     color = Color.White,
-                    offset = androidx.compose.ui.geometry.Offset(2f, 2f),
+                    offset = Offset(2f, 2f),
                     blurRadius = 0f
                 )
             )
@@ -295,12 +303,5 @@ private fun DetailItem(
             fontSize = valueFontSize,
             fontFamily = fontFamilyGoogle
         )
-    }
-}
-
-@Composable
-fun DetailsPlanScreenPreview() {
-    MaterialTheme {
-        DetailsPlanScreen()
     }
 }

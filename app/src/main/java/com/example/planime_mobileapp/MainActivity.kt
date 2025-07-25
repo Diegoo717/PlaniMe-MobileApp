@@ -27,8 +27,7 @@ class MainActivity : ComponentActivity() {
         val tokenPreferences = TokenPreferences(this)
 
         setContent {
-            DetailsPlanScreen()
-           //AppNavGraph(appPreferences = appPreferences, tokenPreferences = tokenPreferences)
+           AppNavGraph(appPreferences = appPreferences, tokenPreferences = tokenPreferences)
         }
     }
     private val repository = ApiRepositoryImpl()
