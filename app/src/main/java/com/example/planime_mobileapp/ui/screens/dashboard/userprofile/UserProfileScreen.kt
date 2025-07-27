@@ -209,8 +209,8 @@ fun UserProfileScreen(
                             .fillMaxWidth()
                             .weight(0.3f)
                     ) {
-                        StatsBox("15", "Planes")
-                        StatsBox("10", "Objetivos")
+                        StatsBox(state.totalPlans.toString(), "Planes")
+                        StatsBox("1", "Objetivos")
                         StatsBox("1", "Insignias")
                     }
                 }

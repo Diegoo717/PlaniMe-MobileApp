@@ -241,6 +241,7 @@ fun HomeScreen(
                     }
 
                     Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(0.75f)
@@ -253,7 +254,35 @@ fun HomeScreen(
                                     .align(Alignment.Center),
                                 color = Color(0xFF4CAF50)
                             )
-                        } else {
+                        } else if(state.totalPlans == 0){
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "No hay planes disponibles...",
+                                    style = TextStyle(
+                                        fontSize = 28.sp,
+                                        fontFamily = fontFamilyGoogle,
+                                        textAlign = TextAlign.Center,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                                Text(
+                                    text = "Crea uno ahora mismo ;)",
+                                    style = TextStyle(
+                                        fontSize = 22.sp,
+                                        fontFamily = fontFamilyGoogle,
+                                        textAlign = TextAlign.Center,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.DarkGray
+                                    )
+                                )
+                            }
+                        }else{
                             LazyRow(
                                 modifier = Modifier
                                     .fillMaxWidth()
