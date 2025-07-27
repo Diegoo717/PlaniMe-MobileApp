@@ -1,6 +1,7 @@
 package com.example.planime_mobileapp.ui.screens.auth.registerscreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -28,7 +29,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -89,22 +95,24 @@ fun RegisterScreen(
                     modifier = Modifier
                         .weight(0.25f)
                         .fillMaxWidth()
+                        .padding(top = 50.dp)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.planime_logo),
                         contentDescription = "planime_logo",
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
-                            .size(280.dp)
+                            .fillMaxSize()
                             .align(Alignment.BottomCenter)
                     )
                     Text(
                         text = "PlaniMe",
-                        fontSize = 40.sp,
+                        fontSize = 35.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .offset(y = 20.dp)
                             .align(Alignment.BottomCenter)
                     )
                 }
@@ -117,10 +125,17 @@ fun RegisterScreen(
                 ) {
                     Text(
                         text = "Registra tu cuenta",
-                        fontSize = 50.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            fontSize = 50.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(4f, 4f),
+                                blurRadius = 0f
+                            )
+                        ),
                         modifier = Modifier.fillMaxWidth()
                     )
                     TextField(
@@ -142,7 +157,33 @@ fun RegisterScreen(
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 30.dp),
+                            .padding(top = 30.dp)
+                            .drawWithContent {
+                                drawContent()
+                                drawIntoCanvas { canvas ->
+                                    val paint = Paint().apply {
+                                        color = Color.Black.copy(alpha = 0.2f)
+                                        this.asFrameworkPaint().apply {
+                                            isAntiAlias = true
+                                            maskFilter = android.graphics.BlurMaskFilter(8f, android.graphics.BlurMaskFilter.Blur.NORMAL)
+                                        }
+                                    }
+
+                                    val shadowHeight = 4.dp.toPx()
+                                    val cornerRadius = 12.dp.toPx()
+                                    val shadowWidthReduction = 7.dp.toPx()
+
+                                    canvas.drawRoundRect(
+                                        left = shadowWidthReduction,
+                                        top = size.height - shadowHeight,
+                                        right = size.width - shadowWidthReduction,
+                                        bottom = size.height,
+                                        radiusX = cornerRadius,
+                                        radiusY = cornerRadius,
+                                        paint = paint
+                                    )
+                                }
+                            },
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -171,7 +212,33 @@ fun RegisterScreen(
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 20.dp),
+                            .padding(top = 20.dp)
+                            .drawWithContent {
+                                drawContent()
+                                drawIntoCanvas { canvas ->
+                                    val paint = Paint().apply {
+                                        color = Color.Black.copy(alpha = 0.2f)
+                                        this.asFrameworkPaint().apply {
+                                            isAntiAlias = true
+                                            maskFilter = android.graphics.BlurMaskFilter(8f, android.graphics.BlurMaskFilter.Blur.NORMAL)
+                                        }
+                                    }
+
+                                    val shadowHeight = 4.dp.toPx()
+                                    val cornerRadius = 12.dp.toPx()
+                                    val shadowWidthReduction = 7.dp.toPx()
+
+                                    canvas.drawRoundRect(
+                                        left = shadowWidthReduction,
+                                        top = size.height - shadowHeight,
+                                        right = size.width - shadowWidthReduction,
+                                        bottom = size.height,
+                                        radiusX = cornerRadius,
+                                        radiusY = cornerRadius,
+                                        paint = paint
+                                    )
+                                }
+                            },
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -200,7 +267,33 @@ fun RegisterScreen(
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 20.dp),
+                            .padding(top = 20.dp)
+                            .drawWithContent {
+                                drawContent()
+                                drawIntoCanvas { canvas ->
+                                    val paint = Paint().apply {
+                                        color = Color.Black.copy(alpha = 0.2f)
+                                        this.asFrameworkPaint().apply {
+                                            isAntiAlias = true
+                                            maskFilter = android.graphics.BlurMaskFilter(8f, android.graphics.BlurMaskFilter.Blur.NORMAL)
+                                        }
+                                    }
+
+                                    val shadowHeight = 4.dp.toPx()
+                                    val cornerRadius = 12.dp.toPx()
+                                    val shadowWidthReduction = 7.dp.toPx()
+
+                                    canvas.drawRoundRect(
+                                        left = shadowWidthReduction,
+                                        top = size.height - shadowHeight,
+                                        right = size.width - shadowWidthReduction,
+                                        bottom = size.height,
+                                        radiusX = cornerRadius,
+                                        radiusY = cornerRadius,
+                                        paint = paint
+                                    )
+                                }
+                            },
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -230,7 +323,33 @@ fun RegisterScreen(
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 20.dp),
+                            .padding(top = 20.dp)
+                            .drawWithContent {
+                                drawContent()
+                                drawIntoCanvas { canvas ->
+                                    val paint = Paint().apply {
+                                        color = Color.Black.copy(alpha = 0.2f)
+                                        this.asFrameworkPaint().apply {
+                                            isAntiAlias = true
+                                            maskFilter = android.graphics.BlurMaskFilter(8f, android.graphics.BlurMaskFilter.Blur.NORMAL)
+                                        }
+                                    }
+
+                                    val shadowHeight = 4.dp.toPx()
+                                    val cornerRadius = 12.dp.toPx()
+                                    val shadowWidthReduction = 7.dp.toPx()
+
+                                    canvas.drawRoundRect(
+                                        left = shadowWidthReduction,
+                                        top = size.height - shadowHeight,
+                                        right = size.width - shadowWidthReduction,
+                                        bottom = size.height,
+                                        radiusX = cornerRadius,
+                                        radiusY = cornerRadius,
+                                        paint = paint
+                                    )
+                                }
+                            },
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -252,10 +371,19 @@ fun RegisterScreen(
                     uiState.successMessage?.let { successMessage ->
                         Text(
                             text = successMessage,
-                            color = Color.Black,
+                            color = Color.White,
                             fontSize = 20.sp,
                             fontFamily = fontFamilyGoogle,
-                            modifier = Modifier.padding(top = 10.dp)
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(top = 10.dp),
+                            style = TextStyle(
+                                shadow = Shadow(
+                                    color = Color.Black,
+                                    offset = Offset(2f, 2f),
+                                    blurRadius = 5f
+                                )
+                            )
                         )
                     }
                 }
@@ -320,10 +448,16 @@ fun RegisterScreen(
                     Text(
                         text = "Inicia sesión AQUI!",
                         color = Color.White,
-                        fontSize = 27.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontSize = 26.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset(2f, 2f),
+                                blurRadius = 5f
+                            )
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)

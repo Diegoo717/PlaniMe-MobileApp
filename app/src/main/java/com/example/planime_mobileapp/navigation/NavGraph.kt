@@ -100,7 +100,11 @@ fun AppNavGraph(
             val planId = backStackEntry.arguments?.getInt("planId") ?: 0
             DetailsPlanScreen(
                 planId = planId,
-                onBackClick = { navController.navigateUp() },
+                onBackClick = {
+                    navController.navigate(routes.HOMESCREEN) {
+                        popUpTo(routes.DETAILSPLANSCREEN) { inclusive = true }
+                    }
+                },
                 tokenPreferences = tokenPreferences
             )
         }

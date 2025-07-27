@@ -15,6 +15,7 @@ import com.example.planime_mobileapp.navigation.AppNavGraph
 import com.example.planime_mobileapp.ui.screens.dashboard.aboutusscreen.AboutUsScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.detailsplan.DetailsPlanScreen
 import com.example.planime_mobileapp.ui.screens.dashboard.progressscreen.ProgressScreen
+import com.example.planime_mobileapp.ui.screens.welcome.loadingscreen.LoadingScreen
 import kotlinx.coroutines.launch
 
 

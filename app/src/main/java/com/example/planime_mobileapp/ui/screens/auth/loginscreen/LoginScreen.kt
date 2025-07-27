@@ -9,43 +9,52 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.planime_mobileapp.R
-import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.planime_mobileapp.R
 import com.example.planime_mobileapp.data.local.TokenPreferences
 import com.example.planime_mobileapp.ui.animations.buttons.animateButtonInteraction
 import com.example.planime_mobileapp.ui.animations.screens.AnimatedScreen
 import com.example.planime_mobileapp.ui.animations.screens.ScreenTransitions
+import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun LoginScreen(
@@ -126,10 +135,17 @@ fun LoginScreen(
                 ) {
                     Text(
                         text = "Ingresa a tu cuenta",
-                        fontSize = 50.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = fontFamilyGoogle,
-                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            fontSize = 50.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = fontFamilyGoogle,
+                            textAlign = TextAlign.Center,
+                            shadow = Shadow(
+                                color = Color.White,
+                                offset = Offset(4f, 4f),
+                                blurRadius = 0f
+                            )
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
 
@@ -153,7 +169,36 @@ fun LoginScreen(
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 40.dp),
+                            .padding(top = 40.dp)
+                            .drawWithContent {
+                                drawContent()
+                                drawIntoCanvas { canvas ->
+                                    val paint = Paint().apply {
+                                        color = Color.Black.copy(alpha = 0.2f)
+                                        this.asFrameworkPaint().apply {
+                                            isAntiAlias = true
+                                            maskFilter = android.graphics.BlurMaskFilter(
+                                                8f,
+                                                android.graphics.BlurMaskFilter.Blur.NORMAL
+                                            )
+                                        }
+                                    }
+
+                                    val shadowHeight = 4.dp.toPx()
+                                    val cornerRadius = 12.dp.toPx()
+                                    val shadowWidthReduction = 7.dp.toPx()
+
+                                    canvas.drawRoundRect(
+                                        left = shadowWidthReduction,
+                                        top = size.height - shadowHeight,
+                                        right = size.width - shadowWidthReduction,
+                                        bottom = size.height,
+                                        radiusX = cornerRadius,
+                                        radiusY = cornerRadius,
+                                        paint = paint
+                                    )
+                                }
+                            },
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -166,6 +211,8 @@ fun LoginScreen(
                     TextField(
                         value = uiState.password,
                         onValueChange = viewModel::updatePassword,
+                        visualTransformation = PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         label = {
                             Text(
                                 "Contraseña",
@@ -182,7 +229,36 @@ fun LoginScreen(
                         },
                         modifier = Modifier
                             .width(300.dp)
-                            .padding(top = 30.dp),
+                            .padding(top = 30.dp)
+                            .drawWithContent {
+                                drawContent()
+                                drawIntoCanvas { canvas ->
+                                    val paint = Paint().apply {
+                                        color = Color.Black.copy(alpha = 0.2f)
+                                        this.asFrameworkPaint().apply {
+                                            isAntiAlias = true
+                                            maskFilter = android.graphics.BlurMaskFilter(
+                                                8f,
+                                                android.graphics.BlurMaskFilter.Blur.NORMAL
+                                            )
+                                        }
+                                    }
+
+                                    val shadowHeight = 4.dp.toPx()
+                                    val cornerRadius = 12.dp.toPx()
+                                    val shadowWidthReduction = 7.dp.toPx()
+
+                                    canvas.drawRoundRect(
+                                        left = shadowWidthReduction,
+                                        top = size.height - shadowHeight,
+                                        right = size.width - shadowWidthReduction,
+                                        bottom = size.height,
+                                        radiusX = cornerRadius,
+                                        radiusY = cornerRadius,
+                                        paint = paint
+                                    )
+                                }
+                            },
                         shape = RoundedCornerShape(12.dp),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color(0xFFEFF299),
@@ -206,10 +282,19 @@ fun LoginScreen(
                 uiState.successMessage?.let { successMessage ->
                     Text(
                         text = successMessage,
-                        color = Color.Black,
+                        color = Color.White,
                         fontSize = 20.sp,
                         fontFamily = fontFamilyGoogle,
-                        modifier = Modifier.padding(top = 0.dp, bottom = 30.dp)
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(bottom = 30.dp),
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset(2f, 2f),
+                                blurRadius = 5f
+                            )
+                        )
                     )
                 }
 
@@ -221,7 +306,7 @@ fun LoginScreen(
                     if (uiState.isLoading) {
                         CircularProgressIndicator(
                             modifier = Modifier
-                                .offset(y= -100.dp)
+                                .offset(y = -100.dp)
                                 .size(50.dp)
                                 .align(Alignment.Center),
                             color = Color(0xFF4CAF50)
@@ -288,10 +373,16 @@ fun LoginScreen(
                     Text(
                         text = "Registrate AQUI!",
                         color = Color.White,
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontSize = 26.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset(2f, 2f),
+                                blurRadius = 5f
+                            )
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)
@@ -328,10 +419,16 @@ fun LoginScreen(
                     Text(
                         text = "HAZ AQUI!",
                         color = Color.White,
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontSize = 23.sp,
                         fontFamily = fontFamilyGoogle,
                         textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset(2f, 2f),
+                                blurRadius = 5f
+                            )
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)

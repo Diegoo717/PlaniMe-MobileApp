@@ -7,6 +7,7 @@ import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
+import com.example.planime_mobileapp.domain.model.user.plans.DeletePlanResponse
 import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetAllWeightRecordsResponse
@@ -27,4 +28,5 @@ interface ApiRepository {
     suspend fun getPlans(token: String): Result<GetPlansResponse>
     suspend fun setWeightRecord(token: String, request: SetWeightRecordRequest): Result<SetWeightRecordResponse>
     suspend fun getAllWeightRecords(token: String): Result<GetAllWeightRecordsResponse>
+    suspend fun deletePlan(planId: Int, token: String): Result<DeletePlanResponse>
 }

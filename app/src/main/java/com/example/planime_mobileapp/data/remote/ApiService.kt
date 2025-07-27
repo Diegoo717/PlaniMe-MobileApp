@@ -7,6 +7,7 @@ import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
+import com.example.planime_mobileapp.domain.model.user.plans.DeletePlanResponse
 import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetAllWeightRecordsResponse
@@ -17,10 +18,12 @@ import com.example.planime_mobileapp.domain.model.user.progress.SetWeightRecordR
 import com.example.planime_mobileapp.domain.model.user.progress.SetWeightRecordResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -60,4 +63,8 @@ interface ApiService {
     @Headers("Content-Type: application/json")
     @GET("/api/protected/getAllWeightR")
     suspend fun getAllWeightRecords(@Header("Authorization") token: String): Response<GetAllWeightRecordsResponse>
+
+    @Headers("Content-Type: application/json")
+    @DELETE("/api/protected/deletePlanByID/{planId}")
+    suspend fun deletePlan(@Path("planId") planId: Int, @Header("Authorization") token: String): Response<DeletePlanResponse>
 }

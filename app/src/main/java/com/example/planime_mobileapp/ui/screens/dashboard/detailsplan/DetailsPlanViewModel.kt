@@ -16,6 +16,7 @@ import android.app.DownloadManager
 import android.content.Context
 import android.os.Environment
 import androidx.core.net.toUri
+import com.example.planime_mobileapp.domain.usecase.user.plans.DeletePlanUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -27,6 +28,7 @@ class DetailsPlanViewModel(
 
     private val repository = ApiRepositoryImpl()
     private val getPlansUseCase = GetPlansUseCase(repository, tokenPreferences)
+    private val deletePlanUseCase = DeletePlanUseCase(repository, tokenPreferences)
 
     private val _state = MutableStateFlow(DetailsPlanState())
     val state: StateFlow<DetailsPlanState> = _state.asStateFlow()
@@ -178,14 +180,37 @@ class DetailsPlanViewModel(
         }
     }
 
-    fun onDeleteClick() {
+    fun onDeleteClick(planId: Int) {
+        _state.value = _state.value.copy(isLoading = true, errorMessage = null)
         viewModelScope.launch {
+            try{
+                val result = deletePlanUseCase(planId)
 
+                result.onSuccess { plansResponse  ->
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        errorMessage = null,
+                        successMessage = "Plan eliminado!"
+                    )
+                }.onFailure { error ->
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        errorMessage = error.message ?: "Error al eliminar el plan"
+                    )
+                }
+
+            }catch(e: Exception){
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    errorMessage = "Error inesperado: ${e.message}"
+                )
+            }
         }
     }
 }
 
 data class DetailsPlanState(
+    val successMessage: String = "",
     val isLoading: Boolean = false,
     val plan: Plan? = null,
     val formattedPlanName: String = "",

@@ -8,6 +8,7 @@ import com.example.planime_mobileapp.domain.model.auth.RegisterRequest
 import com.example.planime_mobileapp.domain.model.auth.RegisterResponse
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanRequest
 import com.example.planime_mobileapp.domain.model.user.plans.CreatePlanResponse
+import com.example.planime_mobileapp.domain.model.user.plans.DeletePlanResponse
 import com.example.planime_mobileapp.domain.model.user.plans.GetPlansResponse
 import com.example.planime_mobileapp.domain.model.user.profile.ProfileResponse
 import com.example.planime_mobileapp.domain.model.user.progress.GetAllWeightRecordsResponse
@@ -180,6 +181,22 @@ class ApiRepositoryImpl() : ApiRepository {
             }else{
                 Result.failure(
                     Exception("Error al obtener los registros de peso: ${response.code()}"))
+            }
+        }catch(e: Exception){
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun deletePlan(planId: Int, token: String): Result<DeletePlanResponse> {
+        return try{
+            val response = ApiClient.apiService.deletePlan(planId, token)
+            if(response.isSuccessful){
+                response.body()?.let{
+                    Result.success(it)
+                } ?: Result.failure(Exception("Respuesta vacía"))
+            }else{
+                Result.failure(
+                    Exception("Error al eliminar el plan: ${response.code()}"))
             }
         }catch(e: Exception){
             Result.failure(e)

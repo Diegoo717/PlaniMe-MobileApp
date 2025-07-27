@@ -40,6 +40,10 @@ import com.example.planime_mobileapp.ui.theme.fontFamilyGoogle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.planime_mobileapp.ui.components.visual.DetailItem
+import kotlinx.coroutines.delay
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.draw.shadow
+import kotlinx.coroutines.launch
 
 @Composable
 fun DetailsPlanScreen(
@@ -60,6 +64,9 @@ fun DetailsPlanScreen(
     )
 
     val state by viewModel.state.collectAsState()
+    val scope = rememberCoroutineScope()
+
+    val planId = state.plan?.details?.id?.toInt()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -103,6 +110,7 @@ fun DetailsPlanScreen(
                             .fillMaxWidth()
                             .height(320.dp)
                             .padding(horizontal = 16.dp)
+                            .shadow(elevation = 5.dp, shape = RoundedCornerShape(12.dp))
                             .clip(RoundedCornerShape(12.dp))
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
@@ -259,16 +267,57 @@ fun DetailsPlanScreen(
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
-                        IconButton(
-                            onClick = { viewModel.onDeleteClick() },
-                            modifier = Modifier.size(140.dp)
+                        Box(
+                            modifier = Modifier
+                                .size(140.dp)
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.delete_button),
-                                contentDescription = "delete_button",
-                                contentScale = ContentScale.Fit,
-                                modifier = Modifier.fillMaxSize()
+                        if (state.isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .offset(y= -100.dp)
+                                    .size(50.dp)
+                                    .align(Alignment.Center),
+                                color = Color(0xFF4CAF50)
                             )
+                        } else if(state.successMessage != "") {
+                                Text(
+                                    text = state.successMessage,
+                                    color = Color.White,
+                                    fontSize = 20.sp,
+                                    fontFamily = fontFamilyGoogle,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                        .padding(0.dp),
+                                    style = TextStyle(
+                                        shadow = Shadow(
+                                            color = Color.Black,
+                                            offset = Offset(2f, 2f),
+                                            blurRadius = 5f
+                                        )
+                                    )
+                                )
+                        }else{
+                            IconButton(
+                                onClick = {
+                                    viewModel.onDeleteClick(planId ?: 1)
+                                    scope.launch {
+                                        delay(2000)
+                                        onBackClick()
+                                    }
+                                },
+                                modifier = Modifier
+                                    .size(140.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.delete_button),
+                                    contentDescription = "delete_button",
+                                    contentScale = ContentScale.Fit,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
+                        }
                         }
                     }
 
