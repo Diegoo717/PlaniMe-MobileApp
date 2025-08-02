@@ -110,7 +110,7 @@ Hacemos que la nutrición sea sencilla y accesible, eliminando la complejidad.
 
 ### Prerrequisitos
 - Dispositivo Android con API nivel 24+ (Android 7.0)
-- Espacio de almacenamiento: ~15 MB
+- Espacio de almacenamiento: ~30 MB
 
 ### Instalación desde APK
 
