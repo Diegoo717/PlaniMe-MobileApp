@@ -1,214 +1,251 @@
-# PlaniMe MobileApp 📱
+<div align="center">
 
-Una aplicación Android nativa desarrollada en Kotlin con Jetpack Compose para la gestión de planes nutricionales personalizados, con arquitectura MVVM y rendimiento optimizado.
+# 📱 PlaniMe Mobile
 
-📦 **[Descargar APK](https://planime.diecode.lat/assets/downloads/PlaniMe_v1.0.apk)**
+**Your personalized nutrition assistant: smart plans and progress tracking**
 
-## 📋 Descripción
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.8+-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-1.5+-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
+[![Android](https://img.shields.io/badge/Android-7.0+-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://www.android.com/)
 
-PlaniMe MobileApp es una aplicación Android nativa desarrollada en Kotlin con Jetpack Compose, diseñada para gestionar planes nutricionales personalizados mediante nuestra API RESTful. Implementa arquitectura MVVM, navegación entre pantallas, consumo de servicios con Retrofit y asincronía con Corrutinas, ofreciendo un rendimiento muy optimizado.
+📦 **[Download APK](https://planime.diecode.lat/assets/downloads/PlaniMe_v1.0.apk)**
 
-## 🚀 Características Principales
+</div>
 
-- ✅ **Planes Nutricionales**: Creación y gestión de planes alimenticios personalizados
-- 📊 **Seguimiento de Progreso**: Monitoreo de peso y objetivos nutricionales
-- 🔐 **Autenticación Segura**: Sistema de login y registro con JWT
-- 📱 **UI Moderna**: Interfaz nativa con Jetpack Compose
-- ⚡ **Alto Rendimiento**: Arquitectura MVVM con Corrutinas
-- 🔄 **Sincronización**: Integración completa con API RESTful
-- 🎨 **Experiencia Fluida**: Navegación intuitiva y animaciones suaves
+---
 
-## 🛠️ Tecnologías
+## 🎯 About The Project
 
-### Desarrollo Android
-- **Kotlin**: Lenguaje principal de desarrollo
-- **Jetpack Compose**: UI toolkit moderno y declarativo
-- **Material Design 3**: Sistema de diseño de Google
+**PlaniMe Mobile** is a native Android application developed with Kotlin and Jetpack Compose, designed to manage personalized nutrition plans through our RESTful API. It implements MVVM architecture, screen navigation, service consumption with Retrofit, and asynchronous operations with Coroutines, offering highly optimized performance.
 
-### Arquitectura
-- **MVVM**: Model-View-ViewModel pattern
-- **Clean Architecture**: Separación de responsabilidades
-- **Repository Pattern**: Abstracción de fuentes de datos
+### What Makes PlaniMe Special?
 
-### Librerías y Frameworks
-- **Retrofit**: Cliente HTTP para consumo de API
-- **Corrutinas**: Programación asíncrona
-- **Navigation Component**: Navegación entre pantallas
-- **ViewModel & LiveData**: Gestión de estado
-- **SharedPreferences**: Almacenamiento local
+- 🍎 **Personalized Plans**: Custom meal plans tailored to your goals
+- 📊 **Progress Tracking**: Monitor weight and nutritional objectives
+- 🎯 **Goal-Oriented**: Designed to help you achieve your health targets
+- 🔐 **Secure Authentication**: JWT-based login and registration
+- ⚡ **High Performance**: Optimized MVVM architecture
+- 🔄 **Real-time Sync**: Full integration with RESTful API
 
-## 📁 Estructura del Proyecto
+---
 
-```
-PLANIME-MOBILEAPP/
-│
-├── manifests/                    # Configuración de la app
-├── kotlin+java/
-│
-├── com.example.planime_mobileapp/
-│   │
-│   ├── data/                     # Capa de datos
-│   │   ├── local/               # Almacenamiento local
-│   │   ├── remote/              # Cliente API
-│   │   └── repository/          # Repositorios
-│   │
-│   ├── domain/                   # Lógica de negocio
-│   ├── model/                    # Modelos de datos
-│   │   ├── auth/                # Modelos de autenticación
-│   │   ├── plans/               # Modelos de planes
-│   │   ├── profile/             # Modelos de perfil
-│   │   └── progress/            # Modelos de progreso
-│   │
-│   ├── usecase/                  # Casos de uso
-│   │   ├── auth/                # Casos de uso de auth
-│   │   └── user/                # Casos de uso de usuario
-│   │
-│   ├── navigation/               # Navegación
-│   │   ├── NavGraph.kt
-│   │   └── routes/
-│   │
-│   └── ui/                       # Interfaz de usuario
-│       ├── screens/             # Pantallas
-│       │   ├── auth/            # Autenticación
-│       │   ├── dashboard/       # Dashboard principal
-│       │   ├── homescreen/      # Pantalla de inicio
-│       │   ├── createplanscreen/ # Crear planes
-│       │   ├── progressscreen/  # Seguimiento
-│       │   └── userprofile/     # Perfil de usuario
-│       │
-│       ├── components/          # Componentes reutilizables
-│       │   ├── cards/           # Tarjetas
-│       │   ├── charts/          # Gráficos
-│       │   ├── inputs/          # Campos de entrada
-│       │   └── navigation/      # Navegación
-│       │
-│       └── theme/               # Tema y estilos
-│
-└── MainActivity.kt               # Actividad principal
-```
+## ✨ Key Features
 
-## 🎯 Nuestra Misión
+### 🥗 Nutrition Management
 
-Empoderar a las personas para que alcancen sus objetivos de salud y bienestar a través de planes de nutrición personalizados que sean accesibles, efectivos y disfrutables.
+- Create and customize personalized meal plans
+- Daily and weekly nutrition planning
+- Calorie and macronutrient tracking
+- Meal recommendations based on your goals
 
-## 🔮 Nuestra Visión
+### 📈 Progress Monitoring
 
-Revolucionar la forma en que las personas abordan la nutrición combinando tecnología de vanguardia con ciencia nutricional.
+- Weight tracking over time
+- Visual charts and statistics
+- Goal achievement monitoring
+- Progress history
 
-## 💎 Nuestros Valores
+### 👤 User Profile
 
-### Personalización
-Creemos que no hay dos personas iguales, y sus planes de nutrición tampoco deberían serlo.
+- Personal information management
+- Health metrics configuration
+- Dietary preferences and restrictions
+- Activity level settings
 
-### Adaptabilidad
-Aprendemos y nos ajustamos continuamente para ofrecerte las soluciones más efectivas.
+### 🎨 User Experience
 
-### Simplicidad
-Hacemos que la nutrición sea sencilla y accesible, eliminando la complejidad.
+- Modern UI with Material Design 3
+- Smooth animations and transitions
+- Intuitive navigation
+- Responsive and fluid interface
 
-## 📱 Instalación
+---
 
-### Prerrequisitos
-- Dispositivo Android con API nivel 24+ (Android 7.0)
-- Espacio de almacenamiento: ~30 MB
+## 🛠️ Tech Stack
 
-### Instalación desde APK
+### Core
 
-1. **Descarga el APK**
+- **[Kotlin](https://kotlinlang.org/)** - Main development language
+- **[Jetpack Compose](https://developer.android.com/jetpack/compose)** - Modern UI toolkit
+- **[Material Design 3](https://m3.material.io/)** - Google's design system
+
+### Architecture
+
+- **MVVM** - Model-View-ViewModel pattern
+- **Clean Architecture** - Separation of concerns
+- **Repository Pattern** - Data source abstraction
+
+### Libraries & Frameworks
+
+- **[Retrofit](https://square.github.io/retrofit/)** - HTTP client for API consumption
+- **[Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)** - Asynchronous programming
+- **[Navigation Component](https://developer.android.com/guide/navigation)** - Screen navigation
+- **[ViewModel & LiveData](https://developer.android.com/topic/libraries/architecture/viewmodel)** - State management
+- **[SharedPreferences](https://developer.android.com/training/data-storage/shared-preferences)** - Local storage
+
+---
+
+## 📂 Project Structure
+
+The project follows Clean Architecture principles with clear separation of layers:
+
+- **Data Layer**: Manages data sources (API, local storage) and repositories
+- **Domain Layer**: Contains business logic and use cases
+- **Presentation Layer**: UI screens and ViewModels built with Jetpack Compose
+
+### Main Components
+
+- **Authentication Module**: Login, registration, and session management
+- **Plans Module**: Create, view, and edit nutrition plans
+- **Progress Module**: Track weight and goal achievement
+- **Profile Module**: User information and preferences management
+- **Navigation**: Type-safe navigation between screens
+- **UI Components**: Reusable cards, charts, inputs, and navigation elements
+- **Theme**: Consistent styling and theming system
+
+---
+
+## 📦 Prerequisites
+
+### For Installation
+
+- Android device with API level 24+ (Android 7.0 or higher)
+- Storage space: ~30 MB
+
+### For Development
+
+- **Android Studio** Arctic Fox or newer
+- **JDK** 11 or higher
+- **Android SDK** API 33+
+- **Kotlin** 1.8+
+
+---
+
+## 🚀 Installation
+
+### From APK (End Users)
+
+1. **Download the APK**
+
    ```
    https://planime.diecode.lat/assets/downloads/PlaniMe_v1.0.apk
    ```
 
-2. **Habilita fuentes desconocidas**
-   - Ve a Configuración > Seguridad
-   - Activa "Fuentes desconocidas" o "Instalar apps desconocidas"
+2. **Enable Unknown Sources**
 
-3. **Instala la aplicación**
-   - Abre el archivo APK descargado
-   - Sigue las instrucciones de instalación
+   - Go to Settings > Security
+   - Enable "Unknown sources" or "Install unknown apps"
 
-### Desarrollo
+3. **Install the Application**
+   - Open the downloaded APK file
+   - Follow the installation instructions
 
-#### Prerrequisitos para desarrollo
-- Android Studio Arctic Fox o superior
-- JDK 11 o superior
-- Android SDK API 33+
-- Kotlin 1.8+
+### From Source (Developers)
 
-#### Configuración del proyecto
+1. **Clone the repository**
 
-1. **Clona el repositorio**
    ```bash
-   git clone https://github.com/tu-usuario/planime-mobileapp.git
+   git clone https://github.com/your-username/planime-mobileapp.git
    cd planime-mobileapp
    ```
 
-2. **Abre en Android Studio**
-   - File > Open > Selecciona la carpeta del proyecto
+2. **Open in Android Studio**
 
-3. **Sincroniza dependencias**
+   - File > Open > Select project folder
+
+3. **Sync dependencies**
+
    ```bash
    ./gradlew build
    ```
 
-4. **Ejecuta la aplicación**
-   - Conecta un dispositivo Android o usa un emulador
-   - Click en "Run" o `Shift + F10`
-
-## 🌐 Integración con Backend
-
-La aplicación se conecta con la API RESTful de PlaniMe:
-- **Autenticación**: JWT para sesiones seguras
-- **Planes**: CRUD completo de planes nutricionales
-- **Progreso**: Seguimiento de peso y objetivos
-- **Perfil**: Gestión de información personal
-
-## ⚡ Rendimiento
-
-### Optimizaciones implementadas
-- **Lazy Loading**: Carga perezosa de contenido
-- **Cacheo Local**: Almacenamiento temporal de datos
-- **Corrutinas**: Operaciones asíncronas eficientes
-- **Compose**: Renderizado optimizado de UI
-
-## 🔧 Arquitectura MVVM
-
-```kotlin
-View (Compose) ↔ ViewModel ↔ Repository ↔ API/Local Storage
-```
-
-- **View**: Composables de Jetpack Compose
-- **ViewModel**: Lógica de presentación y estado
-- **Repository**: Abstracción de fuentes de datos
-- **Data Sources**: API remota y almacenamiento local
-
-## 👨‍💻 Desarrollador
-
-**Ing. Diego Magaña Álvarez**
-- **Rol**: Arquitecto y Desarrollador Full-Stack
-- **Experiencia**: 3+ años en el ciclo completo de desarrollo de aplicaciones web/móviles y sistemas escalables
-- **Enfoque en el proyecto**: 
-  - Desarrollo Android nativo con Kotlin
-  - Arquitectura MVVM y Clean Architecture
-  - Jetpack Compose y Material Design
-  - Integración de APIs RESTful
-  - Optimización de rendimiento móvil
-- **Contacto**: [soydiegoo71@gmail.com](mailto:soydiegoo71@gmail.com)
-
-## 🌐 Más Información
-
-- **Versión Web**: [https://planime.diecode.lat/index.html](https://planime.diecode.lat/index.html)
-- **Contacto**: [https://planime.diecode.lat/pages/contact/contactUs.html](https://planime.diecode.lat/pages/contact/contactUs.html)
-
-## 🆘 Soporte
-
-¿Necesitas ayuda? Puedes:
-- Crear un [issue](https://github.com/tu-usuario/planime-mobileapp/issues) en GitHub
-- Contactar al desarrollador: [soydiegoo71@gmail.com](mailto:soydiegoo71@gmail.com)
-- Visitar nuestra página de [contacto](https://planime.diecode.lat/pages/contact/contactUs.html)
+4. **Run the application**
+   - Connect an Android device or use an emulator
+   - Click "Run" or press `Shift + F10`
 
 ---
 
-⭐ Si te gusta este proyecto, ¡no olvides darle una estrella!
+## 🌐 API Integration
 
-**PlaniMe** - Revolucionando la nutrición personalizada con tecnología móvil 🚀
+The application connects to PlaniMe's RESTful API:
+
+- **Authentication**: JWT for secure sessions
+- **Plans**: Complete CRUD for nutrition plans
+- **Progress**: Weight tracking and goal monitoring
+- **Profile**: Personal information management
+
+---
+
+## ⚡ Performance Optimizations
+
+- **Lazy Loading**: Deferred content loading
+- **Local Caching**: Temporary data storage
+- **Coroutines**: Efficient asynchronous operations
+- **Compose**: Optimized UI rendering
+
+---
+
+## 📜 Available Scripts
+
+```bash
+# Build
+./gradlew build              # Build the project
+./gradlew assembleDebug      # Generate debug APK
+./gradlew assembleRelease    # Generate release APK
+
+# Testing
+./gradlew test               # Run unit tests
+./gradlew connectedAndroidTest  # Run instrumented tests
+
+# Code Quality
+./gradlew lint               # Run lint checks
+./gradlew ktlintCheck        # Check Kotlin code style
+```
+
+---
+
+## 📞 Contact
+
+**Diego Magaña Álvarez**  
+_Full-Stack Developer_
+
+soydiegoo71@gmail.com | +52 445 105 9192
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/diego-magana-dev)
+
+---
+
+## 🌐 More Information
+
+- **Web Version**: [https://planime.diecode.lat](https://planime.diecode.lat/index.html)
+- **Contact**: [Contact Us](https://planime.diecode.lat/pages/contact/contactUs.html)
+
+---
+
+## 📄 License
+
+© 2025 PlaniMe. All rights reserved.
+
+This project is a personal portfolio project and is not licensed for public use, modification, or distribution.
+
+---
+
+## 🙏 Acknowledgments
+
+- [Kotlin Documentation](https://kotlinlang.org/docs/home.html)
+- [Jetpack Compose](https://developer.android.com/jetpack/compose)
+- [Android Developers](https://developer.android.com/)
+- [Material Design 3](https://m3.material.io/)
+- [Retrofit](https://square.github.io/retrofit/)
+
+---
+
+<div align="center">
+
+**Made with ❤️ and ☕**
+
+⭐ Don't forget to give the project a star if you liked it! ⭐
+
+**PlaniMe** - Revolutionizing personalized nutrition with mobile technology 🚀
+
+</div>
